@@ -1,18 +1,28 @@
-# Vue 3 + TypeScript + Vite
+# 项目介绍
+项目基于
+- 工作和学习的开发经验
+- 参考多个github的个人开发者开源库的源码写法，比如ruoyi
+- 参考多个github的知名开源库的源码写法，比如vue3、webpack5
+进行的内容管理系统的`Vue3`版本的开发
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# 项目目标
 
-## Recommended IDE Setup
+## 可复用
+所有的功能都应该基于一个文件夹，比如css、js、vue文件都应该放在一个文件夹，如果有其它项目想要移植该功能，能够直接复制文件夹即可复用该功能
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 易扩展
+80%的代码应该是基础代码
+20%比较复杂定制化的业务代码应该抽离到另外的文件夹进行存放
+如果想要扩展，可以轻易使用基础代码进行扩展
 
-## Type Support For `.vue` Imports in TS
+## 组件化，框架无关
+每一个可复用的功能都应该简单明了，有注释说明，如果想要使用其它框架
+比如`React`重写某一个功能时，可以直接复用该功能的css+js文件
+比如使用`WebComponent`重写某一个功能时，可以直接复用该功能的css+js文件
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## 注释和文档
+每一个功能应该描写对应的注释和文档，为了后面优化时能够想起这样写的目的，也为了后面使用其它框架重写时能够快速重写
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+# 需求分析
+1. 参考多个竞品进行需求分析，不能自己瞎想
+2. 使用网络免费的UI设计图进行风格的确定
