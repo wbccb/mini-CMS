@@ -6,11 +6,19 @@ import router from "./router";
 
 import ElementPlus from "element-plus";
 import locale from "element-plus/lib/locale/lang/zh-cn";
+import elementIconComponents from "./components/svg-icon/svgicon";
+import SvgIcon from "./components/svg-icon/svg-icon.vue";
+
+import "./permission";
 
 const app = createApp(App);
+
+// 全局组件挂在
+app.component("svg-icon", SvgIcon);
 
 app.use(store);
 app.use(router);
 app.use<Array<Record<string, any>>>(ElementPlus, {locale});
+app.use(elementIconComponents);
 
 app.mount("#app");
