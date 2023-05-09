@@ -9,7 +9,7 @@ export default {
     for (const key in components) {
       const componentConfig = components[key];
       app.component(componentConfig.name, componentConfig);
-      console.info("已经注册icons-vue", componentConfig.name);
+      // console.info("已经注册icons-vue", componentConfig.name);
     }
   },
 };

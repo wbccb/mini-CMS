@@ -6,7 +6,23 @@ import LayoutIndex from "@/layout/index.vue";
 // redirect：重定向的目标，可以使用{name:xxx}或者一个function()
 // end：默认为true，其 RegExp 是否应该在末尾加一个 $ 以匹配到末尾
 
-export const notNeedLogin = [
+export const dynamicRoutes: RouteRecordRaw[] = [
+  {
+    path: "/system/user-auth",
+    component: LayoutIndex,
+    permissions: ["system:user:edit"],
+    children: [
+      {
+        path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
+        name: "AuthRole",
+        component: () => import("@/views/system/user/authRole"),
+        meta: {title: "分配角色", activeMenu: "/system/user"},
+      },
+    ],
+  },
+] as RouteRecordRaw[];
+
+export const notNeedLogin: RouteRecordRaw[] = [
   {
     path: "/login",
     name: "Login",
@@ -17,9 +33,9 @@ export const notNeedLogin = [
     name: "Register",
     component: () => import("@/view/Register.vue"),
   },
-];
+] as RouteRecordRaw[];
 
-const basicRouters: RouteRecordRaw[] = [
+export const basicRouters: RouteRecordRaw[] = [
   {
     path: "/:path(.*)*", // "/:path(.*)*"代表: "/a/b"->params: [ "a", "b" ]
     component: () => import("@/view/error/404.vue"),

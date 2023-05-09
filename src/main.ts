@@ -5,11 +5,13 @@ import store from "./store";
 import router from "./router";
 
 import ElementPlus from "element-plus";
+import "element-plus/es/components/message/style/css";
+
 import locale from "element-plus/lib/locale/lang/zh-cn";
 import elementIconComponents from "./components/svg-icon/svgicon";
 import SvgIcon from "./components/svg-icon/svg-icon.vue";
 
-import "./permission";
+import "./initPermission";
 
 const app = createApp(App);
 

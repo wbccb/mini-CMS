@@ -2,11 +2,11 @@
   <div class="login-wrapper">
     <!--中间内容-->
     <div class="login-content">
-      <el-form class="login-form">
+      <el-form class="login-form" ref="loginRef" :model="loginForm" :rules="loginRules">
         <h3 class="title">CMS-VUE</h3>
         <el-form-item prop="username">
           <el-input
-            v-model="loginForm.userName"
+            v-model="loginForm.username"
             type="text"
             size="large"
             auto-complete="off"
@@ -63,9 +63,15 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, reactive, ref} from "vue";
-import {Edit} from "@element-plus/icons-vue";
 import SvgIcon from "@/components/svg-icon/svg-icon.vue";
-import {networkGetCodeImg} from "@/api/login";
+import {networkGetCodeImg, networkLogin} from "@/api/login";
+import ElForm from "element-plus/es/components/form";
+import Cookies from "js-cookie";
+import useUserStore from "@/store/modules/user";
+import {ElMessage} from "element-plus";
+import {useRouter} from "vue-router";
+
+type IElForm = InstanceType<typeof ElForm>;
 
 export default defineComponent({
   name: "login",
@@ -73,11 +79,11 @@ export default defineComponent({
   props: {},
   setup() {
     const loginForm = reactive({
-      userName: "",
-      password: "",
+      username: "admin",
+      password: "admin123",
       rememberMe: false,
       code: "",
-      uuid: "",
+      uuid: "", // 配套code一起使用
     });
 
     const loading = ref(false);
@@ -93,7 +99,55 @@ export default defineComponent({
         loginForm.uuid = res.uuid;
       }
     };
-    const handleLogin = () => {};
+
+    const userStore = useUserStore();
+    const loginRef = ref<IElForm>();
+    const router = useRouter();
+    const redirect = ref<string>(""); // 如果是某一个业务页面跳转过来，则有redirect
+    const loginRules = {
+      username: [{required: true, trigger: "blur", message: "请输入您的账号"}],
+      password: [{required: true, trigger: "blur", message: "请输入您的密码"}],
+      code: [{required: true, trigger: "change", message: "请输入验证码"}],
+    };
+    const handleLogin = () => {
+      if (!loginRef.value) {
+        return;
+      }
+      const elementForm = loginRef.value!;
+      elementForm.validate((valid) => {
+        if (valid) {
+          loading.value = true;
+          // 记住密码：将账号、密码和记住我存入到cookies中
+          if (loginForm.rememberMe) {
+            Cookies.set("username", loginForm.username, {expires: 30});
+            Cookies.set("password", loginForm.password, {expires: 30});
+            Cookies.set("rememberMe", loginForm.rememberMe.toString(), {expires: 30});
+          } else {
+            Cookies.remove("username");
+            Cookies.remove("password");
+            Cookies.remove("rememberMe");
+          }
+
+          // 进行登录
+          userStore
+            .storeLogin(loginForm)
+            .then((res) => {
+              ElMessage({
+                type: "success",
+                message: "登录成功",
+              });
+              const path: string = redirect.value || "/";
+              router.push({path: path});
+            })
+            .catch((error) => {
+              // 错误已经在store中进行处理
+            })
+            .finally(() => {
+              loading.value = false;
+            });
+        }
+      });
+    };
 
     onMounted(() => {
       getCode();
@@ -106,6 +160,8 @@ export default defineComponent({
       getCode,
       codeUrl,
       captchaEnabled,
+      loginRef,
+      loginRules,
     };
   },
 });
