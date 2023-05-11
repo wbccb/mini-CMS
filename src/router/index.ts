@@ -15,13 +15,13 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       {
         path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
         name: "AuthRole",
-        component: () => import("@/views/system/user/authRole.vue"),
+        component: () => import("@/view/system/user/authRole.vue"),
         meta: {title: "分配角色1", activeMenu: "/system/user"},
       },
       {
         path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
         name: "AuthRole",
-        component: () => import("@/views/system/user/authRole.vue"),
+        component: () => import("@/view/system/user/authRole.vue"),
         meta: {title: "分配角色2", activeMenu: "/system/user"},
       },
     ],
@@ -41,13 +41,13 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: "index/:dictId(\\d+)",
-        component: () => import("@/views/system/dict/data.vue"),
+        component: () => import("@/view/system/dict/data.vue"),
         name: "Data",
         meta: {title: "字典数据1", activeMenu: "/system/dict"},
       },
       {
         path: "index/:dictId(\\d+)",
-        component: () => import("@/views/system/dict/data.vue"),
+        component: () => import("@/view/system/dict/data.vue"),
         name: "Data",
         meta: {title: "字典数据2", activeMenu: "/system/dict"},
       },

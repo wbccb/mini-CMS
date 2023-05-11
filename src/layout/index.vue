@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import AppAside from "@/layout/sidebar/SiderBar.vue";
-import AppHeader from "./AppHeader.vue";
+import AppAside from "@/layout/sidebar/index.vue";
+import AppHeader from "./header/index.vue";
 import AppContent from "./AppContent.vue";
 import AppFooter from "./AppFooter.vue";
 import useAppStore from "@/store/modules/app";

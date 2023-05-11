@@ -1,5 +1,6 @@
 import vue from "@vitejs/plugin-vue";
 import createElementAutoImport from "./auto-import";
+import createSvgIcon from "./icons-svg";
 
 export default function createVitePlugins(viteEnv: any, isBuild = false) {
   const vitePlugins = [vue()];
@@ -10,5 +11,7 @@ export default function createVitePlugins(viteEnv: any, isBuild = false) {
   } else {
     vitePlugins.push(elementAutoImport);
   }
+
+  vitePlugins.push(createSvgIcon(isBuild))
   return vitePlugins;
 }

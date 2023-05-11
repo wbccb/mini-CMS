@@ -74,7 +74,6 @@ async function handleDynamicRoute(
       }
     });
 
-    debugger;
     // TODO 要考虑动态addRoute没有实时生效的问题
     next({...to, replace: true});
   } catch (e) {
