@@ -11,7 +11,7 @@ import locale from "element-plus/lib/locale/lang/zh-cn";
 import elementIconComponents from "./components/svg-icon/svgicon";
 import SvgIcon from "./components/svg-icon/svg-icon.vue";
 
-import "./initPermission";
+import "./router/initDynamicRoute";
 
 const app = createApp(App);
 

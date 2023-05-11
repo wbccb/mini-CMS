@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",

@@ -1,73 +1,81 @@
 <template>
-  <div class="layout-index-wrapper">
-    <!--头部区域-->
-    <div class="app-header-wrapper">
-      <AppHeader></AppHeader>
-    </div>
+    <div class="layout-index-wrapper">
+        <!--左侧侧边栏-->
+        <div class="app-left-wrapper">
+            <AppAside></AppAside>
+        </div>
 
-    <!--内容区域，包括侧边菜单栏和右边内容-->
-    <div class="app-content-wrapper">
-      <AppAside></AppAside>
-      <AppContent></AppContent>
+        <!--右侧侧边栏-->
+        <div class="app-right-wrapper">
+            <AppHeader></AppHeader>
+            <AppContent></AppContent>
+        </div>
     </div>
-
-    <!--底部区域-->
-    <div class="app-footer-wrapper">
-      <AppFooter></AppFooter>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import AppAside from "./AppAside.vue";
+import { computed, defineComponent } from "vue";
+import AppAside from "@/layout/sidebar/SiderBar.vue";
 import AppHeader from "./AppHeader.vue";
 import AppContent from "./AppContent.vue";
 import AppFooter from "./AppFooter.vue";
+import useAppStore from "@/store/modules/app";
 
 export default defineComponent({
-  name: "LayoutIndex",
-  components: {AppFooter, AppContent, AppHeader, AppAside},
-  props: {},
-  setup() {
-    return {};
-  },
+    name: "LayoutIndex",
+    components: { AppFooter, AppContent, AppHeader, AppAside },
+    props: {},
+    setup() {
+        // TODO 侧边栏的样式和数据构建布局
+        // TODO AppHeader顶部的左侧收缩组件 + 面包屑也就是多级菜单栏显示
+        const appStore = useAppStore();
+        const sider = computed(() => {
+            return appStore.sidebar;
+        });
+
+        return {
+            sider,
+        };
+    },
 });
 </script>
 
 <style scoped lang="scss">
 .layout-index-wrapper {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  right: 0px;
-  width: 100%;
-  height: 100%;
-  padding: 0px;
-  margin: 0px;
-  background-color: rebeccapurple;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
 
-  display: flex;
-  flex-direction: column;
-}
+    display: flex;
+    flex-direction: row;
 
-.app-header-wrapper {
-  width: 100%;
-  height: 20px;
-  background-color: red;
-}
+    .app-left-wrapper {
+        transition: width 0.28s;
+        width: 200px;
+        height: 100%;
+        position: absolute;
+        font-size: 0px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1001;
+        overflow: hidden;
+    }
 
-.app-content-wrapper {
-  flex: 1;
-  height: 0px;
-  width: 100%;
-  background-color: green;
-}
+    .app-right-wrapper {
+        flex: 1;
+        height: 100%;
+        transition: margin-left 0.28s;
+        margin-left: 200px;
+        position: relative;
 
-.app-footer-wrapper {
-  width: 100%;
-  height: 20px;
-  background-color: blue;
+        background-colo: green;
+    }
 }
 </style>

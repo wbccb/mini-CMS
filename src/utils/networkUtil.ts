@@ -6,6 +6,12 @@ import {tansParams} from "@/utils/ruoyi_test";
 import useUserStore from "@/store/modules/user";
 import router from "@/router";
 
+export interface ResponseData<T> {
+  code: number;
+  msg: string;
+  data: T;
+}
+
 axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8";
 
 const options: CreateAxiosDefaults = {
@@ -47,7 +53,7 @@ server.interceptors.request.use((config) => {
 server.interceptors.response.use(
   (res) => {
     // 由于返回的数据层级较多，因此解析出res数据，拼接为简单的数据结构返回
-    const code = res.data.code || 200;
+    const code: number = res.data.code || 200;
     const msg = errorCodeText[code] || res.data.msg || errorCodeText["default"];
 
     if (res.request.responseType === "blob" || res.request.responseType === "arraybuffer") {
@@ -59,6 +65,7 @@ server.interceptors.response.use(
       // 这里的提示只是一种普遍性的检测code
       switch (code) {
         case 401:
+          console.error("返回401，会话过期，需要重新登录");
           // 登录过期提示
           ElMessage({message: msg, type: "error"});
           const userStore = useUserStore();

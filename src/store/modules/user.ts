@@ -1,12 +1,27 @@
 import {defineStore} from "pinia";
 import {getToken, removeToken, setToken} from "@/utils/tokenUtil";
-import {logout, networkGetInfo, networkLogin} from "@/api/login";
+import {logout, networkGetInfo, networkLogin, NetworkRole} from "@/api/login";
 import defaultAvatar from "@/assets/profile.jpg";
+
+interface UserStore {
+  token: string | undefined;
+  name: string;
+  avatar: string;
+  roles: NetworkRole[] | ["ROLE_DEFAULT"];
+  permissions: string[];
+}
+
+interface LoginData {
+  username: string;
+  password: string;
+  code: string;
+  uuid: string;
+}
 
 // state 是 store 的数据 (data)，getters 是 store 的计算属性 (computed)，而 actions 则是方法 (methods)
 const useUserStore = defineStore({
   id: "user",
-  state: () => ({
+  state: (): UserStore => ({
     token: getToken(),
     name: "",
     avatar: "",
@@ -14,7 +29,7 @@ const useUserStore = defineStore({
     permissions: [],
   }),
   actions: {
-    async storeLogin(userInfo) {
+    async storeLogin(userInfo: LoginData) {
       // 进行网络请求的登录，然后存入token
       const {username, password, code, uuid} = userInfo;
 
@@ -35,7 +50,7 @@ const useUserStore = defineStore({
         const {avatar, roles, userName} = res.user;
         const userAvatar = !avatar ? defaultAvatar : import.meta.env.VITE_BASE_URL + avatar;
 
-        if (Array.isArray(roles) && res.roles.length > 0) {
+        if (Array.isArray(roles) && roles.length > 0) {
           this.roles = roles;
           this.permissions = res.permissions;
         } else {

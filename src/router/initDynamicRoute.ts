@@ -1,5 +1,5 @@
 import NProgress from "nprogress";
-import router, {notNeedLogin} from "./router/index";
+import router, {notNeedLogin} from "./index";
 import {getToken, removeToken} from "@/utils/tokenUtil";
 import {RouteLocationNamedRaw, RouteLocationNormalized, NavigationGuardNext} from "vue-router";
 import useUserStore from "@/store/modules/user";
@@ -15,15 +15,15 @@ const notNeedLoginPath = notNeedLogin.map((item) => {
 // 检测是否已经登录，如果没有登录则跳转到注册/登录页面，如果已经登录，则next()
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  if (!getToken()) {
-    if (notNeedLoginPath.includes(to.path)) {
-      next();
-    } else {
-      next("/login");
-    }
-  } else {
+  // if (!getToken()) {
+  //   if (notNeedLoginPath.includes(to.path)) {
+  //     next();
+  //   } else {
+  //     next("/login");
+  //   }
+  // } else {
     handleAlreadyLogin(to, from, next);
-  }
+  // }
 });
 
 function handleAlreadyLogin(
@@ -40,7 +40,7 @@ function handleAlreadyLogin(
     // 检测是否获取userInfo数据，因为根据账户获取动态路由
     const userStore = useUserStore(); // pinia可以在任意地方使用store
     if (userStore.roles.length === 0) {
-      handleDynamicRouter(to, from, next);
+      handleDynamicRoute(to, from, next);
     } else {
       // 已经合并过动态路由
       next();
@@ -51,7 +51,7 @@ function handleAlreadyLogin(
 /**
  * 登录情况下，进行userInfo的获取和动态路由的获取
  */
-async function handleDynamicRouter(
+async function handleDynamicRoute(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext
@@ -74,6 +74,7 @@ async function handleDynamicRouter(
       }
     });
 
+    debugger;
     // TODO 要考虑动态addRoute没有实时生效的问题
     next({...to, replace: true});
   } catch (e) {
@@ -83,5 +84,4 @@ async function handleDynamicRouter(
 
 router.afterEach(() => {
   NProgress.done();
-  removeToken();
 });

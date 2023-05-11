@@ -1,5 +1,6 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw, RouterOptions} from "vue-router";
 import LayoutIndex from "@/layout/index.vue";
+
 // 默认情况下，所有路由是不区分大小写的，并且能匹配带有或不带有尾部斜线的路由
 // strict=true，严格要求（导致匹配带有或不带有尾部斜线的路由失效）
 // sensitive=true，严格区分大小写
@@ -10,13 +11,45 @@ export const dynamicRoutes: RouteRecordRaw[] = [
   {
     path: "/system/user-auth",
     component: LayoutIndex,
-    permissions: ["system:user:edit"],
     children: [
       {
         path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
         name: "AuthRole",
-        component: () => import("@/views/system/user/authRole"),
-        meta: {title: "分配角色", activeMenu: "/system/user"},
+        component: () => import("@/views/system/user/authRole.vue"),
+        meta: {title: "分配角色1", activeMenu: "/system/user"},
+      },
+      {
+        path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
+        name: "AuthRole",
+        component: () => import("@/views/system/user/authRole.vue"),
+        meta: {title: "分配角色2", activeMenu: "/system/user"},
+      },
+    ],
+    meta: {
+      permissions: ["system:user:edit"],
+      title: "系统",
+    },
+  },
+  {
+    path: "/system/dict-data",
+    component: LayoutIndex,
+    permissions: ["system:dict:list"],
+    meta: {
+      hidden: true,
+      title: "字典数据",
+    },
+    children: [
+      {
+        path: "index/:dictId(\\d+)",
+        component: () => import("@/views/system/dict/data.vue"),
+        name: "Data",
+        meta: {title: "字典数据1", activeMenu: "/system/dict"},
+      },
+      {
+        path: "index/:dictId(\\d+)",
+        component: () => import("@/views/system/dict/data.vue"),
+        name: "Data",
+        meta: {title: "字典数据2", activeMenu: "/system/dict"},
       },
     ],
   },
@@ -27,11 +60,17 @@ export const notNeedLogin: RouteRecordRaw[] = [
     path: "/login",
     name: "Login",
     component: () => import("@/view/Login.vue"),
+    meta: {
+      hidden: true,
+    },
   },
   {
     path: "/register",
     name: "Register",
     component: () => import("@/view/Register.vue"),
+    meta: {
+      hidden: true,
+    },
   },
 ] as RouteRecordRaw[];
 
@@ -39,6 +78,9 @@ export const basicRouters: RouteRecordRaw[] = [
   {
     path: "/:path(.*)*", // "/:path(.*)*"代表: "/a/b"->params: [ "a", "b" ]
     component: () => import("@/view/error/404.vue"),
+    meta: {
+      hidden: true,
+    },
   },
   {
     path: "",
@@ -50,6 +92,9 @@ export const basicRouters: RouteRecordRaw[] = [
         component: () => import("@/view/index.vue"),
       },
     ],
+    meta: {
+      title: "首页",
+    },
   },
   ...notNeedLogin,
 ] as RouteRecordRaw[];

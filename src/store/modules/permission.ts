@@ -8,28 +8,28 @@ import LayoutIndex from "@/layout/index.vue";
 import ParentView from "@/components/parent-view/parent-view.vue";
 import InnerLink from "@/components/inner-link/inner-link.vue";
 
-interface State {
+interface PermissionState {
   routes: RouteRecordRaw[];
   addRoutes: RouteRecordRaw[];
   defaultRoutes: RouteRecordRaw[];
-  topbarRouters: RouteRecordRaw[];
-  sidebarRouters: RouteRecordRaw[];
+  topbarRoutes: RouteRecordRaw[];
+  sidebarRoutes: RouteRecordRaw[];
 }
 
 const usePermissionStore = defineStore({
   id: "permission",
-  state: (): State => {
+  state: (): PermissionState => {
     return {
       routes: [],
       addRoutes: [],
       defaultRoutes: [],
-      topbarRouters: [],
-      sidebarRouters: [],
+      topbarRoutes: [],
+      sidebarRoutes: [],
     };
   },
   actions: {
     setSidebarRouters(routes: RouteRecordRaw[]) {
-      this.sidebarRouters = routes;
+      this.sidebarRoutes = routes;
     },
     // 根据权限拼接路由
     async storeGetRoutes() {
@@ -77,21 +77,23 @@ const usePermissionStore = defineStore({
       const res: RouteRecordRaw[] = [];
       for (let route of routes) {
         // route.permissions = ["system:user:edit"],
-        if (route.permissions && this.checkRoutePermission(route.permissions)) {
+        const permission: string[] = ((route.meta && route.meta.permissions) || []) as string[];
+        const roles: string[] = ((route.meta && route.meta.roles) || []) as string[];
+        if (permission && this.checkRoutePermission(permission)) {
           // 检测用户拿到的权限是否包含着某一个路由的权限(只要有触及即可，不要求全包括，因为我们要显示一个菜单，那必须有一定权限操作该菜单)
           res.push(route);
-        } else if (route.roles && this.checkRouteRole(route.permissions)) {
+        } else if (roles && this.checkRouteRole(roles)) {
           res.push(route);
         }
       }
       return res;
     },
-    async checkRoutePermission(routePermissions) {
+    checkRoutePermission(routePermissions: string[]) {
       // 用户拿到的权限只要有一个是routePermissions的权限，就可以显示该路由
       const userStore = useUserStore();
       const userPermissions = userStore.permissions;
 
-      function checkRoutePermission1(routePermission, userPermissions) {
+      function checkRoutePermission1(routePermission: string, userPermissions: string[]) {
         const allPermission = "*:*:*";
         if (!userPermissions || userPermissions.length <= 0) {
           return false;
@@ -105,13 +107,13 @@ const usePermissionStore = defineStore({
         return checkRoutePermission1(routePermission, userPermissions);
       });
     },
-    async checkRouteRole(routeRoles) {
+    checkRouteRole(routeRoles: string[]) {
       // 某一个菜单可以被多个角色访问
       // 用户可以拥有多个角色，只要用户的某一个角色能够命中某一个菜单的角色，就可以显示出来
       const userStore = useUserStore();
       const userRoles = userStore.roles;
 
-      function checkRouteRole1(routeRole, userRoles) {
+      function checkRouteRole1(routeRole: string, userRoles: string[]) {
         const superAdmin = "admin";
 
         if (!Array.isArray(userRoles) || userRoles.length <= 0) {
@@ -132,7 +134,7 @@ const usePermissionStore = defineStore({
 });
 
 function filterChildren(childrenMap: any[], lastRouter = false) {
-  let children = [];
+  let children: any[] = [];
   childrenMap.forEach((el, index) => {
     if (el.children && el.children.length) {
       if (el.component === "ParentView" && !lastRouter) {

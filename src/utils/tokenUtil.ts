@@ -7,9 +7,11 @@ export function getToken() {
 }
 
 export function setToken(token: string) {
+  console.warn("setToken");
   return Cookies.set(TokenKey, token);
 }
 
 export function removeToken() {
+  console.warn("removeToken");
   return Cookies.remove(TokenKey);
 }
