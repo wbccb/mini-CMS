@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {networkGetRoutes} from "@/api/menu";
+import {networkGetRoutes, NetworkRoute} from "@/api/menu";
 import {filterDynamicRoutes} from "@/utils/routeUtil";
 import router, {dynamicRoutes, basicRouters} from "@/router";
 import {RouteRecordRaw} from "vue-router";
@@ -7,6 +7,12 @@ import useUserStore from "@/store/modules/user";
 import LayoutIndex from "@/layout/index.vue";
 import ParentView from "@/components/parent-view/parent-view.vue";
 import InnerLink from "@/components/inner-link/inner-link.vue";
+import deepClone from "@/utils/deepCloneUtil";
+import {ResponseData} from "@/utils/networkUtil";
+import {ComponentPublicInstance} from "@vue/runtime-core";
+import {DefineComponent} from "vue";
+
+type NetworkResponseRoute = ResponseData<NetworkRoute>;
 
 interface PermissionState {
   routes: RouteRecordRaw[];
@@ -29,17 +35,22 @@ const usePermissionStore = defineStore({
   },
   actions: {
     setSidebarRouters(routes: RouteRecordRaw[]) {
+      console.log("setSidebarRouters", routes);
       this.sidebarRoutes = routes;
     },
     // 根据权限拼接路由
     async storeGetRoutes() {
       const res = await networkGetRoutes();
-      const rdata = JSON.parse(JSON.stringify(res.data));
+      const rdata = deepClone(res.data);
+      const sdata = deepClone(res.data);
+
       const rewriteRoutes = this.filterAsyncRouter(rdata, false, true);
+      const sidebarRoutes = this.filterAsyncRouter(sdata);
 
       const asyncRoutes = (await this.filterDynamicRoutes(dynamicRoutes)) as RouteRecordRaw[];
 
-      const newRoutes = basicRouters.concat(asyncRoutes);
+      // @ts-ignore
+      const newRoutes = basicRouters.concat(sidebarRoutes as RouteRecordRaw[]);
       this.setSidebarRouters(newRoutes);
 
       return {
@@ -47,7 +58,7 @@ const usePermissionStore = defineStore({
         rewriteRoutes: rewriteRoutes, // 网络请求拿到的路由列表
       };
     },
-    filterAsyncRouter(routeMap: any[], lastRouter = false, type = false) {
+    filterAsyncRouter(routeMap: NetworkRoute[], lastRouter = false, type = false) {
       return routeMap.filter((route) => {
         if (type && route.children) {
           route.children = filterChildren(route.children);
@@ -67,8 +78,8 @@ const usePermissionStore = defineStore({
         if (route.children != null && route.children && route.children.length) {
           route.children = this.filterAsyncRouter(route.children, route, type);
         } else {
-          delete route["children"];
-          delete route["redirect"];
+          route["children"] = [];
+          route["redirect"] = "";
         }
         return true;
       });
@@ -159,14 +170,19 @@ function filterChildren(childrenMap: any[], lastRouter = false) {
 
 // 匹配views里面所有的.vue文件
 const modules = import.meta.glob("./../../views/**/*.vue");
-export const loadView = (view) => {
-  let res;
+export const loadView = (view: string) => {
+  // TODO 需要声明为Component类型
+  let res: any;
+  // modules = {"../../views/Login.vue": () => import("/src/views/Login.vue")}
   for (const path in modules) {
     const dir = path.split("views/")[1].split(".vue")[0];
     if (dir === view) {
+      // modules[path] = ()=> import(view)
+      // modules[path]就是直接获取对应的Component
       res = () => modules[path]();
     }
   }
+  console.info("动态加载组件", res);
   return res;
 };
 

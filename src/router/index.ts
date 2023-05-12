@@ -8,58 +8,14 @@ import LayoutIndex from "@/layout/index.vue";
 // end：默认为true，其 RegExp 是否应该在末尾加一个 $ 以匹配到末尾
 
 export const dynamicRoutes: RouteRecordRaw[] = [
-  {
-    path: "/system/user-auth",
-    component: LayoutIndex,
-    children: [
-      {
-        path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
-        name: "AuthRole",
-        component: () => import("@/view/system/user/authRole.vue"),
-        meta: {title: "分配角色1", activeMenu: "/system/user"},
-      },
-      {
-        path: "role/:userId(\\d+)", // :userId(\d+) -> 仅匹配数字，可以拿到params:数字
-        name: "AuthRole",
-        component: () => import("@/view/system/user/authRole.vue"),
-        meta: {title: "分配角色2", activeMenu: "/system/user"},
-      },
-    ],
-    meta: {
-      permissions: ["system:user:edit"],
-      title: "系统",
-    },
-  },
-  {
-    path: "/system/dict-data",
-    component: LayoutIndex,
-    permissions: ["system:dict:list"],
-    meta: {
-      hidden: true,
-      title: "字典数据",
-    },
-    children: [
-      {
-        path: "index/:dictId(\\d+)",
-        component: () => import("@/view/system/dict/data.vue"),
-        name: "Data",
-        meta: {title: "字典数据1", activeMenu: "/system/dict"},
-      },
-      {
-        path: "index/:dictId(\\d+)",
-        component: () => import("@/view/system/dict/data.vue"),
-        name: "Data",
-        meta: {title: "字典数据2", activeMenu: "/system/dict"},
-      },
-    ],
-  },
+
 ] as RouteRecordRaw[];
 
 export const notNeedLogin: RouteRecordRaw[] = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("@/view/Login.vue"),
+    component: () => import("@/views/Login.vue"),
     meta: {
       hidden: true,
     },
@@ -67,7 +23,7 @@ export const notNeedLogin: RouteRecordRaw[] = [
   {
     path: "/register",
     name: "Register",
-    component: () => import("@/view/Register.vue"),
+    component: () => import("@/views/Register.vue"),
     meta: {
       hidden: true,
     },
@@ -77,7 +33,7 @@ export const notNeedLogin: RouteRecordRaw[] = [
 export const basicRouters: RouteRecordRaw[] = [
   {
     path: "/:path(.*)*", // "/:path(.*)*"代表: "/a/b"->params: [ "a", "b" ]
-    component: () => import("@/view/error/404.vue"),
+    component: () => import("@/views/error/404.vue"),
     meta: {
       hidden: true,
     },
@@ -89,7 +45,7 @@ export const basicRouters: RouteRecordRaw[] = [
     children: [
       {
         path: "/index",
-        component: () => import("@/view/index.vue"),
+        component: () => import("@/views/index.vue"),
       },
     ],
     meta: {
