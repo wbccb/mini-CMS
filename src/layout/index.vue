@@ -78,7 +78,7 @@ export default defineComponent({
         margin-left: 200px;
         position: relative;
 
-        background-colo: green;
+        overflow-y: scroll;
     }
 }
 </style>

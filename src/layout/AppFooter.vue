@@ -1,5 +1,5 @@
 <template>
-  <div class="app-footer-content"></div>
+  <div class="app-footer-content">这是Footer</div>
 </template>
 
 <script lang="ts">
@@ -16,5 +16,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .app-footer-content {
+  height: 26px;
+  line-height: 26px;
 }
 </style>

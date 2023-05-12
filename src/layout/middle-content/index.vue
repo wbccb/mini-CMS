@@ -1,5 +1,5 @@
 <template>
-  <div class="app-content-content">
+  <div class="app-content-container">
     <router-view v-slot="{Component, route}">
       <transition name="fade-transform" mode="out-in">
         <keep-alive>
@@ -23,6 +23,12 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.app-content-content {
+.app-content-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+
+  background-color: red;
 }
 </style>
