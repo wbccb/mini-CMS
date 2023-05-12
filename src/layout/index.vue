@@ -5,10 +5,12 @@
             <AppAside></AppAside>
         </div>
 
-        <!--右侧侧边栏-->
+        <!--右侧主内容-->
         <div class="app-right-wrapper">
             <AppHeader></AppHeader>
+            <AppHeaderTagsView></AppHeaderTagsView>
             <AppContent></AppContent>
+            <AppFooter></AppFooter>
         </div>
     </div>
 </template>
@@ -17,13 +19,14 @@
 import { computed, defineComponent } from "vue";
 import AppAside from "@/layout/sidebar/index.vue";
 import AppHeader from "./header/index.vue";
-import AppContent from "./AppContent.vue";
+import AppContent from "./middle-content/index.vue";
 import AppFooter from "./AppFooter.vue";
+import AppHeaderTagsView from "./header-tags-view/index.vue";
 import useAppStore from "@/store/modules/app";
 
 export default defineComponent({
     name: "LayoutIndex",
-    components: { AppFooter, AppContent, AppHeader, AppAside },
+    components: { AppFooter, AppContent, AppHeader, AppAside, AppHeaderTagsView },
     props: {},
     setup() {
         // TODO 侧边栏的样式和数据构建布局
