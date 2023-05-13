@@ -9,8 +9,6 @@ import ParentView from "@/components/parent-view/parent-view.vue";
 import InnerLink from "@/components/inner-link/inner-link.vue";
 import deepClone from "@/utils/deepCloneUtil";
 import {ResponseData} from "@/utils/networkUtil";
-import {ComponentPublicInstance} from "@vue/runtime-core";
-import {DefineComponent} from "vue";
 
 type NetworkResponseRoute = ResponseData<NetworkRoute>;
 

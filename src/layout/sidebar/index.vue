@@ -19,6 +19,7 @@ import {computed, defineComponent} from "vue";
 import AppAsideHeaderLogo from "./HeaderLogo.vue";
 import SidebarItem from "./SidebarItem.vue";
 import usePermissionStore from "@/store/modules/permission";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "AppAside",
@@ -26,6 +27,7 @@ export default defineComponent({
   props: {},
   setup() {
     const permissionStore = usePermissionStore();
+    const router = useRouter();
     const sidebarRoutes = computed(() => {
       // 一开始在router/initDymamicRoute.ts中动态初始化的路由
       return permissionStore.sidebarRoutes.filter((item) => {
@@ -39,6 +41,7 @@ export default defineComponent({
     const handleSelect = (key: string, keyPath: string[]) => {
       console.log("handleSelect选择的是", key, keyPath);
       // TODO 需要解析出params，然后解析出对应的路径作为key
+      router.push(key + keyPath);
     };
 
     return {
