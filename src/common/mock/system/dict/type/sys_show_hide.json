@@ -1,0 +1,33 @@
+[{
+  "createBy": "admin",
+  "createTime": "2023-04-23 16:13:25",
+  "updateBy": null,
+  "updateTime": null,
+  "remark": "显示菜单",
+  "dictCode": 4,
+  "dictSort": 1,
+  "dictLabel": "显示",
+  "dictValue": "0",
+  "dictType": "sys_show_hide",
+  "cssClass": "",
+  "listClass": "primary",
+  "isDefault": "Y",
+  "status": "0",
+  "default": true
+}, {
+  "createBy": "admin",
+  "createTime": "2023-04-23 16:13:25",
+  "updateBy": null,
+  "updateTime": null,
+  "remark": "隐藏菜单",
+  "dictCode": 5,
+  "dictSort": 2,
+  "dictLabel": "隐藏",
+  "dictValue": "1",
+  "dictType": "sys_show_hide",
+  "cssClass": "",
+  "listClass": "danger",
+  "isDefault": "N",
+  "status": "0",
+  "default": false
+}]

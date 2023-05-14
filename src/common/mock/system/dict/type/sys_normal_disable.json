@@ -1,0 +1,36 @@
+[
+  {
+    "createBy": "admin",
+    "createTime": "2023-04-23 16:13:26",
+    "updateBy": null,
+    "updateTime": null,
+    "remark": "正常状态",
+    "dictCode": 6,
+    "dictSort": 1,
+    "dictLabel": "正常",
+    "dictValue": "0",
+    "dictType": "sys_normal_disable",
+    "cssClass": "",
+    "listClass": "primary",
+    "isDefault": "Y",
+    "status": "0",
+    "default": true
+  },
+  {
+    "createBy": "admin",
+    "createTime": "2023-04-23 16:13:26",
+    "updateBy": null,
+    "updateTime": null,
+    "remark": "停用状态",
+    "dictCode": 7,
+    "dictSort": 2,
+    "dictLabel": "停用",
+    "dictValue": "1",
+    "dictType": "sys_normal_disable",
+    "cssClass": "",
+    "listClass": "danger",
+    "isDefault": "N",
+    "status": "0",
+    "default": false
+  }
+]
