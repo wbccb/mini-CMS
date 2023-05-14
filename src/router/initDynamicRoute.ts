@@ -70,6 +70,7 @@ async function handleDynamicRoute(
     // 动态创建菜单所产生的路由列表
     rewriteRoutes.forEach((route) => {
       if (!isHttp(route.path)) {
+        console.log("添加的路由", route);
         router.addRoute(route);
       }
     });

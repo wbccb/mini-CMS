@@ -65,7 +65,7 @@
 import {defineComponent, onMounted, reactive, ref} from "vue";
 import SvgIcon from "@/components/svg-icon/svg-icon.vue";
 import {networkGetCodeImg, networkLogin} from "@/api/login";
-import ElForm from "element-plus/es/components/form";
+import ElForm from "element-plus";
 import Cookies from "js-cookie";
 import useUserStore from "@/store/modules/user";
 import {ElMessage} from "element-plus";

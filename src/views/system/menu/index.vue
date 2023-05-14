@@ -12,21 +12,22 @@
                 </el-col>
 
                 <el-tooltip class="item" effect="dark" content="刷新" placement="top">
-                    <el-button circle icon="Refresh" @click="getList" />
+                    <el-button circle icon="Refresh" @click="forceRefresh" />
                 </el-tooltip>
             </el-row>
         </div>
 
-        <div class="table-wrapper">
+        <div class="table-wrapper" ref="elTableParent">
             <el-table
-                v-if="tableRefreshFlag"
+                v-if="initFinish"
                 v-loading="loading"
                 :data="menuList"
+                :max-height="elTableHeight"
                 row-key="menuId"
                 :default-expand-all="isExpandAll"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
             >
-                <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
+                <el-table-column fixed prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
                 <el-table-column prop="icon" label="图标" align="center" width="100">
                     <template #default="scope">
                         <svg-icon :icon-class="scope.row.icon" />
@@ -39,7 +40,7 @@
                     <template #default="scope">
                         <el-tag
                             :disable-transitions="true"
-                            type="primary"
+                            type="info"
                         >正常</el-tag>
                     </template>
                 </el-table-column>
@@ -65,8 +66,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import {parseTime} from "@/utils/ruoyi_test";
+import {defineComponent, onMounted, ref} from "vue";
+import {handleTree, parseTime} from "@/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkGetMenuList, NetworkMenu} from "@/api/menu";
 import {ResponseData} from "@/utils/networkUtil";
@@ -79,18 +80,16 @@ export default defineComponent({
     name: "",
     props: {},
     setup() {
-        const handleAdd = () => {};
+        const handleAdd = () => {
+            // 弹出提示框
+        };
 
         const toggleExpandAll = () => {};
-
-
 
         const handleUpdate = (item: any)=> {};
         const handleDelete = (item: any)=> {};
 
-        const tableRefreshFlag = ref(false);
-        const loading = ref(false);
-        const menuList = ref();
+
         const isExpandAll = ref(false);
 
 
@@ -98,6 +97,9 @@ export default defineComponent({
         const getList = ()=> {
             return async (pageNo: number, pageSize: number) => {
                 const data: ResponseData<NetworkMenu[]> = await networkGetMenuList();
+                const treeData = handleTree(data.data, "menuId");
+                data.data = treeData
+                console.info(treeData);
                 return data;
             }
         };
@@ -111,23 +113,58 @@ export default defineComponent({
         } = usePaginationBar<MenuItem>(getList());
 
 
+        const initFinish = ref(false);
+        onMounted(()=> {
+            forceRefresh();
+
+            if(elTableParent.value) {
+                const height = elTableParent.value.clientHeight;
+                elTableHeight.value = height;
+
+                initFinish.value = true;
+            }
+        });
+
+
+        const elTableParent = ref<typeof HTMLDivElement>();
+        const elTableHeight = ref(200);
+
         return {
+            initFinish,
             handleAdd,
             toggleExpandAll,
             getList,
-            tableRefreshFlag,
             parseTime,
             handleUpdate,
             handleDelete,
-            loading,
             isExpandAll,
             menuList: dataList,
             forceRefresh,
             indexMethod,
+            elTableParent,
+            elTableHeight,
             ...returnObject
         };
     },
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+.menu-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    .tool-wrapper {
+
+    }
+
+    .table-wrapper {
+        height: 100%;
+    }
+}
+
+
+</style>

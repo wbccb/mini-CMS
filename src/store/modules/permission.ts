@@ -73,6 +73,12 @@ const usePermissionStore = defineStore({
             route.component = loadView(route.component);
           }
         }
+
+        if(route.meta.link) {
+          // TODO 暂时屏蔽link链接的路由
+          return false;
+        }
+
         if (route.children != null && route.children && route.children.length) {
           route.children = this.filterAsyncRouter(route.children, route, type);
         } else {
@@ -170,7 +176,7 @@ function filterChildren(childrenMap: any[], lastRouter = false) {
 const modules = import.meta.glob("./../../views/**/*.vue");
 export const loadView = (view: string) => {
   // TODO 需要声明为Component类型
-  let res: any;
+  let res: any = undefined;
   // modules = {"../../views/Login.vue": () => import("/src/views/Login.vue")}
   for (const path in modules) {
     const dir = path.split("views/")[1].split(".vue")[0];

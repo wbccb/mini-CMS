@@ -45,6 +45,7 @@ export const basicRouters: RouteRecordRaw[] = [
     children: [
       {
         path: "/index",
+        redirect: "/system/menu",
         component: () => import("@/views/index.vue"),
       },
     ],

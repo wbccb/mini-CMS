@@ -9,7 +9,7 @@
         <div class="app-right-wrapper">
             <AppHeader></AppHeader>
             <AppHeaderTagsView></AppHeaderTagsView>
-            <AppContent></AppContent>
+            <AppContent class="app-right-wrapper_content"></AppContent>
             <AppFooter></AppFooter>
         </div>
     </div>
@@ -79,6 +79,13 @@ export default defineComponent({
         position: relative;
 
         overflow-y: scroll;
+
+        display: flex;
+        flex-direction: column;
+
+        .app-right-wrapper_content {
+            flex: 1;
+        }
     }
 }
 </style>

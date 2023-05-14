@@ -11,7 +11,8 @@ export const usePaginationBar = <T>(getListData: (pageNo: number, pageSize: numb
     const pageSize = ref<number>(10);
     const total = ref<number>(0);
     const dataList = ref<T[]>();
-    const refreshFlag = ref<boolean>(false);
+    const loading = ref<boolean>(false);
+
 
 
     const handleSizeChange = async (val: number) => {
@@ -27,14 +28,15 @@ export const usePaginationBar = <T>(getListData: (pageNo: number, pageSize: numb
     }
 
     const forceRefresh = async () => {
+        loading.value = true;
         const responseData = await getListData(currentPage.value, pageSize.value);
         // TODO 要适配不同数据结构
         dataList.value = responseData.data || responseData.rows;
 
         total.value = responseData.total?responseData.total:0;
-        refreshFlag.value = false;
+
         await nextTick(() => {
-            refreshFlag.value = true;
+            loading.value = false;
         });
     }
 
@@ -47,7 +49,7 @@ export const usePaginationBar = <T>(getListData: (pageNo: number, pageSize: numb
         currentPage,
         pageSize,
         total,
-        refreshFlag,
+        loading,
         indexMethod,
         handleSizeChange,
         handleCurrentChange,

@@ -29,7 +29,7 @@ export default defineComponent({
     const permissionStore = usePermissionStore();
     const router = useRouter();
     const sidebarRoutes = computed(() => {
-      // 一开始在router/initDymamicRoute.ts中动态初始化的路由
+      // 一开始在router/initDynamicRoute.ts中动态初始化的路由
       return permissionStore.sidebarRoutes.filter((item) => {
         if (item.meta && item.meta.hidden) {
           return false;
@@ -39,9 +39,8 @@ export default defineComponent({
     });
 
     const handleSelect = (key: string, keyPath: string[]) => {
-      console.log("handleSelect选择的是", key, keyPath);
       // TODO 需要解析出params，然后解析出对应的路径作为key
-      router.push(key + keyPath);
+      router.push(keyPath.join("/"));
     };
 
     return {
