@@ -1,24 +1,23 @@
 <template>
-  <div class="menu-wrapper">
-    <!--表格上面的按钮功能，比如新增、刷新、展开/折叠等等-->
-    <div class="tool-wrapper">
-      <el-row :gutter="10" class="mb8">
-        <el-col :span="1.5">
-          <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
-        </el-col>
+  <TableBaseView>
+    <template v-slot:base-table-header>
+      <el-col :span="1.5">
+        <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
+      </el-col>
 
-        <el-col :span="1.5">
-          <el-button type="info" plain icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
-        </el-col>
+      <el-col :span="1.5">
+        <el-button type="info" plain icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
+      </el-col>
 
-        <el-tooltip class="item" effect="dark" content="刷新" placement="top">
-          <el-button circle icon="Refresh" @click="forceRefresh" />
-        </el-tooltip>
-      </el-row>
-    </div>
+      <el-tooltip class="item" effect="dark" content="刷新" placement="top">
+        <el-button circle icon="Refresh" @click="forceRefresh" />
+      </el-tooltip>
+    </template>
 
-    <div class="table-wrapper" ref="elTableParent">
+    <template v-slot:base-table-content>
       <el-table
+        id="elTableRef"
+        ref="elTableRef"
         v-if="initFinish"
         v-loading="loading"
         :data="menuList"
@@ -76,14 +75,28 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
+    </template>
 
-    <CreateMenu
-      v-model="openDialog"
-      :menuList="menuList"
-      @close-dialog="openDialog = false"
-    ></CreateMenu>
-  </div>
+    <template v-slot:base-table-footer>
+      <PaginationBar
+        class="main-pagination"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total">
+      </PaginationBar>
+    </template>
+
+    <template v-slot:other>
+      <CreateMenu
+        v-model="openDialog"
+        :menuList="menuList"
+        @close-dialog="openDialog = false"
+      ></CreateMenu>
+    </template>
+    
+  </TableBaseView>
 </template>
 
 <script lang="ts">
@@ -93,10 +106,12 @@ import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkGetMenuList, NetworkMenu} from "@/api/menu";
 import {ResponseData} from "@/utils/networkUtil";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
+import TableBaseView from "@/components/table/TableBaseView.vue";
+import PaginationBar from "@/components/table/PaginationBar.vue";
 
 export default defineComponent({
   name: "MenuIndex",
-  components: {CreateMenu},
+  components: {PaginationBar, TableBaseView, CreateMenu},
   props: {},
   setup() {
     const openDialog = ref(false);
@@ -135,19 +150,19 @@ export default defineComponent({
       getList()
     );
 
-    const initFinish = ref(false);
+    const initFinish = ref(true);
     onMounted(() => {
       forceRefresh();
-
-      if (elTableParent.value) {
-        const height = elTableParent.value.clientHeight;
+      
+      // TODO 能不能通过refs获取到DOM元素
+      const dom = document.getElementById("elTableRef");
+      if (dom) {
+        const height = dom.parentElement.clientHeight;
         elTableHeight.value = height;
-
-        initFinish.value = true;
       }
     });
 
-    const elTableParent = ref<typeof HTMLDivElement>();
+    const elTableRef = ref();
     const elTableHeight = ref(200);
 
     return {
@@ -162,7 +177,7 @@ export default defineComponent({
       menuList: dataList,
       forceRefresh,
       indexMethod,
-      elTableParent,
+      elTableRef,
       elTableHeight,
       ...returnObject,
       openDialog,
