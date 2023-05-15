@@ -3,6 +3,7 @@
  */
 import networkUtil, {ResponseData} from "@/utils/networkUtil";
 import systemMenuList from "@/common/mock/system/menu/list.json";
+import deepClone from "@/utils/deepCloneUtil";
 
 export interface NetworkRoute {
   alwaysShow: boolean;
@@ -50,6 +51,6 @@ export interface NetworkMenu {
 export function networkGetMenuList(): Promise<ResponseData<NetworkMenu[]>> {
   return new Promise((resolve)=> {
     const data = systemMenuList as ResponseData<NetworkMenu[]>;
-    resolve(data);
+    resolve(deepClone(data));
   });
 }

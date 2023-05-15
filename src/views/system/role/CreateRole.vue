@@ -34,7 +34,7 @@
               :width="540"
               v-model:visible="showChooseIcon"
               trigger="click"
-              @show="showSelectIcon"
+              @show="showIconSelect"
             >
               <!--初始化展示的内容-->
               <template #reference>
@@ -43,6 +43,7 @@
                   v-model="formData.icon"
                   placeholder="点击选择图标"
                   @blur="showSelectIcon"
+                  v-click-outside="hideSelectIcon"
                   readonly
                 >
                   <template #prefix>
@@ -57,10 +58,9 @@
                     </el-icon>
                   </template>
                 </el-input>
+                <!--图标展示，支持点击后选中-->
+                <IconSelect ref="iconSelectRef"></IconSelect>
               </template>
-
-              <!--图标展示，支持点击后选中-->
-              <IconSelect ref="iconSelectRef" @select-icon="selectIcon"></IconSelect>
             </el-popover>
           </el-form-item>
         </el-col>
@@ -169,7 +169,6 @@ import {defineComponent, PropType, reactive, ref, computed} from "vue";
 import {NetworkMenu} from "@/api/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
-import IconSelect from "@/components/icon-select/IconSelect.vue";
 
 interface MenuDialogForm {
   parentId: string;
@@ -186,7 +185,6 @@ interface MenuDialogForm {
 
 export default defineComponent({
   name: "CreateMenu",
-  components: {IconSelect},
   props: {
     menuList: {
       type: Array as PropType<NetworkMenu[]>,
@@ -246,7 +244,7 @@ export default defineComponent({
     // ------- 选择图标的相关逻辑 ---------
     const showChooseIcon = ref(false);
     const iconSelectRef = ref();
-
+    const showIconSelect = () => {};
     const showSelectIcon = () => {
       // 显示弹出的下拉列表
       showChooseIcon.value = true;
@@ -262,15 +260,11 @@ export default defineComponent({
       }
     };
 
-    const selectIcon = (icon: string)=> {
-        formData.icon = icon;
-    }
-
     // ------- 选择图标的相关逻辑 ---------
 
     return {
-        selectIcon,
       showChooseIcon,
+      showIconSelect,
       showSelectIcon,
       hideSelectIcon,
       dialogTitle,
@@ -282,7 +276,6 @@ export default defineComponent({
       sys_show_hide,
       sys_normal_disable,
       formRules,
-      iconSelectRef,
     };
   },
 });

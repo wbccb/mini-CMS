@@ -16,6 +16,7 @@ import "./router/initDynamicRoute";
 const app = createApp(App);
 
 // 全局组件挂在
+// TODO 需要处理全局的svg-icon和el-svg的管理问题
 app.component("svg-icon", SvgIcon);
 
 app.use(store);

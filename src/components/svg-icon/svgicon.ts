@@ -6,6 +6,7 @@ import * as components from "@element-plus/icons-vue";
  */
 export default {
   install: (app) => {
+    // components是element-plus的icons
     for (const key in components) {
       const componentConfig = components[key];
       app.component(componentConfig.name, componentConfig);

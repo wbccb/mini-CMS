@@ -79,25 +79,25 @@
     </div>
 
     <CreateMenu
-            v-model="openDialog"
-            :menuList="menuList"></CreateMenu>
+      v-model="openDialog"
+      :menuList="menuList"
+      @close-dialog="openDialog = false"
+    ></CreateMenu>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, nextTick, onMounted, ref} from "vue";
 import {handleTree, parseTime} from "@/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkGetMenuList, NetworkMenu} from "@/api/menu";
 import {ResponseData} from "@/utils/networkUtil";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 
-
 export default defineComponent({
-  name: "",
+  name: "MenuIndex",
   components: {CreateMenu},
-  props: {
-  },
+  props: {},
   setup() {
     const openDialog = ref(false);
     const handleAdd = () => {
@@ -105,12 +105,16 @@ export default defineComponent({
       openDialog.value = true;
     };
 
-    const toggleExpandAll = () => {};
+    const isExpandAll = ref(false);
+    const toggleExpandAll = async () => {
+      isExpandAll.value = !isExpandAll.value;
+      initFinish.value = false;
+      await nextTick();
+      initFinish.value = true;
+    };
 
     const handleUpdate = (item: any) => {};
     const handleDelete = (item: any) => {};
-
-    const isExpandAll = ref(false);
 
     const menuArray = ref<NetworkMenu[]>([]);
 

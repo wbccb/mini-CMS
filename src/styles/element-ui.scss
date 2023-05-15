@@ -95,27 +95,3 @@
   color: var(--el-color-primary) !important;
 }
 
-.el-table__cell {
-  height: 57px !important;
-  line-height: 57px !important;
-  box-sizing: border-box;
-  overflow: hidden !important;
-}
-
-.el-table__header tr,
-.el-table__header th {
-  padding: 0;
-  height: 40px;
-}
-
-.el-table__body tr,
-.el-table__body td,
-.el-table__body td::before {
-  padding: 0 !important;
-  height: 40px !important;
-  line-height: 40px !important;
-  min-height: 0px !important;
-  max-height: 20px !important;
-
-  overflow: hidden;
-}
