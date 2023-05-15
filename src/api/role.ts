@@ -2,6 +2,7 @@ import networkUtil, {ResponseData} from "@/utils/networkUtil";
 import systemRoleList from "@/common/mock/system/role/list.json";
 import deepClone from "@/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
+import authUser from "@/common/mock/system/role/authUser.json";
 
 export interface NetworkRole {
   "createBy": string;
@@ -50,4 +51,46 @@ export function networkGetCreateRoleMenuList() {
   //   url: '/system/menu/treeselect',
   //   method: 'get'
   // })
+}
+
+
+export interface QueryUserListParams {
+  pageNum: number;
+  pageSize: number;
+  roleId: string;
+  userName?: undefined;
+  phonenumber?: undefined;
+}
+
+export interface NetworkAuthUser {
+  "remark": null|string;
+  "userId": number;
+  "deptId": number;
+  "userName": string;
+  "nickName": string;
+  "email": string;
+  "phonenumber": string;
+  "status": string;
+  "dept": {
+    "remark": null|string;
+    "deptId": number;
+    "parentId": null|number;
+  }
+}
+
+/**
+ * 根据roleId查询所有的用户数据
+ * @param query
+ */
+export function networkGetUserListByRoleId(query: QueryUserListParams): Promise<ResponseData<NetworkAuthUser[]>> {
+  return new Promise((resolve)=> {
+    // @ts-ignore
+    const data = authUser as ResponseData<NetworkAuthUser[]>;
+    resolve(deepClone(data));
+  });
+  return networkUtil({
+    url: '/system/role/authUser/allocatedList',
+    method: 'get',
+    params: query
+  })
 }

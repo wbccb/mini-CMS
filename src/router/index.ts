@@ -8,8 +8,23 @@ import LayoutIndex from "@/layout/index.vue";
 // end：默认为true，其 RegExp 是否应该在末尾加一个 $ 以匹配到末尾
 
 export const dynamicRoutes: RouteRecordRaw[] = [
-
-] as RouteRecordRaw[];
+  {
+    path: '/system/role-auth',
+    component: LayoutIndex,
+    meta: {
+      hidden: true,
+      permissions: ['system:user:edit'],
+    },
+    children: [
+      {
+        path: 'user/:roleId(\\d+)',
+        component: () => import('@/views/system/role/AuthUser.vue'),
+        name: 'AuthUser',
+        meta: { title: '分配用户', activeMenu: '/system/role' }
+      }
+    ]
+  }
+];
 
 export const notNeedLogin: RouteRecordRaw[] = [
   {

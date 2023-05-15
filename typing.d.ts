@@ -7,5 +7,6 @@ declare module 'vue-router' {
     interface RouteMeta {
         title: string|undefined;
         breadcrumb: false;
+        hidden: boolean;
     }
 }

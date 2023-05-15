@@ -72,14 +72,14 @@
                 @click="handleDelete(scope.row)"
               ></el-button>
             </el-tooltip>
-            <el-tooltip content="数据权限" placement="top" v-if="scope.row.roleId !== 1">
-              <el-button
-                link
-                type="primary"
-                icon="CircleCheck"
-                @click="handleDataScope(scope.row)"
-              ></el-button>
-            </el-tooltip>
+<!--            <el-tooltip content="数据权限" placement="top" v-if="scope.row.roleId !== 1">-->
+<!--              <el-button-->
+<!--                link-->
+<!--                type="primary"-->
+<!--                icon="CircleCheck"-->
+<!--                @click="handleDataScope(scope.row)"-->
+<!--              ></el-button>-->
+<!--            </el-tooltip>-->
             <el-tooltip content="分配用户" placement="top" v-if="scope.row.roleId !== 1">
               <el-button
                 link
@@ -105,10 +105,6 @@
 
     <template v-slot:other>
       <CreateRole v-model="openDialog" @close-dialog="openDialog = false"></CreateRole>
-      <CreateRolePermission
-        v-model="openRolePermissionDialog"
-        :roleId="roleId"
-      ></CreateRolePermission>
     </template>
   </TableBaseView>
 </template>
@@ -123,11 +119,11 @@ import {handleTree} from "@/utils/ruoyi_test";
 import {parseTime} from "@/utils/ruoyi_test";
 import PaginationBar from "@/components/table/PaginationBar.vue";
 import CreateRole from "@/views/system/role/CreateRole.vue";
-import CreateRolePermission from "@/views/system/role/CreateRolePermission.vue";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "RoleIndex",
-  components: {CreateRolePermission, CreateRole, PaginationBar, TableBaseView},
+  components: {CreateRole, PaginationBar, TableBaseView},
   props: {},
   setup() {
     const openDialog = ref(false);
@@ -165,7 +161,10 @@ export default defineComponent({
       roleId.value = item.roleId;
       openRolePermissionDialog.value = true;
     };
-    const handleAuthUser = (item: NetworkRole) => {};
+    const router = useRouter();
+    const handleAuthUser = (item: NetworkRole) => {
+      router.push(`/system/role-auth/user/${item.roleId}`);
+    }
     // ----------分页逻辑-----------
 
     return {

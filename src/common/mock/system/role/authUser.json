@@ -1,0 +1,51 @@
+{
+  "total": 1,
+  "rows": [
+    {
+      "createBy": null,
+      "createTime": "2023-04-23 16:11:38",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": null,
+      "userId": 2,
+      "deptId": 105,
+      "userName": "ry",
+      "nickName": "若依",
+      "email": "ry@qq.com",
+      "phonenumber": "15666666666",
+      "sex": null,
+      "avatar": null,
+      "password": null,
+      "status": "0",
+      "delFlag": null,
+      "loginIp": null,
+      "loginDate": null,
+      "dept": {
+        "createBy": null,
+        "createTime": null,
+        "updateBy": null,
+        "updateTime": null,
+        "remark": null,
+        "deptId": 105,
+        "parentId": null,
+        "ancestors": null,
+        "deptName": null,
+        "orderNum": null,
+        "leader": null,
+        "phone": null,
+        "email": null,
+        "status": null,
+        "delFlag": null,
+        "parentName": null,
+        "children": []
+      },
+      "roles": [],
+      "roleIds": null,
+      "postIds": null,
+      "roleId": null,
+      "admin": false
+    }
+  ],
+  "code": 200,
+  "msg": "查询成功"
+}
