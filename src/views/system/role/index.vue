@@ -23,7 +23,7 @@
       </el-tooltip>
     </template>
     <template v-slot:base-table-content>
-      <el-table>
+      <el-table v-loading="loading" :data="dataList">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="角色编号" prop="roleId" width="120" />
         <el-table-column
@@ -62,7 +62,6 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:role:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top" v-if="scope.row.roleId !== 1">
@@ -71,7 +70,6 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:role:remove']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="数据权限" placement="top" v-if="scope.row.roleId !== 1">
@@ -80,7 +78,6 @@
                 type="primary"
                 icon="CircleCheck"
                 @click="handleDataScope(scope.row)"
-                v-hasPermi="['system:role:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="分配用户" placement="top" v-if="scope.row.roleId !== 1">
@@ -89,37 +86,52 @@
                 type="primary"
                 icon="User"
                 @click="handleAuthUser(scope.row)"
-                v-hasPermi="['system:role:edit']"
               ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
     </template>
-    <template v-slot:base-table-footer></template>
+    <template v-slot:base-table-footer>
+      <PaginationBar
+        class="main-pagination"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total"
+      ></PaginationBar>
+    </template>
 
-    <template v-slot:other></template>
+    <template v-slot:other>
+      <CreateRole v-model="openDialog" @close-dialog="openDialog = false"></CreateRole>
+    </template>
   </TableBaseView>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkGetRoleList, NetworkRole} from "@/api/role";
 import {ResponseData} from "@/utils/networkUtil";
 import {handleTree} from "@/utils/ruoyi_test";
 import {parseTime} from "@/utils/ruoyi_test";
+import PaginationBar from "@/components/table/PaginationBar.vue";
+import CreateRole from "@/views/system/role/CreateRole.vue";
 
 export default defineComponent({
   name: "RoleIndex",
-  components: {TableBaseView},
+  components: {CreateRole, PaginationBar, TableBaseView},
   props: {},
   setup() {
+    const openDialog = ref(false);
     // ----------table上面的工具按钮-----------
-    const handleAdd = () => {};
-    const handleUpdate = (item: NetworkRole)=> {};
-    const handleDelete = (item: NetworkRole)=> {};
+    const handleAdd = () => {
+      openDialog.value = true;
+    };
+    const handleUpdate = (item: NetworkRole) => {};
+    const handleDelete = (item: NetworkRole) => {};
     const handleExport = () => {};
     const single = ref(false);
     const multiple = ref(false);
@@ -132,18 +144,28 @@ export default defineComponent({
         return data;
       };
     };
-    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<NetworkRole>(
+    const {
+      dataList,
+      forceRefresh,
+      indexMethod,
+      ...returnObject
+    } = usePaginationBar<NetworkRole>(
       getList()
     );
-    
-    const handleStatusChange = (item: NetworkRole)=> {};
-    const handleDataScope = (item: NetworkRole)=> {};
-    const handleAuthUser = (item: NetworkRole)=> {};
+
+    onMounted(() => {
+      forceRefresh();
+    });
+
+    const handleStatusChange = (item: NetworkRole) => {};
+    const handleDataScope = (item: NetworkRole) => {};
+    const handleAuthUser = (item: NetworkRole) => {};
     // ----------分页逻辑-----------
-    
+
     
 
     return {
+      openDialog,
       handleStatusChange,
       handleDataScope,
       handleAuthUser,
