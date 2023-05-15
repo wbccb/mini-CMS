@@ -14,14 +14,12 @@
       </el-tooltip>
     </template>
 
-    <template v-slot:base-table-content>
+    <template v-slot:base-table-content="slotProps">
       <el-table
-        id="elTableRef"
-        ref="elTableRef"
         v-if="initFinish"
         v-loading="loading"
         :data="menuList"
-        :max-height="elTableHeight"
+        :max-height="slotProps.elTableHeight"
         row-key="menuId"
         :default-expand-all="isExpandAll"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
@@ -154,16 +152,8 @@ export default defineComponent({
     onMounted(() => {
       forceRefresh();
       
-      // TODO 能不能通过refs获取到DOM元素
-      const dom = document.getElementById("elTableRef");
-      if (dom) {
-        const height = dom.parentElement.clientHeight;
-        elTableHeight.value = height;
-      }
     });
 
-    const elTableRef = ref();
-    const elTableHeight = ref(200);
 
     return {
       initFinish,
@@ -177,8 +167,6 @@ export default defineComponent({
       menuList: dataList,
       forceRefresh,
       indexMethod,
-      elTableRef,
-      elTableHeight,
       ...returnObject,
       openDialog,
       menuArray,
