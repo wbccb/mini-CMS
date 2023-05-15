@@ -105,6 +105,10 @@
 
     <template v-slot:other>
       <CreateRole v-model="openDialog" @close-dialog="openDialog = false"></CreateRole>
+      <CreateRolePermission
+        v-model="openRolePermissionDialog"
+        :roleId="roleId"
+      ></CreateRolePermission>
     </template>
   </TableBaseView>
 </template>
@@ -119,10 +123,11 @@ import {handleTree} from "@/utils/ruoyi_test";
 import {parseTime} from "@/utils/ruoyi_test";
 import PaginationBar from "@/components/table/PaginationBar.vue";
 import CreateRole from "@/views/system/role/CreateRole.vue";
+import CreateRolePermission from "@/views/system/role/CreateRolePermission.vue";
 
 export default defineComponent({
   name: "RoleIndex",
-  components: {CreateRole, PaginationBar, TableBaseView},
+  components: {CreateRolePermission, CreateRole, PaginationBar, TableBaseView},
   props: {},
   setup() {
     const openDialog = ref(false);
@@ -144,12 +149,7 @@ export default defineComponent({
         return data;
       };
     };
-    const {
-      dataList,
-      forceRefresh,
-      indexMethod,
-      ...returnObject
-    } = usePaginationBar<NetworkRole>(
+    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<NetworkRole>(
       getList()
     );
 
@@ -158,13 +158,19 @@ export default defineComponent({
     });
 
     const handleStatusChange = (item: NetworkRole) => {};
-    const handleDataScope = (item: NetworkRole) => {};
+
+    const roleId = ref("");
+    const openRolePermissionDialog = ref(false);
+    const handleDataScope = (item: NetworkRole) => {
+      roleId.value = item.roleId;
+      openRolePermissionDialog.value = true;
+    };
     const handleAuthUser = (item: NetworkRole) => {};
     // ----------分页逻辑-----------
 
-    
-
     return {
+      openRolePermissionDialog,
+      roleId,
       openDialog,
       handleStatusChange,
       handleDataScope,

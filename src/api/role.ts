@@ -9,7 +9,7 @@ export interface NetworkRole {
   "updateBy": string;
   "updateTime": string;
   "remark": string;
-  "roleId": number;
+  "roleId": string;
   "roleName": string;
   "roleKey": string;
   "roleSort":  number;

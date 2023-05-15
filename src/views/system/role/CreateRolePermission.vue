@@ -65,8 +65,9 @@ export default defineComponent({
   name: "CreateRolePermission",
   components: {IconSelect},
   props: {
-    menuList: {
-      type: Array as PropType<NetworkMenu[]>,
+    roleId: {
+      type: String,
+      required: true
     },
     modelValue: {
       type: Boolean,
