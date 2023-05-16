@@ -3,6 +3,7 @@ import systemRoleList from "@/common/mock/system/role/list.json";
 import deepClone from "@/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
+import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
 
 export interface NetworkRole {
   "createBy": string;
@@ -62,7 +63,7 @@ export interface QueryUserListParams {
   phonenumber?: undefined;
 }
 
-export interface NetworkAuthUser {
+export interface NetworkRoleUser {
   "remark": null|string;
   "userId": number;
   "deptId": number;
@@ -80,12 +81,13 @@ export interface NetworkAuthUser {
 
 /**
  * 根据roleId查询所有的用户数据
+ * 查找该角色的所有用户数据
  * @param query
  */
-export function networkGetUserListByRoleId(query: QueryUserListParams): Promise<ResponseData<NetworkAuthUser[]>> {
+export function networkGetUserListByRoleId(query: QueryUserListParams): Promise<ResponseData<NetworkRoleUser[]>> {
   return new Promise((resolve)=> {
     // @ts-ignore
-    const data = authUser as ResponseData<NetworkAuthUser[]>;
+    const data = authUser as ResponseData<NetworkRoleUser[]>;
     resolve(deepClone(data));
   });
   return networkUtil({
@@ -93,4 +95,24 @@ export function networkGetUserListByRoleId(query: QueryUserListParams): Promise<
     method: 'get',
     params: query
   })
+}
+
+
+
+/**
+ * 查询角色未授权用户列表
+ * 进行新授权
+ * @param query
+ */
+export function networkGetUnallocatedUserList(query: QueryUserListParams): Promise<ResponseData<NetworkRoleUser[]>> {
+  return new Promise((resolve)=> {
+    // @ts-ignore
+    const data = authUser as ResponseData<NetworkRoleUser[]>;
+    resolve(deepClone(data));
+  });
+  // return networkUtil({
+  //   url: '/system/role/authUser/unallocatedList',
+  //   method: 'get',
+  //   params: query
+  // })
 }

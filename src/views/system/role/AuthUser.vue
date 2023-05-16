@@ -1,7 +1,6 @@
 <template>
   <TableBaseView>
     <template v-slot:base-table-header>
-      <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
           <el-button type="primary" plain icon="Plus" @click="handleAdd">添加用户</el-button>
         </el-col>
@@ -23,7 +22,6 @@
         <el-tooltip class="item" effect="dark" content="刷新" placement="top">
           <el-button circle icon="Refresh" @click="forceRefresh" />
         </el-tooltip>
-      </el-row>
     </template>
 
     <template v-slot:base-table-content="slotProps">
@@ -84,7 +82,7 @@ import {networkGetMenuList, NetworkMenu} from "@/api/menu";
 import {handleTree} from "@/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/utils/ruoyi_test";
-import {NetworkAuthUser, networkGetUserListByRoleId, QueryUserListParams} from "@/api/role";
+import {NetworkRoleUser, networkGetUserListByRoleId, QueryUserListParams} from "@/api/role";
 import {useRoute, useRouter} from "vue-router";
 import SelectUser from "@/views/system/role/SelectUser.vue";
 import CreateRole from "@/views/system/role/CreateRole.vue";
@@ -111,7 +109,7 @@ export default defineComponent({
     const sys_normal_disable = sysNormalDisable;
 
     // 取消该用户的授权
-    const cancelAuthUser = (user: NetworkAuthUser) => {};
+    const cancelAuthUser = (user: NetworkRoleUser) => {};
 
     const route = useRoute();
 
@@ -124,14 +122,14 @@ export default defineComponent({
           pageSize: pageSize,
           roleId: roleId,
         };
-        const data: ResponseData<NetworkAuthUser[]> = await networkGetUserListByRoleId(query);
+        const data: ResponseData<NetworkRoleUser[]> = await networkGetUserListByRoleId(query);
         return data;
       };
     };
 
     // 分页逻辑结合
     const {dataList, forceRefresh, indexMethod, pageSize, currentPage, ...returnObject} =
-      usePaginationBar<NetworkAuthUser>(getList());
+      usePaginationBar<NetworkRoleUser>(getList());
 
     const initFinish = ref(true);
     onMounted(() => {
