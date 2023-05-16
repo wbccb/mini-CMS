@@ -67,6 +67,8 @@ async function handleDynamicRoute(
       router.addRoute(route);
     });
 
+    console.error("handleDynamicRoute触发");
+
     // 动态创建菜单所产生的路由列表
     rewriteRoutes.forEach((route) => {
       if (!isHttp(route.path)) {

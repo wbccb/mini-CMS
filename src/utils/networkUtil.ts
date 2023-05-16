@@ -11,6 +11,7 @@ export interface ResponseData<T> {
   msg: string;
   data: T;
   rows?: T;
+  roles?: T;
   total?: number;
 }
 

@@ -60,7 +60,7 @@ export const basicRouters: RouteRecordRaw[] = [
     children: [
       {
         path: "/index",
-        redirect: "/system/role",
+        redirect: "/system/user",
         component: () => import("@/views/index.vue"),
       },
     ],

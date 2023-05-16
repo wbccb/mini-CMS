@@ -31,7 +31,7 @@ export const usePaginationBar = <T>(getListData: (pageNo: number, pageSize: numb
         loading.value = true;
         const responseData = await getListData(currentPage.value, pageSize.value);
         // TODO 要适配不同数据结构
-        dataList.value = responseData.data || responseData.rows;
+        dataList.value = responseData.data || responseData.rows || responseData.roles;
 
         total.value = responseData.total?responseData.total:0;
 
