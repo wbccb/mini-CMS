@@ -9,6 +9,23 @@ import LayoutIndex from "@/layout/index.vue";
 
 export const dynamicRoutes: RouteRecordRaw[] = [
   {
+    path: '/system/user-auth',
+    component: LayoutIndex,
+    hidden: true,
+    children: [
+      {
+        path: 'role/:userId(\\d+)',
+        component: () => import('@/views/system/user/AuthRole.vue'),
+        name: 'AuthRole',
+        meta: {
+          title: '分配角色',
+          permissions: ['system:user:edit'],
+          activeMenu: '/system/user'
+        }
+      }
+    ]
+  },
+  {
     path: '/system/role-auth',
     component: LayoutIndex,
     meta: {

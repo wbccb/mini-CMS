@@ -143,7 +143,7 @@
     </template>
 
     <template v-slot:other>
-      <AuthRole v-model="openDialog" @close-dialog="openDialog = false"></AuthRole>
+      <CreateUser v-model="openDialog" @close-dialog="openDialog = false"></CreateUser>
     </template>
   </TableBaseView>
 </template>
@@ -152,17 +152,18 @@
 import {defineComponent, onMounted, ref} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
-import CreateRole from "@/views/system/role/CreateRole.vue";
+import CreateUser from "@/views/system/user/CreateUser.vue";
 import AuthRole from "@/views/system/user/AuthRole.vue";
 import {networkGetUserList} from "@/api/user";
 import {ResponseData} from "@/utils/networkUtil";
 import {NetworkRoleUser, QueryUserListParams} from "@/api/role";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/utils/ruoyi_test";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "userIndex",
-  components: {AuthRole, CreateRole, PaginationBar},
+  components: {AuthRole, CreateUser, PaginationBar},
   props: {},
   setup(props, context) {
     // ----------分页逻辑-----------
@@ -195,21 +196,25 @@ export default defineComponent({
     const handleImport = () => {};
     const handleExport = () => {};
     const handleResetPwd = (item: NetworkRoleUser) => {};
-    const handleAuthRole = (item: NetworkRoleUser) => {};
+    const router = useRouter();
+    const handleAuthRole = (item: NetworkRoleUser) => {
+      // 跳转到用户授权角色的路由
+      const userId = item.userId;
+      router.push(`/system/user-auth/role/${userId}`);
+    };
 
     // ----------- table的处理方法集合--------------
     const handleSelectionChange = () => {};
     const handleStatusChange = (item: NetworkRoleUser) => {};
 
-
     const columns = ref([
-      { key: 0, label: `用户编号`, visible: true },
-      { key: 1, label: `用户名称`, visible: true },
-      { key: 2, label: `用户昵称`, visible: true },
-      { key: 3, label: `部门`, visible: true },
-      { key: 4, label: `手机号码`, visible: true },
-      { key: 5, label: `状态`, visible: true },
-      { key: 6, label: `创建时间`, visible: true }
+      {key: 0, label: `用户编号`, visible: true},
+      {key: 1, label: `用户名称`, visible: true},
+      {key: 2, label: `用户昵称`, visible: true},
+      {key: 3, label: `部门`, visible: true},
+      {key: 4, label: `手机号码`, visible: true},
+      {key: 5, label: `状态`, visible: true},
+      {key: 6, label: `创建时间`, visible: true},
     ]);
 
     return {
@@ -230,7 +235,7 @@ export default defineComponent({
       forceRefresh,
       indexMethod,
       ...returnObject,
-      columns
+      columns,
     };
   },
 });
