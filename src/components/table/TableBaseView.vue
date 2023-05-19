@@ -14,6 +14,10 @@
       <div class="pagination-wrapper">
         <slot name="base-table-footer"></slot>
       </div>
+      
+      <div class="pagination-bottom-btn-wrapper">
+        <slot name="base-table-footer-btn"></slot>
+      </div>
     </div>
 
     <slot name="other"></slot>
@@ -58,6 +62,7 @@ export default defineComponent({
     height: 100%;
 
     .pagination-wrapper {
+      position: relative;
       margin-top: 20px;
       text-align: center;
 
@@ -65,6 +70,13 @@ export default defineComponent({
       flex-direction: row;
       align-items: center;
       justify-content: end;
+    }
+    
+    .pagination-bottom-btn-wrapper {
+      width: 100%;
+      
+      box-sizing: border-box;
+      overflow: hidden;
     }
   }
 }

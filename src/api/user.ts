@@ -20,19 +20,26 @@ export function networkGetUserList(query: QueryUserListParams): Promise<Response
   })
 }
 
+export interface NetworkUserAndRoles {
+  code: number;
+  msg: string;
+  roles: NetworkRole[],
+  user: NetworkRoleUser
+}
 
-// 查询用户详细
-export function networkGetRoleListInAddUser(userId?: string): Promise<ResponseData<NetworkRole[]>> {
+
+// 查询该用户详细的角色分配列表
+export function networkGetRoleListInAddUser(userId?: string): Promise<NetworkUserAndRoles> {
   const urlUserId = userId || "";
 
   return new Promise((resolve) => {
     // @ts-ignore
-    const data = roles as ResponseData<NetworkRole[]>;
+    const data = roles as NetworkUserAndRoles;
     resolve(deepClone(data));
   });
 
   return networkUtil({
-    url: '/system/user/' + urlUserId,
+    url: `system/user/authRole/${urlUserId}`,
     method: 'get'
   })
 }

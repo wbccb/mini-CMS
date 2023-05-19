@@ -11,7 +11,10 @@ export const dynamicRoutes: RouteRecordRaw[] = [
   {
     path: '/system/user-auth',
     component: LayoutIndex,
-    hidden: true,
+    meta: {
+      hidden: true,
+      permissions: ['system:user:edit'],
+    },
     children: [
       {
         path: 'role/:userId(\\d+)',

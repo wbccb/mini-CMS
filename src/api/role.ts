@@ -101,6 +101,8 @@ export function networkGetUserListByRoleId(
   });
 }
 
+
+
 /**
  * 查询角色未授权用户列表
  * 进行新授权
@@ -108,10 +110,10 @@ export function networkGetUserListByRoleId(
  */
 export function networkGetUnallocatedUserList(
   query: QueryUserListParams
-): Promise<ResponseData<NetworkRoleUser[]>> {
+): Promise<NetworkUserAndRoles> {
   return new Promise((resolve) => {
     // @ts-ignore
-    const data = authUser as ResponseData<NetworkRoleUser[]>;
+    const data = authUser as NetworkUserAndRoles;
     resolve(deepClone(data));
   });
   // return networkUtil({
