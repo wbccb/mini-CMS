@@ -104,7 +104,7 @@ import {NetworkMenu} from "@/common/api/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import sysUserSex from "@/common/mock/system/dict/type/sys_user_sex.json";
-import IconSelect from "@/components/icon-select/IconSelect.vue";
+import IconSelect from "@/components/icon-select/icon-select.vue";
 import {
   NetworkCreateRoleTree,
   networkGetCreateRoleMenuList,
