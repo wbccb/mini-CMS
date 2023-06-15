@@ -30,7 +30,7 @@ export default defineComponent({
     const router = useRouter();
     const sidebarRoutes = computed(() => {
       // 一开始在router/initDynamicRoute.ts中动态初始化的路由
-      const routes =  permissionStore.sidebarRoutes.filter((item) => {
+      const routes = permissionStore.sidebarRoutes.filter((item) => {
         if (item.meta && item.meta.hidden) {
           return false;
         }

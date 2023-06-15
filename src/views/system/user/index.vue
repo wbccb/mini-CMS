@@ -163,7 +163,7 @@ import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "userIndex",
-  components: {AuthRole, CreateUser, PaginationBar},
+  components: {AuthRole, CreateUser, PaginationBar, TableBaseView},
   props: {},
   setup(props, context) {
     // ----------分页逻辑-----------

@@ -1,8 +1,9 @@
 <template>
   <div class="sidebar-header-logo">
-    <a href="/">
-      <span class="sidebar-header-logo_text">这是logo位置</span>
-    </a>
+    logo位置
+<!--    <a href="/">-->
+<!--      <span class="sidebar-header-logo_text">这是logo位置</span>-->
+<!--    </a>-->
   </div>
 </template>
 

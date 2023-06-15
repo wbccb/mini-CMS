@@ -24,11 +24,11 @@ export default defineComponent({
         path: "/",
       },
       {
-        title: "首首页首页首页首页页",
+        title: "子页面1",
         path: "/",
       },
       {
-        title: "首首页首页页",
+        title: "子页面2",
         path: "/",
       }
     ];

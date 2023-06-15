@@ -62,8 +62,12 @@ async function handleDynamicRoute(
     const res = await userStore.storeGetInfo();
     const {dynamicAccessRoutes, rewriteRoutes} = await permissionStore.storeGetRoutes();
 
+    console.info("前端中可以访问的路由，是已经写死的部分", dynamicAccessRoutes);
+    console.info("网络请求拿到的路由列表", rewriteRoutes);
+
     // 写死的前端路由
     dynamicAccessRoutes.forEach((route) => {
+      console.warn("dynamicAccessRoutes添加的路由", route);
       router.addRoute(route);
     });
 
@@ -72,7 +76,7 @@ async function handleDynamicRoute(
     // 动态创建菜单所产生的路由列表
     rewriteRoutes.forEach((route) => {
       if (!isHttp(route.path)) {
-        console.log("添加的路由", route);
+        console.warn("rewriteRoutes添加的路由", route);
         router.addRoute(route);
       }
     });

@@ -44,7 +44,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       }
     ]
   }
-];
+] as RouteRecordRaw[];
 
 export const notNeedLogin: RouteRecordRaw[] = [
   {

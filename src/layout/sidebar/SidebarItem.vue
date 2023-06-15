@@ -13,37 +13,24 @@
       </el-menu-item>
     </template>
 
-      <!--只有一个元素-->
-      <template v-if="hasOneShowingChild()">
-          <!--一个单纯的链接-->
-          <!--      <el-sub-menu :index="item.path">-->
-          <!--        <template v-if="item.meta" #title>-->
-          <!--          <span>{{ item.meta.title }}</span>-->
-          <!--        </template>-->
-          <!--      </el-sub-menu>-->
-          <el-menu-item :index="item.path">
-              {{ item.meta.title }}
-          </el-menu-item>
-      </template>
+    <!--多个元素，可能存在嵌套结构-->
+    <template v-else>
+      <el-sub-menu :index="item.path">
+        <!-- 当前菜单group的标题一行-->
+        <template v-if="item.meta" #title>
+          <span>{{ item.meta.title }}</span>
+        </template>
 
-      <!--多个元素，可能存在嵌套结构-->
-      <template v-else>
-          <el-sub-menu :index="item.path">
-              <!-- 当前菜单group的标题一行-->
-              <template v-if="item.meta" #title>
-                  <span>{{ item.meta.title }}</span>
-              </template>
+        <!--当前菜单group的嵌套子children具体的内容-->
+        <SidebarItem
+          v-for="(child, index) in item.children"
+          :key="child.path + index"
+          :item="child"
+        ></SidebarItem>
+      </el-sub-menu>
+    </template>
 
-              <!--当前菜单group的嵌套子children具体的内容-->
-              <SidebarItem
-                      v-for="(child, index) in item.children"
-                      :key="child.path + index"
-                      :item="child"
-              ></SidebarItem>
-          </el-sub-menu>
-      </template>
-
-      <!--多个元素，可能存在嵌套结构-->
+    <!--多个元素，可能存在嵌套结构-->
     <template v-else>
       <el-sub-menu :index="item.path">
         <!-- 当前菜单group的标题一行-->
@@ -96,7 +83,6 @@ export default defineComponent({
 
       return false;
     };
-
 
     return {
       hasOneShowingChild,
