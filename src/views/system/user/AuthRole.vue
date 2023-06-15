@@ -65,11 +65,11 @@ import {defineComponent, nextTick, onMounted, reactive, ref, watchEffect} from "
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import CreateUser from "@/views/system/user/CreateUser.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
-import {NetworkRole, NetworkRoleUser, QueryUserListParams} from "@/api/role";
-import {ResponseData} from "@/utils/networkUtil";
-import {networkGetRoleListInAddUser, networkGetUserList, NetworkUserAndRoles} from "@/api/user";
+import {NetworkRole, NetworkRoleUser, QueryUserListParams} from "@/common/api/role";
+import {ResponseData} from "@/common/utils/networkUtil";
+import {networkGetRoleListInAddUser, networkGetUserList, NetworkUserAndRoles} from "@/common/api/user";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {parseTime} from "@/utils/ruoyi_test";
+import {parseTime} from "@/common/utils/ruoyi_test";
 import {useRoute, useRouter} from "vue-router";
 
 interface UserFrom {

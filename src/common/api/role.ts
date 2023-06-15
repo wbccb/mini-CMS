@@ -1,6 +1,6 @@
-import networkUtil, {ResponseData} from "@/utils/networkUtil";
+import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
 import systemRoleList from "@/common/mock/system/role/list.json";
-import deepClone from "@/utils/deepCloneUtil";
+import deepClone from "@/common/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";

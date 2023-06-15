@@ -1,6 +1,6 @@
-@import './element-ui.scss';
-@import "./transition.scss";
-@import "./atomic.scss";
+@import 'element-ui';
+@import "transition";
+@import "atomic";
 body {
   position: relative;
   width: 100%;

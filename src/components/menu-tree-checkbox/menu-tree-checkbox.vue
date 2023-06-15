@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
-import {NetworkCreateRoleTree, networkGetCreateRoleMenuList} from "@/api/role";
+import {NetworkCreateRoleTree, networkGetCreateRoleMenuList} from "@/common/api/role";
 
 export default defineComponent({
   name: "menuTreeCheckBox",

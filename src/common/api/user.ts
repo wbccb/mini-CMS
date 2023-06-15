@@ -1,10 +1,10 @@
 // 查询用户列表
-import networkUtil, {ResponseData} from "@/utils/networkUtil";
-import {NetworkRoleUser, QueryUserListParams, NetworkRole} from "@/api/role";
+import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
+import {NetworkRoleUser, QueryUserListParams, NetworkRole} from "@/common/api/role";
 import userList from "@/common/mock/system/user/user.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import roles from "@/common/mock/system/user/roles.json";
-import deepClone from "@/utils/deepCloneUtil";
+import deepClone from "@/common/utils/deepCloneUtil";
 
 
 export function networkGetUserList(query: QueryUserListParams): Promise<ResponseData<NetworkRoleUser[]>> {

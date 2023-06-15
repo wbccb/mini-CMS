@@ -1,8 +1,8 @@
 import axios, {CreateAxiosDefaults} from "axios";
 import {ElMessage, ElNotification} from "element-plus";
-import {errorCodeText} from "@/api/login";
-import {getToken} from "@/utils/tokenUtil";
-import {tansParams} from "@/utils/ruoyi_test";
+import {errorCodeText} from "@/common/api/login";
+import {getToken} from "@/common/utils/tokenUtil";
+import {tansParams} from "@/common/utils/ruoyi_test";
 import useUserStore from "@/store/modules/user";
 import router from "@/router";
 

@@ -1,9 +1,9 @@
 /**
  * 根据账号获取动态路由，进行menu菜单的显示
  */
-import networkUtil, {ResponseData} from "@/utils/networkUtil";
+import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
 import systemMenuList from "@/common/mock/system/menu/list.json";
-import deepClone from "@/utils/deepCloneUtil";
+import deepClone from "@/common/utils/deepCloneUtil";
 
 export interface NetworkRoute {
   alwaysShow: boolean;

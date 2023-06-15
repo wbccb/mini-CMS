@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import Cookies from "js-cookie";
-import {sidebarStatusCookieKey} from "@/utils/CONST";
+import {sidebarStatusCookieKey} from "@/common/utils/CONST";
 
 interface AppStore {
   sidebar: {

@@ -69,6 +69,7 @@
         @close-dialog="openDialog = false"
       ></SelectUser>
     </template>
+  
   </TableBaseView>
 </template>
 
@@ -77,12 +78,12 @@ import {computed, defineComponent, onMounted, reactive, ref} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
-import {ResponseData} from "@/utils/networkUtil";
-import {networkGetMenuList, NetworkMenu} from "@/api/menu";
-import {handleTree} from "@/utils/ruoyi_test";
+import {ResponseData} from "@/common/utils/networkUtil";
+import {networkGetMenuList, NetworkMenu} from "@/common/api/menu";
+import {handleTree} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {parseTime} from "@/utils/ruoyi_test";
-import {NetworkRoleUser, networkGetUserListByRoleId, QueryUserListParams} from "@/api/role";
+import {parseTime} from "@/common/utils/ruoyi_test";
+import {NetworkRoleUser, networkGetUserListByRoleId, QueryUserListParams} from "@/common/api/role";
 import {useRoute, useRouter} from "vue-router";
 import SelectUser from "@/views/system/role/SelectUser.vue";
 import CreateRole from "@/views/system/role/CreateRole.vue";

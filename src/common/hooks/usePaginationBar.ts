@@ -1,5 +1,5 @@
 import {nextTick, ref} from "vue";
-import {ResponseData} from "@/utils/networkUtil";
+import {ResponseData} from "@/common/utils/networkUtil";
 
 /**
  * 通用版本，传入一个获取List的方法，获取对应的T[]数据

@@ -99,10 +99,10 @@
 
 <script lang="ts">
 import {defineComponent, nextTick, onMounted, ref} from "vue";
-import {handleTree, parseTime} from "@/utils/ruoyi_test";
+import {handleTree, parseTime} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {networkGetMenuList, NetworkMenu} from "@/api/menu";
-import {ResponseData} from "@/utils/networkUtil";
+import {networkGetMenuList, NetworkMenu} from "@/common/api/menu";
+import {ResponseData} from "@/common/utils/networkUtil";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";

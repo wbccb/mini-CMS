@@ -1,11 +1,11 @@
 import NProgress from "nprogress";
 import router, {notNeedLogin} from "./index";
-import {getToken, removeToken} from "@/utils/tokenUtil";
+import {getToken, removeToken} from "@/common/utils/tokenUtil";
 import {RouteLocationNamedRaw, RouteLocationNormalized, NavigationGuardNext} from "vue-router";
 import useUserStore from "@/store/modules/user";
-import networkUtil from "@/utils/networkUtil";
+import networkUtil from "@/common/utils/networkUtil";
 import usePermissionStore from "@/store/modules/permission";
-import {isHttp} from "@/utils/validateUtil";
+import {isHttp} from "@/common/utils/validateUtil";
 
 // 不需要跳转的路由notNeedLogin
 const notNeedLoginPath = notNeedLogin.map((item) => {

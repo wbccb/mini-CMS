@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
-import {getToken, removeToken, setToken} from "@/utils/tokenUtil";
-import {logout, networkGetInfo, networkLogin, NetworkRole} from "@/api/login";
-import defaultAvatar from "@/assets/profile.jpg";
+import {getToken, removeToken, setToken} from "@/common/utils/tokenUtil";
+import {logout, networkGetInfo, networkLogin, NetworkRole} from "@/common/api/login";
+import defaultAvatar from "@/common/assets/profile.jpg";
 
 interface UserStore {
   token: string | undefined;

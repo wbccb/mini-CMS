@@ -1,14 +1,14 @@
 import {defineStore} from "pinia";
-import {networkGetRoutes, NetworkRoute} from "@/api/menu";
-import {filterDynamicRoutes} from "@/utils/routeUtil";
+import {networkGetRoutes, NetworkRoute} from "@/common/api/menu";
+import {filterDynamicRoutes} from "@/common/utils/routeUtil";
 import router, {dynamicRoutes, basicRouters} from "@/router";
 import {RouteRecordRaw} from "vue-router";
 import useUserStore from "@/store/modules/user";
 import LayoutIndex from "@/layout/index.vue";
 import ParentView from "@/components/parent-view/parent-view.vue";
 import InnerLink from "@/components/inner-link/inner-link.vue";
-import deepClone from "@/utils/deepCloneUtil";
-import {ResponseData} from "@/utils/networkUtil";
+import deepClone from "@/common/utils/deepCloneUtil";
+import {ResponseData} from "@/common/utils/networkUtil";
 
 type NetworkResponseRoute = ResponseData<NetworkRoute>;
 

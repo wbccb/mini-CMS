@@ -154,11 +154,11 @@ import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
 import CreateUser from "@/views/system/user/CreateUser.vue";
 import AuthRole from "@/views/system/user/AuthRole.vue";
-import {networkGetUserList} from "@/api/user";
-import {ResponseData} from "@/utils/networkUtil";
-import {NetworkRoleUser, QueryUserListParams} from "@/api/role";
+import {networkGetUserList} from "@/common/api/user";
+import {ResponseData} from "@/common/utils/networkUtil";
+import {NetworkRoleUser, QueryUserListParams} from "@/common/api/role";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {parseTime} from "@/utils/ruoyi_test";
+import {parseTime} from "@/common/utils/ruoyi_test";
 import {useRouter} from "vue-router";
 
 export default defineComponent({
