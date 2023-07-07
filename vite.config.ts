@@ -22,6 +22,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/dev-api/, ""),
       },
+      "/koa": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/koa/, ""),
+      }
     },
   },
   plugins: createVitePlugins(null, false),

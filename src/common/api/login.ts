@@ -3,6 +3,7 @@ import networkUtil, {ResponseData} from "../utils/networkUtil";
 /**
  * 都加上固定前缀network，可以快速辨别出是api/xxx.ts的请求
  */
+const prefix = "/user";
 
 // 获取验证码
 export function networkGetCodeImg() {
@@ -98,5 +99,33 @@ export function logout() {
   return networkUtil({
     url: "/logout",
     method: "post",
+  });
+}
+
+
+
+// 注册
+export function networkRegister(
+    email: string,
+    password1: string,
+    password2: string,
+    nickName: string
+): Promise<any> {
+  const data = {
+    email,
+    password1,
+    password2,
+    nickName
+  };
+
+
+  return networkUtil({
+    url: prefix + "/register",
+    headers: {
+      isToken: false,
+      "content-type": "application/json"
+    },
+    method: "post",
+    data: data,
   });
 }

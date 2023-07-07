@@ -15,15 +15,15 @@ const notNeedLoginPath = notNeedLogin.map((item) => {
 // 检测是否已经登录，如果没有登录则跳转到注册/登录页面，如果已经登录，则next()
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  // if (!getToken()) {
-  //   if (notNeedLoginPath.includes(to.path)) {
-  //     next();
-  //   } else {
-  //     next("/login");
-  //   }
-  // } else {
+  if (!getToken()) {
+    if (notNeedLoginPath.includes(to.path)) {
+      next();
+    } else {
+      next("/register");
+    }
+  } else {
     handleAlreadyLogin(to, from, next);
-  // }
+  }
 });
 
 function handleAlreadyLogin(

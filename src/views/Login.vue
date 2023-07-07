@@ -3,7 +3,7 @@
     <!--中间内容-->
     <div class="login-content">
       <el-form class="login-form" ref="loginRef" :model="loginForm" :rules="loginRules">
-        <h3 class="title">CMS-VUE</h3>
+        <h3 class="title">CMS-VUE登录页面</h3>
         <el-form-item prop="username">
           <el-input
             v-model="loginForm.username"
