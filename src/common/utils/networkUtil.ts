@@ -57,13 +57,13 @@ server.interceptors.response.use(
   (res) => {
     // 由于返回的数据层级较多，因此解析出res数据，拼接为简单的数据结构返回
     const code: number = res.data.code || 200;
-    const msg = errorCodeText[code] || res.data.msg || errorCodeText["default"];
+    const msg = errorCodeText[code] || res.data.message || errorCodeText["default"];
 
     if (res.request.responseType === "blob" || res.request.responseType === "arraybuffer") {
       return res.data;
     }
 
-    if (code !== 200) {
+    if (code !== 200 && code !== 201) {
       // 具体的业务代码应该在各自的.vue组件中进行，比如Login.vue弹出登录成功的提示
       // 这里的提示只是一种普遍性的检测code
       switch (code) {

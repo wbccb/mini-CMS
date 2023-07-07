@@ -61,7 +61,7 @@
             </template>
           </el-input>
         </el-form-item>
-        
+
 
         <el-form-item>
           <el-button size="large" type="primary" :loading="loading" @click.preven="handleBtnClick">
@@ -129,14 +129,23 @@ export default defineComponent({
                 });
                 const path: string = redirect.value || "/";
                 router.push({path: path});
+                console.warn("storeRegister success", res);
               })
               .catch((error) => {
+                console.info("storeRegister error", error);
                 // 错误已经在store中进行处理
-                const message = error.data || error;
-                ElMessage({
-                  type: "error",
-                  message: "注册失败:"+JSON.stringify(message)
-                });
+                if (error) {
+                  const message = error.data || error;
+                  ElMessage({
+                    type: "error",
+                    message: "注册失败:" + JSON.stringify(message)
+                  });
+                } else {
+                  ElMessage({
+                    type: "error",
+                    message: "注册失败:原因未知"
+                  });
+                }
               })
               .finally(() => {
                 loading.value = false;
@@ -144,7 +153,7 @@ export default defineComponent({
         }
       });
     };
-    
+
     return {
       dataForm,
       handleBtnClick,

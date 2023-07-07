@@ -118,7 +118,6 @@ export function networkRegister(
     nickName
   };
 
-
   return networkUtil({
     url: prefix + "/register",
     headers: {
@@ -127,5 +126,9 @@ export function networkRegister(
     },
     method: "post",
     data: data,
+  }).then(res=> {
+    return res;
+  }).catch(error=> {
+    return Promise.reject(error);
   });
 }
