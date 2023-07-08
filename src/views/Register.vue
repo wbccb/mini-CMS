@@ -69,6 +69,12 @@
             <span v-else>注 册 中...</span>
           </el-button>
         </el-form-item>
+
+        <el-form-item>
+          <el-button size="large" type="info" @click.preven="navigateToLogin">
+            <span>切换到登录页面</span>
+          </el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -83,6 +89,7 @@ import Cookies from "js-cookie";
 import useUserStore from "@/store/modules/user";
 import {ElMessage} from "element-plus";
 import {useRouter} from "vue-router";
+import {useMyRouter} from "@/common/hooks/useMyRouter";
 
 type IElForm = InstanceType<typeof ElForm>;
 
@@ -122,7 +129,6 @@ export default defineComponent({
           userStore
               .storeRegister(dataForm)
               .then((res) => {
-                debugger;
                 ElMessage({
                   type: "success",
                   message: "注册成功",
@@ -154,9 +160,15 @@ export default defineComponent({
       });
     };
 
+    const {goToLogin} = useMyRouter();
+    const navigateToLogin = () => {
+      goToLogin(true);
+    }
+
     return {
       dataForm,
       handleBtnClick,
+      navigateToLogin,
       loading,
       loginRef,
       loginRules,

@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
     if (notNeedLoginPath.includes(to.path)) {
       next();
     } else {
-      next("/register");
+      next("/login");
     }
   } else {
     handleAlreadyLogin(to, from, next);

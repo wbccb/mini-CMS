@@ -6,11 +6,11 @@
         <h3 class="title">CMS-VUE登录页面</h3>
         <el-form-item prop="username">
           <el-input
-            v-model="loginForm.username"
-            type="text"
-            size="large"
-            auto-complete="off"
-            placeholder="账号"
+              v-model="loginForm.username"
+              type="text"
+              size="large"
+              auto-complete="off"
+              placeholder="账号"
           >
             <template #prefix>
               <svg-icon icon-class="user" class="el-input__icon input-icon"></svg-icon>
@@ -20,12 +20,12 @@
 
         <el-form-item prop="password">
           <el-input
-            v-model="loginForm.password"
-            type="password"
-            size="large"
-            auto-complete="off"
-            placeholder="密码"
-            @keyup.enter="handleLogin"
+              v-model="loginForm.password"
+              type="password"
+              size="large"
+              auto-complete="off"
+              placeholder="密码"
+              @keyup.enter="handleLogin"
           >
             <template #prefix>
               <svg-icon icon-class="password" class="el-input__icon input-icon"></svg-icon>
@@ -35,18 +35,18 @@
 
         <el-form-item prop="code" v-if="captchaEnabled">
           <el-input
-            v-model="loginForm.code"
-            size="large"
-            auto-complete="off"
-            placeholder="验证码"
-            @keyup.enter="handleLogin"
+              v-model="loginForm.code"
+              size="large"
+              auto-complete="off"
+              placeholder="验证码"
+              @keyup.enter="handleLogin"
           >
             <template #prefix>
               <svg-icon icon-class="validCode" class="el-input__icon input-icon"></svg-icon>
             </template>
           </el-input>
           <div class="login-code">
-            <img :src="codeUrl" @click="getCode" class="login-code-img" />
+            <img :src="codeUrl" @click="getCode" class="login-code-img"/>
           </div>
         </el-form-item>
 
@@ -54,6 +54,12 @@
           <el-button size="large" type="primary" :loading="loading" @click.preven="handleLogin">
             <span v-if="!loading">登 录</span>
             <span v-else>登 录 中...</span>
+          </el-button>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button size="large" type="info" @click.preven="navigateToRegister">
+            <span>切换到注册页面</span>
           </el-button>
         </el-form-item>
       </el-form>
@@ -70,6 +76,7 @@ import Cookies from "js-cookie";
 import useUserStore from "@/store/modules/user";
 import {ElMessage} from "element-plus";
 import {useRouter} from "vue-router";
+import {useMyRouter} from "@/common/hooks/useMyRouter";
 
 type IElForm = InstanceType<typeof ElForm>;
 
@@ -130,24 +137,30 @@ export default defineComponent({
 
           // 进行登录
           userStore
-            .storeLogin(loginForm)
-            .then((res) => {
-              ElMessage({
-                type: "success",
-                message: "登录成功",
+              .storeLogin(loginForm)
+              .then((res) => {
+                ElMessage({
+                  type: "success",
+                  message: "登录成功",
+                });
+                const path: string = redirect.value || "/";
+                router.push({path: path});
+              })
+              .catch((error) => {
+                // 错误已经在store中进行处理
+              })
+              .finally(() => {
+                loading.value = false;
               });
-              const path: string = redirect.value || "/";
-              router.push({path: path});
-            })
-            .catch((error) => {
-              // 错误已经在store中进行处理
-            })
-            .finally(() => {
-              loading.value = false;
-            });
         }
       });
     };
+
+
+    const {goToRegister} = useMyRouter();
+    const navigateToRegister = () => {
+      goToRegister(true);
+    }
 
     onMounted(() => {
       getCode();
@@ -156,6 +169,7 @@ export default defineComponent({
     return {
       loginForm,
       handleLogin,
+      navigateToRegister,
       loading,
       getCode,
       codeUrl,
