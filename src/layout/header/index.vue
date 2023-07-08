@@ -2,16 +2,18 @@
   <div class="app-header-wrapper">
     <div class="left-wrapper">
       <div class="left-menu-wrapper">
-        <Hamburger @toggle-click="toggleClick" />
+        <Hamburger @toggle-click="toggleClick"/>
       </div>
 
       <div class="left-breadcrumb-wrapper">
-        <Breadcrumb />
+        <Breadcrumb/>
       </div>
     </div>
 
     <div class="right-wrapper">
-      <div class="right-menu"></div>
+      <div class="right-menu">
+        <el-button @click="clickToLogout">退出登录</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +23,10 @@ import {defineComponent} from "vue";
 import Hamburger from "@/layout/header/Hamburger.vue";
 import Breadcrumb from "@/layout/header/Breadcrumb.vue";
 import useAppStore from "@/store/modules/app";
+import {logout} from "@/common/api/login";
+import useUserStore from "@/store/modules/user";
+import {useMyRouter} from "@/common/hooks/useMyRouter";
+import {ElMessage} from "element-plus";
 
 export default defineComponent({
   name: "AppHeader",
@@ -32,8 +38,29 @@ export default defineComponent({
       // 切换侧边栏显示和隐藏功能
       appStore.toggleSideBar(false);
     };
+
+    const userStore = useUserStore();
+    const {goToLogin} = useMyRouter();
+    const clickToLogout = async () => {
+      // TODO 全局try-catch后期需要处理
+      try {
+        await userStore.storeLogout();
+        goToLogin();
+        ElMessage({
+          type: "success",
+          message: "登出成功",
+        });
+      } catch (e) {
+        ElMessage({
+          type: "error",
+          message: "登出失败",
+        });
+      }
+
+    }
     return {
       toggleClick,
+      clickToLogout
     };
   },
 });
@@ -70,6 +97,9 @@ export default defineComponent({
   }
 
   .right-wrapper {
+    .right-menu {
+      margin: 10px;
+    }
   }
 }
 </style>

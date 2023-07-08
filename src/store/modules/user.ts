@@ -83,12 +83,16 @@ const useUserStore = defineStore({
             }
         },
         async storeLogout() {
-            const res = await logout();
-            this.token = "";
-            this.roles = [];
-            this.permissions = [];
-            removeToken();
-            return true;
+            try {
+                const res = await logout();
+                this.token = "";
+                this.roles = [];
+                this.permissions = [];
+                removeToken();
+                return true;
+            } catch (e) {
+                return Promise.reject(e);
+            }
         },
     },
 });

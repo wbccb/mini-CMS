@@ -86,7 +86,7 @@ export default defineComponent({
   props: {},
   setup() {
     const loginForm = reactive({
-      username: "admin",
+      username: "18814122731@163.com",
       password: "admin123",
       rememberMe: false,
       code: "",
@@ -96,7 +96,7 @@ export default defineComponent({
     const loading = ref(false);
 
     // 验证码开关
-    const captchaEnabled = ref(true);
+    const captchaEnabled = ref(false);
     const codeUrl = ref("");
     const getCode = async () => {
       const res = await networkGetCodeImg();
@@ -114,7 +114,7 @@ export default defineComponent({
     const loginRules = {
       username: [{required: true, trigger: "blur", message: "请输入您的账号"}],
       password: [{required: true, trigger: "blur", message: "请输入您的密码"}],
-      code: [{required: true, trigger: "change", message: "请输入验证码"}],
+      code: [{required: false, trigger: "change", message: "请输入验证码"}],
     };
     const handleLogin = () => {
       if (!loginRef.value) {
@@ -163,7 +163,8 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      getCode();
+      // TODO 暂时屏蔽验证码
+      // getCode();
     });
 
     return {

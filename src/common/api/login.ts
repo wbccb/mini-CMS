@@ -56,14 +56,15 @@ export function networkLogin(
   uuid: string
 ): Promise<any> {
   const data = {
-    username: userName,
+    email: userName,
     password,
     code,
     uuid,
+    type: 101
   };
 
   return networkUtil({
-    url: "/login",
+    url: prefix + "/login",
     headers: {
       isToken: false,
     },
@@ -97,7 +98,7 @@ export const errorCodeText: Record<string, string> = {
 // 退出登录
 export function logout() {
   return networkUtil({
-    url: "/logout",
+    url: prefix + "/logout",
     method: "post",
   });
 }
