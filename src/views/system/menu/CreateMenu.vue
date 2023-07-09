@@ -88,7 +88,7 @@
               </span>
             </template>
 
-            <el-radio-group v-model="formData.isFrame">
+            <el-radio-group v-model="formData.isIframe">
               <el-radio label="0">是</el-radio>
               <el-radio label="1">否</el-radio>
             </el-radio-group>
@@ -182,8 +182,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, reactive, ref, computed} from "vue";
-import {networkCreateMenu, NetworkMenu} from "@/common/api/menu";
+import {defineComponent, PropType, reactive, ref, computed, watchEffect, watch} from "vue";
+import {networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
@@ -202,20 +202,38 @@ export default defineComponent({
     modelValue: {
       type: Boolean,
     },
+    updateItem: {
+      type: Object as PropType<NetworkMenu>,
+      require: false
+    }
   },
   emits: ["close-dialog", "update:modelValue"],
   setup(props, context) {
-    const formData = reactive<MenuDialogForm>({
-      parentId: "0",
+    const initFormData: MenuDialogForm = {
+      parentId: "",
       menuType: "M",
       formData: "",
       orderNum: 1,
-      isFrame: "0",
-      path: "/system/user/test",
+      isIframe: "0",
+      path: "",
       visible: true,
       status: "",
-      menuName: "测试菜单1",
+      menuName: "",
       icon: "",
+    }
+    const formData = reactive<MenuDialogForm>({...initFormData});
+
+    const isUpdate = ref(false);
+    watch(() => props.updateItem, (value) => {
+      if (value) {
+        isUpdate.value = !!props.updateItem;
+        const keys = Object.keys(value);
+        for (const key of keys) {
+          formData[key] = value[key];
+        }
+      }
+    }, {
+      immediate: true
     });
 
 
@@ -234,6 +252,15 @@ export default defineComponent({
         context.emit("update:modelValue", value);
       },
     });
+    watch(() => dialogOpen.value, (show) => {
+      if (!show) {
+        // 重置数据
+        const keys = Object.keys(initFormData);
+        for (const key of keys) {
+          formData[key] = initFormData[key];
+        }
+      }
+    });
 
     const menuOptions = computed(() => {
       const menu = {menuId: 0, menuName: "主类目", children: []} as NetworkMenu;
@@ -246,8 +273,12 @@ export default defineComponent({
     const submitForm = () => {
       // api/menu提交网络请求
       checkRulesAndSubmit(async () => {
-        const addRes = await networkCreateMenu(formData);
-        ElMessage({message: "新增菜单成功", type: "success", duration: 20 * 1000});
+        const addRes = await networkCreateOrUpdateMenu(formData, isUpdate.value);
+        let msg = "新增成功";
+        if (isUpdate.value) {
+          msg = "更新成功";
+        }
+        ElMessage({message: msg, type: "success", duration: 20 * 1000});
         cancel();
       });
     };

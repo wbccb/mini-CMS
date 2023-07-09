@@ -90,7 +90,8 @@
       <CreateMenu
           v-model="openDialog"
           :menuList="menuList"
-          @close-dialog="openDialog = false"
+          :updateItem="currentItem"
+          @close-dialog="hideDialog"
       ></CreateMenu>
     </template>
 
@@ -101,11 +102,12 @@
 import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import {handleTree, parseTime} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {networkGetMenuList, NetworkMenu} from "@/common/api/menu";
+import {networkDeleteMenu, networkGetMenuList, NetworkMenu} from "@/common/api/menu";
 import {ResponseData} from "@/common/utils/networkUtil";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
+import {ElMessage} from "element-plus";
 
 export default defineComponent({
   name: "MenuIndex",
@@ -123,6 +125,10 @@ export default defineComponent({
         forceRefresh();
       }
     });
+    const hideDialog = () => {
+      openDialog.value = false;
+      currentItem.value = undefined;
+    }
 
     const isExpandAll = ref(false);
     const toggleExpandAll = async () => {
@@ -132,9 +138,15 @@ export default defineComponent({
       initFinish.value = true;
     };
 
-    const handleUpdate = (item: any) => {
+    const currentItem = ref<NetworkMenu>();
+    const handleUpdate = (item: NetworkMenu) => {
+      currentItem.value = item;
+      openDialog.value = true;
     };
-    const handleDelete = (item: any) => {
+    const handleDelete = async (item: NetworkMenu) => {
+      await networkDeleteMenu(item.menuId);
+      ElMessage.success("删除成功");
+      await forceRefresh();
     };
 
     const menuArray = ref<NetworkMenu[]>([]);
@@ -177,6 +189,8 @@ export default defineComponent({
       ...returnObject,
       openDialog,
       menuArray,
+      currentItem,
+      hideDialog
     };
   },
 });
