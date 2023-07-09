@@ -31,11 +31,11 @@
             :show-overflow-tooltip="true"
             width="160"
         ></el-table-column>
-        <el-table-column prop="icon" label="图标" align="center" width="100">
-          <template #default="scope">
-            <svg-icon :icon-class="scope.row.icon"/>
-          </template>
-        </el-table-column>
+<!--        <el-table-column prop="icon" label="图标" align="center" width="100">-->
+<!--          <template #default="scope">-->
+<!--            <svg-icon :icon-class="scope.row.icon"/>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
         <el-table-column prop="orderNum" label="排序" width="60"></el-table-column>
         <el-table-column
             prop="perms"
@@ -52,9 +52,9 @@
             <el-tag :disable-transitions="true" type="info">正常</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" align="center" width="160" prop="createTime">
+        <el-table-column label="创建时间" align="center" width="160" prop="created_at">
           <template #default="scope">
-            <span>{{ parseTime(scope.row.createTime) }}</span>
+            <span>{{ parseTime(scope.row.created_at) }}</span>
           </template>
         </el-table-column>
         <el-table-column

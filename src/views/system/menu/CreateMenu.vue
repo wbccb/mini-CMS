@@ -124,7 +124,7 @@
                 路由地址
               </span>
             </template>
-            <el-input v-model="formData.path" placeholder="请输入路由地址"/>
+            <el-input v-model="formData.component" placeholder="请输入路由地址"/>
           </el-form-item>
         </el-col>
 
@@ -163,7 +163,7 @@
             </template>
             <el-radio-group v-model="formData.status">
               <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">
-                {{ dict.dictLabel }}
+                {{ dict.label }}
               </el-radio>
             </el-radio-group>
           </el-form-item>
@@ -216,6 +216,7 @@ export default defineComponent({
       orderNum: 1,
       isIframe: "0",
       path: "",
+      component: "",
       visible: true,
       status: "",
       menuName: "",

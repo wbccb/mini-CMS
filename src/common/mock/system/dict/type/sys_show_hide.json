@@ -13,6 +13,7 @@
   "listClass": "primary",
   "isDefault": "Y",
   "status": "0",
+  "value": "1",
   "default": true
 }, {
   "createBy": "admin",
@@ -29,5 +30,6 @@
   "listClass": "danger",
   "isDefault": "N",
   "status": "0",
+  "value": "0",
   "default": false
 }]

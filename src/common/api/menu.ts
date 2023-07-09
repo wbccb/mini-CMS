@@ -2,7 +2,6 @@
  * 根据账号获取动态路由，进行menu菜单的显示
  */
 import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
-import systemMenuList from "@/common/mock/system/menu/list.json";
 import deepClone from "@/common/utils/deepCloneUtil";
 import routesList from "@/common/mock/system/router/list.json";
 
@@ -44,6 +43,7 @@ export interface MenuDialogForm {
     orderNum: number;
     isIframe: "0" | "1";
     path: string;
+    component: string;
     visible: boolean;
     status: string;
     menuName: string;

@@ -109,5 +109,7 @@ export function handleTree(data: Array<any>, id?: string, parentId?: string, chi
       }
     }
   }
+
+  console.info("拿到的树状路由结构", tree);
   return tree;
 }
