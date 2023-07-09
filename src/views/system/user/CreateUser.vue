@@ -100,7 +100,7 @@
 
 <script lang="ts">
 import {defineComponent, PropType, reactive, ref, computed, onMounted} from "vue";
-import {NetworkMenu} from "@/common/api/menu";
+import {NetworkMenu} from "@/common/api/system/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import sysUserSex from "@/common/mock/system/dict/type/sys_user_sex.json";
@@ -111,7 +111,7 @@ import {
   networkGetRoleList,
   NetworkRole,
   NetworkRoleUser,
-} from "@/common/api/role";
+} from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ResponseData} from "@/common/utils/networkUtil";
 import {networkGetRoleListInAddUser, networkGetUserList} from "@/common/api/user";

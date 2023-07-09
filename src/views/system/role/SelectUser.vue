@@ -43,7 +43,7 @@ import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
 import {parseTime} from "@/common/utils/ruoyi_test";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
-import {networkGetUnallocatedUserList, NetworkRoleUser, QueryUserListParams} from "@/common/api/role";
+import {networkGetUnallocatedUserList, NetworkRoleUser, QueryUserListParams} from "@/common/api/system/role";
 import {ResponseData} from "@/common/utils/networkUtil";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {useRoute} from "vue-router";

@@ -102,7 +102,7 @@
 import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import {handleTree, parseTime} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {networkDeleteMenu, networkGetMenuList, NetworkMenu} from "@/common/api/menu";
+import {networkDeleteMenu, networkGetMenuList, NetworkMenu} from "@/common/api/system/menu";
 import {ResponseData} from "@/common/utils/networkUtil";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";

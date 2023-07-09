@@ -24,7 +24,9 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
-import {NetworkCreateRoleTree, networkGetCreateRoleMenuList} from "@/common/api/role";
+import {NetworkCreateRoleTree, networkGetCreateRoleMenuList} from "@/common/api/system/role";
+import {ResponseData} from "@/common/utils/networkUtil";
+import {NetworkMenuTree} from "@/common/api/system/menu";
 
 export default defineComponent({
   name: "menuTreeCheckBox",
@@ -57,12 +59,11 @@ export default defineComponent({
       context.emit("change-check-strictly", value);
     };
 
-    const menuOptions = ref<NetworkCreateRoleTree[]>([]);
-    onMounted(() => {
-      networkGetCreateRoleMenuList().then((res: NetworkCreateRoleTree[]) => {
-        menuOptions.value = res;
-        console.warn("createRole拿到的菜单是", res);
-      });
+    const menuOptions = ref<NetworkMenuTree[]>([]);
+    onMounted(async () => {
+      const res = await networkGetCreateRoleMenuList();
+      menuOptions.value = res.data;
+      console.warn("createRole拿到的菜单是", res);
     });
 
     return {

@@ -4,6 +4,9 @@ import deepClone from "@/common/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
+import {networkGetMenuTree, NetworkMenuTree} from "@/common/api/system/menu";
+
+
 
 export interface NetworkRole {
   createBy: string;
@@ -26,6 +29,7 @@ export interface NetworkRole {
   permissions: null | string[];
   admin: boolean;
 }
+const prefix = "/system";
 
 export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
   return new Promise((resolve) => {
@@ -35,24 +39,18 @@ export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
   });
 }
 
-export interface NetworkCreateRoleTree {
-  children: NetworkCreateRoleTree[];
-  id: number;
-  label: string;
-}
+
 
 // 查询菜单下拉树结构
 export function networkGetCreateRoleMenuList() {
-  return new Promise((resolve) => {
-    // @ts-ignore
-    const data = createRole as ResponseData<NetworkCreateRoleTree[]>;
-    resolve(deepClone(data.data));
-  });
+  // return new Promise((resolve) => {
+  //   // @ts-ignore
+  //   const data = createRole as ResponseData<NetworkCreateRoleTree[]>;
+  //   resolve(deepClone(data.data));
+  // });
 
-  // return networkUtil({
-  //   url: '/system/menu/treeselect',
-  //   method: 'get'
-  // })
+  return networkGetMenuTree();
+
 }
 
 export interface QueryUserListParams {

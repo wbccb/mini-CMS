@@ -1,6 +1,6 @@
 // 查询用户列表
 import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
-import {NetworkRoleUser, QueryUserListParams, NetworkRole} from "@/common/api/role";
+import {NetworkRoleUser, QueryUserListParams, NetworkRole} from "@/common/api/system/role";
 import userList from "@/common/mock/system/user/user.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import roles from "@/common/mock/system/user/roles.json";

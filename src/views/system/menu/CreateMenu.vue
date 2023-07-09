@@ -18,52 +18,52 @@
         <el-col :span="24">
           <el-form-item label="菜单类型" prop="menuType">
             <el-radio-group v-model="formData.menuType">
-              <el-radio label="M">目录</el-radio>
-              <el-radio label="C">菜单</el-radio>
-              <el-radio label="F">按钮</el-radio>
+              <el-radio label="M">最外层菜单</el-radio>
+              <el-radio label="C">子菜单</el-radio>
+              <el-radio label="F">最内层的按钮</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
 
         <!--          选择已经有的菜单图标-->
-        <el-col :span="24">
-          <el-form-item label="菜单图标" props="icon">
-            <!--整个内容包裹在弹出泡泡中-->
-            <el-popover
-                placement="bottom-start"
-                :width="540"
-                v-model:visible="showChooseIcon"
-                trigger="click"
-                @show="showSelectIcon"
-            >
-              <!--初始化展示的内容-->
-              <template #reference>
-                <!--图标的文字-->
-                <el-input
-                    v-model="formData.icon"
-                    placeholder="点击选择图标"
-                    @blur="showSelectIcon"
-                    readonly
-                >
-                  <template #prefix>
-                    <!--使用自己在assets的svg图标，与上面的文字相配合-->
-                    <svg-icon
-                        v-if="formData.icon"
-                        :icon-class="formData.icon"
-                        class="el-input__icon choose_icon_input"
-                    ></svg-icon>
-                    <el-icon v-else class="choose_icon_input">
-                      <Search></Search>
-                    </el-icon>
-                  </template>
-                </el-input>
-              </template>
+<!--        <el-col :span="24">-->
+<!--          <el-form-item label="菜单图标" props="icon">-->
+<!--            &lt;!&ndash;整个内容包裹在弹出泡泡中&ndash;&gt;-->
+<!--            <el-popover-->
+<!--                placement="bottom-start"-->
+<!--                :width="540"-->
+<!--                v-model:visible="showChooseIcon"-->
+<!--                trigger="click"-->
+<!--                @show="showSelectIcon"-->
+<!--            >-->
+<!--              &lt;!&ndash;初始化展示的内容&ndash;&gt;-->
+<!--              <template #reference>-->
+<!--                &lt;!&ndash;图标的文字&ndash;&gt;-->
+<!--                <el-input-->
+<!--                    v-model="formData.icon"-->
+<!--                    placeholder="点击选择图标"-->
+<!--                    @blur="showSelectIcon"-->
+<!--                    readonly-->
+<!--                >-->
+<!--                  <template #prefix>-->
+<!--                    &lt;!&ndash;使用自己在assets的svg图标，与上面的文字相配合&ndash;&gt;-->
+<!--                    <svg-icon-->
+<!--                        v-if="formData.icon"-->
+<!--                        :icon-class="formData.icon"-->
+<!--                        class="el-input__icon choose_icon_input"-->
+<!--                    ></svg-icon>-->
+<!--                    <el-icon v-else class="choose_icon_input">-->
+<!--                      <Search></Search>-->
+<!--                    </el-icon>-->
+<!--                  </template>-->
+<!--                </el-input>-->
+<!--              </template>-->
 
-              <!--图标展示，支持点击后选中-->
-              <IconSelect ref="iconSelectRef" @select-icon="selectIcon"></IconSelect>
-            </el-popover>
-          </el-form-item>
-        </el-col>
+<!--              &lt;!&ndash;图标展示，支持点击后选中&ndash;&gt;-->
+<!--              <IconSelect ref="iconSelectRef" @select-icon="selectIcon"></IconSelect>-->
+<!--            </el-popover>-->
+<!--          </el-form-item>-->
+<!--        </el-col>-->
 
         <el-col :span="12">
           <el-form-item label="菜单名称" prop="menuName">
@@ -121,7 +121,7 @@
                 >
                   <el-icon><question-filled/></el-icon>
                 </el-tooltip>
-                路由地址
+                组件地址
               </span>
             </template>
             <el-input v-model="formData.component" placeholder="请输入路由地址"/>
@@ -183,13 +183,13 @@
 
 <script lang="ts">
 import {defineComponent, PropType, reactive, ref, computed, watchEffect, watch} from "vue";
-import {networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/menu";
+import {networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
 import type {FormInstance, FormRules} from 'element-plus'
 import {useSubmitForm} from "@/common/hooks/useSubmitForm";
-import {MenuDialogForm} from "@/common/api/menu";
+import {MenuDialogForm} from "@/common/api/system/menu";
 import {ElMessage} from "element-plus";
 
 export default defineComponent({

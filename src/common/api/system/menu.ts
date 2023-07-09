@@ -4,6 +4,7 @@
 import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
 import deepClone from "@/common/utils/deepCloneUtil";
 import routesList from "@/common/mock/system/router/list.json";
+import createRole from "@/common/mock/system/role/createRole.json";
 
 export interface NetworkRoute {
     alwaysShow: boolean;
@@ -50,10 +51,18 @@ export interface MenuDialogForm {
     icon: string;
 }
 
+
+
+export interface NetworkMenuTree {
+    children: NetworkMenuTree[];
+    id: number;
+    label: string;
+}
+
 const prefix = "/system";
 
 /**
- * 获取动态路哟
+ * 获取动态路由
  */
 export function networkGetRoutes(): Promise<ResponseData<NetworkRoute[]>> {
     return new Promise((resolve) => {
@@ -97,5 +106,17 @@ export function networkDeleteMenu(id: number): Promise<NetworkMenu[]> {
     });
 }
 
+
+
+/**
+ * 获取menu的树状结构，可以参考createRole的mock数据
+ * @param id
+ */
+export function networkGetMenuTree(): Promise<ResponseData<NetworkMenuTree[]>> {
+    return networkUtil({
+      url: prefix +'/menu/treeselect',
+      method: 'get'
+    })
+}
 
 

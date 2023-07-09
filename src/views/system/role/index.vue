@@ -113,7 +113,7 @@
 import {defineComponent, onMounted, ref} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {networkGetRoleList, NetworkRole} from "@/common/api/role";
+import {networkGetRoleList, NetworkRole} from "@/common/api/system/role";
 import {ResponseData} from "@/common/utils/networkUtil";
 import {handleTree} from "@/common/utils/ruoyi_test";
 import {parseTime} from "@/common/utils/ruoyi_test";

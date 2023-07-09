@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {networkGetRoutes, NetworkRoute} from "@/common/api/menu";
+import {networkGetRoutes, NetworkRoute} from "@/common/api/system/menu";
 import {filterDynamicRoutes} from "@/common/utils/routeUtil";
 import router, {dynamicRoutes, basicRouters} from "@/router";
 import {RouteRecordRaw} from "vue-router";

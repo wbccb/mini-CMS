@@ -156,7 +156,7 @@ import CreateUser from "@/views/system/user/CreateUser.vue";
 import AuthRole from "@/views/system/user/AuthRole.vue";
 import {networkGetUserList} from "@/common/api/user";
 import {ResponseData} from "@/common/utils/networkUtil";
-import {NetworkRoleUser, QueryUserListParams} from "@/common/api/role";
+import {NetworkRoleUser, QueryUserListParams} from "@/common/api/system/role";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/common/utils/ruoyi_test";
 import {useRouter} from "vue-router";
