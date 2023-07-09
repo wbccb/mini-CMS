@@ -10,42 +10,42 @@
       </el-col>
 
       <el-tooltip class="item" effect="dark" content="刷新" placement="top">
-        <el-button circle icon="Refresh" @click="forceRefresh" />
+        <el-button circle icon="Refresh" @click="forceRefresh"/>
       </el-tooltip>
     </template>
 
     <template v-slot:base-table-content="slotProps">
       <el-table
-        v-if="initFinish"
-        v-loading="loading"
-        :data="menuList"
-        :max-height="slotProps.elTableHeight"
-        row-key="menuId"
-        :default-expand-all="isExpandAll"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+          v-if="initFinish"
+          v-loading="loading"
+          :data="menuList"
+          :max-height="slotProps.elTableHeight"
+          row-key="menuId"
+          :default-expand-all="isExpandAll"
+          :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
         <el-table-column
-          fixed
-          prop="menuName"
-          label="菜单名称"
-          :show-overflow-tooltip="true"
-          width="160"
+            fixed
+            prop="menuName"
+            label="菜单名称"
+            :show-overflow-tooltip="true"
+            width="160"
         ></el-table-column>
         <el-table-column prop="icon" label="图标" align="center" width="100">
           <template #default="scope">
-            <svg-icon :icon-class="scope.row.icon" />
+            <svg-icon :icon-class="scope.row.icon"/>
           </template>
         </el-table-column>
         <el-table-column prop="orderNum" label="排序" width="60"></el-table-column>
         <el-table-column
-          prop="perms"
-          label="权限标识"
-          :show-overflow-tooltip="true"
+            prop="perms"
+            label="权限标识"
+            :show-overflow-tooltip="true"
         ></el-table-column>
         <el-table-column
-          prop="component"
-          label="组件路径"
-          :show-overflow-tooltip="true"
+            prop="component"
+            label="组件路径"
+            :show-overflow-tooltip="true"
         ></el-table-column>
         <el-table-column prop="status" label="状态" width="80">
           <template #default="scope">
@@ -58,10 +58,10 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="操作"
-          align="center"
-          width="210"
-          class-name="small-padding fixed-width"
+            label="操作"
+            align="center"
+            width="210"
+            class-name="small-padding fixed-width"
         >
           <template #default="scope">
             <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)">
@@ -77,28 +77,28 @@
 
     <template v-slot:base-table-footer>
       <PaginationBar
-        class="main-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :total="total">
+          class="main-pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="total">
       </PaginationBar>
     </template>
 
     <template v-slot:other>
       <CreateMenu
-        v-model="openDialog"
-        :menuList="menuList"
-        @close-dialog="openDialog = false"
+          v-model="openDialog"
+          :menuList="menuList"
+          @close-dialog="openDialog = false"
       ></CreateMenu>
     </template>
-    
+
   </TableBaseView>
 </template>
 
 <script lang="ts">
-import {defineComponent, nextTick, onMounted, ref} from "vue";
+import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import {handleTree, parseTime} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkGetMenuList, NetworkMenu} from "@/common/api/menu";
@@ -117,6 +117,12 @@ export default defineComponent({
       // 弹出提示框
       openDialog.value = true;
     };
+    watch(openDialog, (showFlag) => {
+      if (!showFlag) {
+        // 隐藏创建框时主动触发列表刷新
+        forceRefresh();
+      }
+    });
 
     const isExpandAll = ref(false);
     const toggleExpandAll = async () => {
@@ -126,26 +132,28 @@ export default defineComponent({
       initFinish.value = true;
     };
 
-    const handleUpdate = (item: any) => {};
-    const handleDelete = (item: any) => {};
+    const handleUpdate = (item: any) => {
+    };
+    const handleDelete = (item: any) => {
+    };
 
     const menuArray = ref<NetworkMenu[]>([]);
 
     // 实际请求的业务方法
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
-        const data: ResponseData<NetworkMenu[]> = await networkGetMenuList();
-        menuArray.value = data.data;
-        const treeData = handleTree(data.data, "menuId");
-        data.data = treeData;
+        const res: ResponseData<NetworkMenu[]> = await networkGetMenuList();
+        const data = res.data;
+        menuArray.value = data;
+        const treeData = handleTree(data, "menuId");
         console.info(treeData);
-        return data;
+        return Object.assign({}, res, {data: data});
       };
     };
 
     // 分页逻辑结合
     const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<NetworkMenu>(
-      getList()
+        getList()
     );
 
     const initFinish = ref(true);

@@ -42,9 +42,15 @@ const usePermissionStore = defineStore({
       const rdata = deepClone(res.data);
       const sdata = deepClone(res.data);
 
+      // filterAsyncRouter:
+      // 1.暂时屏蔽link链接的路由
+      // 2.构建route.component对象
+      // 3.递归route.children进行上面流程的处理
       const rewriteRoutes = this.filterAsyncRouter(rdata, false, true);
       const sidebarRoutes = this.filterAsyncRouter(sdata);
 
+      // 根据router路由的permission和roles跟目前用户持有的permission和roles比对
+      // 获取当前用户可以操作的动态路由
       const asyncRoutes = (await this.filterDynamicRoutes(dynamicRoutes)) as RouteRecordRaw[];
 
       // @ts-ignore

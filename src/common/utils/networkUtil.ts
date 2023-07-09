@@ -10,9 +10,6 @@ export interface ResponseData<T> {
   code: number;
   msg: string;
   data: T;
-  rows?: T;
-  roles?: T;
-  total?: number;
 }
 
 axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8";

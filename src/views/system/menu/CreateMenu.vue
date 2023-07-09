@@ -6,12 +6,12 @@
         <el-col :span="24">
           <el-form-item label="上级菜单">
             <el-tree-select
-              v-model="formData.parentId"
-              :data="menuOptions"
-              :props="{value: 'menuId', label: 'menuName', children: 'children'}"
-              value-key="menuId"
-              placeholder="选择上级菜单"
-              check-strictly
+                v-model="formData.parentId"
+                :data="menuOptions"
+                :props="{value: 'menuId', label: 'menuName', children: 'children'}"
+                value-key="menuId"
+                placeholder="选择上级菜单"
+                check-strictly
             />
           </el-form-item>
         </el-col>
@@ -30,27 +30,27 @@
           <el-form-item label="菜单图标" props="icon">
             <!--整个内容包裹在弹出泡泡中-->
             <el-popover
-              placement="bottom-start"
-              :width="540"
-              v-model:visible="showChooseIcon"
-              trigger="click"
-              @show="showSelectIcon"
+                placement="bottom-start"
+                :width="540"
+                v-model:visible="showChooseIcon"
+                trigger="click"
+                @show="showSelectIcon"
             >
               <!--初始化展示的内容-->
               <template #reference>
                 <!--图标的文字-->
                 <el-input
-                  v-model="formData.icon"
-                  placeholder="点击选择图标"
-                  @blur="showSelectIcon"
-                  readonly
+                    v-model="formData.icon"
+                    placeholder="点击选择图标"
+                    @blur="showSelectIcon"
+                    readonly
                 >
                   <template #prefix>
                     <!--使用自己在assets的svg图标，与上面的文字相配合-->
                     <svg-icon
-                      v-if="formData.icon"
-                      :icon-class="formData.icon"
-                      class="el-input__icon choose_icon_input"
+                        v-if="formData.icon"
+                        :icon-class="formData.icon"
+                        class="el-input__icon choose_icon_input"
                     ></svg-icon>
                     <el-icon v-else class="choose_icon_input">
                       <Search></Search>
@@ -67,12 +67,12 @@
 
         <el-col :span="12">
           <el-form-item label="菜单名称" prop="menuName">
-            <el-input v-model="formData.menuName" placeholder="请输入菜单名称" />
+            <el-input v-model="formData.menuName" placeholder="请输入菜单名称"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="显示排序" prop="orderNum">
-            <el-input-number v-model="formData.orderNum" controls-position="right" :min="0" />
+            <el-input-number v-model="formData.orderNum" controls-position="right" :min="0"/>
           </el-form-item>
         </el-col>
 
@@ -81,7 +81,7 @@
             <template #label>
               <span>
                 <el-tooltip content="选择是外链则路由地址需要以`http(s)://`开头" placement="top">
-                  <el-icon><QuestionFilled /></el-icon>
+                  <el-icon><QuestionFilled/></el-icon>
                 </el-tooltip>
 
                 <span>是否外链</span>
@@ -99,15 +99,32 @@
             <template #label>
               <span>
                 <el-tooltip
-                  content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头"
-                  placement="top"
+                    content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头"
+                    placement="top"
                 >
-                  <el-icon><question-filled /></el-icon>
+                  <el-icon><question-filled/></el-icon>
                 </el-tooltip>
                 路由地址
               </span>
             </template>
-            <el-input v-model="formData.path" placeholder="请输入路由地址" />
+            <el-input v-model="formData.path" placeholder="请输入路由地址"/>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item prop="component">
+            <template #label>
+              <span>
+                <el-tooltip
+                    content="组件地址，放在views下面，比如/system/menu/"
+                    placement="top"
+                >
+                  <el-icon><question-filled/></el-icon>
+                </el-tooltip>
+                路由地址
+              </span>
+            </template>
+            <el-input v-model="formData.path" placeholder="请输入路由地址"/>
           </el-form-item>
         </el-col>
 
@@ -116,10 +133,10 @@
             <template #label>
               <span>
                 <el-tooltip
-                  content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问"
-                  placement="top"
+                    content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问"
+                    placement="top"
                 >
-                  <el-icon><QuestionFilled /></el-icon>
+                  <el-icon><QuestionFilled/></el-icon>
                 </el-tooltip>
                 显示状态
               </span>
@@ -136,10 +153,10 @@
             <template #label>
               <span>
                 <el-tooltip
-                  content="选择停用则路由将不会出现在侧边栏，也不能被访问"
-                  placement="top"
+                    content="选择停用则路由将不会出现在侧边栏，也不能被访问"
+                    placement="top"
                 >
-                  <el-icon><question-filled /></el-icon>
+                  <el-icon><question-filled/></el-icon>
                 </el-tooltip>
                 菜单状态
               </span>
@@ -166,23 +183,14 @@
 
 <script lang="ts">
 import {defineComponent, PropType, reactive, ref, computed} from "vue";
-import {NetworkMenu} from "@/common/api/menu";
+import {networkCreateMenu, NetworkMenu} from "@/common/api/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
-
-interface MenuDialogForm {
-  parentId: string;
-  menuType: "M" | "C" | "F";
-  formData: string;
-  orderNum: number;
-  isFrame: "0" | "1";
-  path: string;
-  visible: boolean;
-  status: string;
-  menuName: string;
-  icon: string;
-}
+import type {FormInstance, FormRules} from 'element-plus'
+import {useSubmitForm} from "@/common/hooks/useSubmitForm";
+import {MenuDialogForm} from "@/common/api/menu";
+import {ElMessage} from "element-plus";
 
 export default defineComponent({
   name: "CreateMenu",
@@ -198,19 +206,20 @@ export default defineComponent({
   emits: ["close-dialog", "update:modelValue"],
   setup(props, context) {
     const formData = reactive<MenuDialogForm>({
-      parentId: "",
+      parentId: "0",
       menuType: "M",
       formData: "",
       orderNum: 1,
       isFrame: "0",
-      path: "",
+      path: "/system/user/test",
       visible: true,
       status: "",
-      menuName: "",
+      menuName: "测试菜单1",
       icon: "",
     });
 
-    const formRules = {
+
+    const formRules: FormRules<MenuDialogForm> = {
       menuName: [{required: true, message: "菜单名称不能为空", trigger: "blur"}],
       orderNum: [{required: true, message: "菜单顺序不能为空", trigger: "blur"}],
       path: [{required: true, message: "路由地址不能为空", trigger: "blur"}],
@@ -232,10 +241,16 @@ export default defineComponent({
       return [menu];
     });
 
+    const dialogRef = ref<FormInstance>();
+    const {checkRulesAndSubmit} = useSubmitForm(dialogRef);
     const submitForm = () => {
       // api/menu提交网络请求
+      checkRulesAndSubmit(async () => {
+        const addRes = await networkCreateMenu(formData);
+        ElMessage({message: "新增菜单成功", type: "success", duration: 20 * 1000});
+        cancel();
+      });
     };
-
     const cancel = () => {
       context.emit("close-dialog");
     };
@@ -262,14 +277,15 @@ export default defineComponent({
       }
     };
 
-    const selectIcon = (icon: string)=> {
-        formData.icon = icon;
+    const selectIcon = (icon: string) => {
+      formData.icon = icon;
     }
 
     // ------- 选择图标的相关逻辑 ---------
 
     return {
-        selectIcon,
+      dialogRef,
+      selectIcon,
       showChooseIcon,
       showSelectIcon,
       hideSelectIcon,
