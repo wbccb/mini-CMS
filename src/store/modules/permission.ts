@@ -80,7 +80,7 @@ const usePermissionStore = defineStore({
           }
         }
 
-        if(route.meta.link) {
+        if (route.meta.link) {
           // TODO 暂时屏蔽link链接的路由
           return false;
         }

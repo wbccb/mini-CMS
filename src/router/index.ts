@@ -9,41 +9,41 @@ import LayoutIndex from "@/layout/index.vue";
 
 export const dynamicRoutes: RouteRecordRaw[] = [
   {
-    path: '/system/user-auth',
+    path: "/system/user-auth",
     component: LayoutIndex,
     meta: {
       hidden: true,
-      permissions: ['system:user:edit'],
+      permissions: ["system:user:edit"],
     },
     children: [
       {
-        path: 'role/:userId(\\d+)',
-        component: () => import('@/views/system/user/AuthRole.vue'),
-        name: 'AuthRole',
+        path: "role/:userId(\\d+)",
+        component: () => import("@/views/system/user/AuthRole.vue"),
+        name: "AuthRole",
         meta: {
-          title: '分配角色',
-          permissions: ['system:user:edit'],
-          activeMenu: '/system/user'
-        }
-      }
-    ]
+          title: "分配角色",
+          permissions: ["system:user:edit"],
+          activeMenu: "/system/user",
+        },
+      },
+    ],
   },
   {
-    path: '/system/role-auth',
+    path: "/system/role-auth",
     component: LayoutIndex,
     meta: {
       hidden: true,
-      permissions: ['system:user:edit'],
+      permissions: ["system:user:edit"],
     },
     children: [
       {
-        path: 'user/:roleId(\\d+)',
-        component: () => import('@/views/system/role/AuthUser.vue'),
-        name: 'AuthUser',
-        meta: { title: '分配用户', activeMenu: '/system/role' }
-      }
-    ]
-  }
+        path: "user/:roleId(\\d+)",
+        component: () => import("@/views/system/role/AuthUser.vue"),
+        name: "AuthUser",
+        meta: {title: "分配用户", activeMenu: "/system/role"},
+      },
+    ],
+  },
 ] as RouteRecordRaw[];
 
 export const notNeedLogin: RouteRecordRaw[] = [

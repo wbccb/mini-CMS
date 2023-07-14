@@ -6,8 +6,6 @@ import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
 import {networkGetMenuTree, NetworkMenuTree} from "@/common/api/system/menu";
 
-
-
 export interface NetworkRole {
   createBy: string;
   createTime: string;
@@ -39,8 +37,6 @@ export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
   });
 }
 
-
-
 // 查询菜单下拉树结构
 export function networkGetCreateRoleMenuList() {
   // return new Promise((resolve) => {
@@ -50,7 +46,6 @@ export function networkGetCreateRoleMenuList() {
   // });
 
   return networkGetMenuTree();
-
 }
 
 export interface QueryUserListParams {
@@ -98,8 +93,6 @@ export function networkGetUserListByRoleId(
     params: query,
   });
 }
-
-
 
 /**
  * 查询角色未授权用户列表

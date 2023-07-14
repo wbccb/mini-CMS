@@ -12,6 +12,6 @@ export default function createVitePlugins(viteEnv: any, isBuild = false) {
     vitePlugins.push(elementAutoImport);
   }
 
-  vitePlugins.push(createSvgIcon(isBuild))
+  vitePlugins.push(createSvgIcon(isBuild));
   return vitePlugins;
 }
