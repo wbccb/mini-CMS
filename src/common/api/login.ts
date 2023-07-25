@@ -158,10 +158,11 @@ export function networkGetInfo(): Promise<NetworkLoginResponse> {
 }
 
 export const errorCodeText: Record<string, string> = {
-  "401": "认证失败，无法访问系统资源",
-  "403": "当前操作没有权限",
-  "404": "访问资源不存在",
-  default: "系统未知错误，请反馈给管理员",
+  "10001": "用户不存在",
+  "10002": "账号/密码错误",
+  "10003": "登录超时",
+  "10011": "注册失败",
+  "10021": "参数规则不符合设定",
 };
 
 // 退出登录

@@ -50,7 +50,7 @@ const useUserStore = defineStore({
         return true;
       } catch (e) {
         console.error("注册失败", e);
-        return Promise.reject(e.response);
+        return Promise.reject(e);
       }
     },
     async storeLogin(userInfo: LoginData) {

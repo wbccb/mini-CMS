@@ -139,13 +139,13 @@ export default defineComponent({
               })
               .catch((error) => {
                 console.info("storeRegister error", error);
-                // 错误已经在store中进行处理
                 if (error) {
-                  const message = error.data || error;
-                  ElMessage({
-                    type: "error",
-                    message: "注册失败:" + JSON.stringify(message)
-                  });
+                  // TODO 错误已经在store中进行处理
+                  // const message = error.data || error;
+                  // ElMessage({
+                  //   type: "error",
+                  //   message: "注册失败:" + JSON.stringify(message)
+                  // });
                 } else {
                   ElMessage({
                     type: "error",

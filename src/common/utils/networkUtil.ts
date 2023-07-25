@@ -53,14 +53,15 @@ server.interceptors.request.use((config) => {
 server.interceptors.response.use(
   (res) => {
     // 由于返回的数据层级较多，因此解析出res数据，拼接为简单的数据结构返回
-    const code: number = res.data.code || 200;
-    const msg = errorCodeText[code] || res.data.message || errorCodeText["default"];
+    const code: number = res.data.code === undefined ? 200 : res.data.code;
+    // 优先返回的信息 > 特殊code的提示语 > 默认提示语
+    const msg = res.data.desc || errorCodeText[code] || errorCodeText["default"];
 
     if (res.request.responseType === "blob" || res.request.responseType === "arraybuffer") {
       return res.data;
     }
 
-    if (code !== 200 && code !== 201) {
+    if (code !== 0) {
       // 具体的业务代码应该在各自的.vue组件中进行，比如Login.vue弹出登录成功的提示
       // 这里的提示只是一种普遍性的检测code
       switch (code) {
@@ -80,7 +81,7 @@ server.interceptors.response.use(
           ElMessage({message: msg, type: "warning"});
           return Promise.reject(new Error(msg));
         default:
-          ElNotification.error({title: msg});
+          ElMessage({message: `请求失败：${msg}`, type: "error"})
           return Promise.reject("error");
       }
       return Promise.reject("error");
