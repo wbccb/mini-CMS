@@ -158,8 +158,9 @@ export default defineComponent({
         const data = res.data;
         menuArray.value = data;
         const treeData = handleTree(data, "menuId");
-        console.info(treeData);
-        return Object.assign({}, res, {data: data});
+        return {
+          data: treeData
+        } as ResponseData<NetworkMenu[]>
       };
     };
 

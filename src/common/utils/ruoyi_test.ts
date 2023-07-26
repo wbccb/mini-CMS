@@ -1,3 +1,5 @@
+import {NetworkMenu} from "@/common/api/system/menu";
+
 export function tansParams(params: Record<string, any>) {
   let result = "";
   for (const propName of Object.keys(params)) {
@@ -81,7 +83,7 @@ export function handleTree(data: Array<any>, id?: string, parentId?: string, chi
 
   var childrenListMap: Record<any, any> = {};
   var nodeIds: Record<any, any> = {};
-  var tree: any[] = [];
+  var tree: NetworkMenu[] = [];
 
   for (let d of data) {
     let parentId = d[config.parentId];
