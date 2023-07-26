@@ -67,8 +67,8 @@ async function handleDynamicRoute(
 
     // 写死的前端路由
     dynamicAccessRoutes.forEach((route) => {
-      console.warn("dynamicAccessRoutes添加的路由", route);
-      router.addRoute(route);
+      console.info("前端写的路由数据为：", route);
+      // router.addRoute(route);
     });
 
     console.error("handleDynamicRoute触发");
@@ -76,13 +76,21 @@ async function handleDynamicRoute(
     // 动态创建菜单所产生的路由列表
     rewriteRoutes.forEach((route) => {
       if (!isHttp(route.path)) {
-        console.warn("rewriteRoutes添加的路由", route);
+        console.warn("网络请求getRouters拿到的路由是：", route);
         router.addRoute(route);
       }
     });
 
+    const tempRouters = router.getRoutes();
+    console.error("目前能拿到的所有路由数据是", tempRouters);
+
     // TODO 要考虑动态addRoute没有实时生效的问题
-    next({...to, replace: true});
+    next(
+      {
+        path: "/",
+        replace: true
+      }
+    );
   } catch (e) {
     console.error("获取动态路由失败", e);
   }

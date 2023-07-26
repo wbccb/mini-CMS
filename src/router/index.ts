@@ -66,13 +66,7 @@ export const notNeedLogin: RouteRecordRaw[] = [
 ] as RouteRecordRaw[];
 
 export const basicRouters: RouteRecordRaw[] = [
-  {
-    path: "/:path(.*)*", // "/:path(.*)*"代表: "/a/b"->params: [ "a", "b" ]
-    component: () => import("@/views/error/404.vue"),
-    meta: {
-      hidden: true,
-    },
-  },
+
   {
     path: "",
     component: LayoutIndex,
@@ -80,7 +74,6 @@ export const basicRouters: RouteRecordRaw[] = [
     children: [
       {
         path: "/index",
-        redirect: "/system/user",
         component: () => import("@/views/index.vue"),
       },
     ],

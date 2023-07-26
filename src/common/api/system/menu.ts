@@ -39,7 +39,7 @@ export interface NetworkMenu {
 
 export interface MenuDialogForm {
   parentId: string;
-  menuType: "M" | "C" | "F";
+  menuType: "subMenu" | "menu" | "button";
   formData: string;
   orderNum: number;
   isIframe: "0" | "1";
@@ -63,16 +63,16 @@ const prefix = "/system";
  * 获取动态路由
  */
 export function networkGetRoutes(): Promise<ResponseData<NetworkRoute[]>> {
-  return new Promise((resolve) => {
-    const mockData: any = routesList;
-    const data = mockData as ResponseData<NetworkRoute>;
-    resolve(data);
-  });
-
-  // return networkUtil({
-  //   url: "/getRouters",
-  //   method: "get",
+  // return new Promise((resolve) => {
+  //   const mockData: any = routesList;
+  //   const data = mockData as ResponseData<NetworkRoute>;
+  //   resolve(data);
   // });
+
+  return networkUtil({
+    url: prefix + "/menu/routes",
+    method: "get",
+  });
 }
 
 /**

@@ -38,9 +38,10 @@ const usePermissionStore = defineStore({
     },
     // 根据权限拼接路由
     async storeGetRoutes() {
-      const res = await networkGetRoutes();
-      const rdata = deepClone(res.data);
-      const sdata = deepClone(res.data);
+      const {data} = await networkGetRoutes();
+      const {list} = data;
+      const rdata = deepClone(list);
+      const sdata = deepClone(list);
 
       // filterAsyncRouter:
       // 1.暂时屏蔽link链接的路由
@@ -191,8 +192,9 @@ export const loadView = (view: string) => {
       // modules[path]就是直接获取对应的Component
       res = () => modules[path]();
     }
+    console.info("动态加载组件", res, path);
   }
-  console.info("动态加载组件", res);
+
   return res;
 };
 
