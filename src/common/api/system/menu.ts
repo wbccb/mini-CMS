@@ -37,17 +37,25 @@ export interface NetworkMenu {
   visible: string;
 }
 
+export enum MenuTypeEnum {
+  "最外层菜单" = "menu",
+  "内层菜单" = "subMenu",
+  "内层按钮" = "button"
+}
+
+
 export interface MenuDialogForm {
   parentId: string;
-  menuType: "subMenu" | "menu" | "button";
+  menuType: MenuTypeEnum;
   formData: string;
   orderNum: number;
   isIframe: "0" | "1";
   path: string;
   component: string;
   visible: boolean;
-  status: string;
-  menuName: string;
+  status: boolean;
+  menuName: string; // 菜单显示的名称
+  name: string; // 路由名称
   icon: string;
 }
 

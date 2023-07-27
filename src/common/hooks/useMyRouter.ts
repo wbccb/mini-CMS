@@ -19,9 +19,18 @@ const useMyRouter = () => {
     }
   };
 
+  const goToMenuIndex = (replace = false) => {
+    if (replace) {
+      return router.replace({name: "Menu"});
+    } else {
+      return router.push({name: "Login"});
+    }
+  };
+
   return {
     goToRegister,
     goToLogin,
+    goToMenuIndex
   };
 };
 

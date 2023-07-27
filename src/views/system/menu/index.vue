@@ -31,11 +31,11 @@
             :show-overflow-tooltip="true"
             width="160"
         ></el-table-column>
-<!--        <el-table-column prop="icon" label="图标" align="center" width="100">-->
-<!--          <template #default="scope">-->
-<!--            <svg-icon :icon-class="scope.row.icon"/>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+        <!--        <el-table-column prop="icon" label="图标" align="center" width="100">-->
+        <!--          <template #default="scope">-->
+        <!--            <svg-icon :icon-class="scope.row.icon"/>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
         <el-table-column prop="orderNum" label="排序" width="60"></el-table-column>
         <el-table-column
             prop="perms"
@@ -155,7 +155,15 @@ export default defineComponent({
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
         const res: ResponseData<NetworkMenu[]> = await networkGetMenuList();
-        const data = res.data;
+        const data: NetworkMenu[] = res.data.list.map((item: NetworkMenu) => {
+          return {
+            ...item,
+            ...{
+              status: !!parseInt(item.status),
+              visible: !!parseInt(item.visible)
+            }
+          } as NetworkMenu;
+        });
         menuArray.value = data;
         const treeData = handleTree(data, "menuId");
         return {

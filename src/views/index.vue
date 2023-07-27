@@ -3,14 +3,25 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onMounted} from "vue";
+import router from "@/router";
+import {useRouter} from "vue-router";
+import {useMyRouter} from "@/common/hooks/useMyRouter";
 
 export default defineComponent({
   name: "viewIndex",
   props: {},
   setup() {
-    return {};
-  },
+
+    const {goToMenuIndex} = useMyRouter();
+    onMounted(() => {
+      setTimeout(()=> {
+        goToMenuIndex();
+      }, 1000);
+    });
+
+    return {}
+  }
 });
 </script>
 

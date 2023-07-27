@@ -18,9 +18,9 @@
         <el-col :span="24">
           <el-form-item label="菜单类型" prop="menuType">
             <el-radio-group v-model="formData.menuType">
-              <el-radio label="M">最外层菜单</el-radio>
-              <el-radio label="C">子菜单</el-radio>
-              <el-radio label="F">最内层的按钮</el-radio>
+              <el-radio :label="MenuTypeEnum.最外层菜单">最外层菜单</el-radio>
+              <el-radio :label="MenuTypeEnum.内层菜单">子菜单</el-radio>
+              <el-radio :label="MenuTypeEnum.内层按钮">最内层的按钮</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -112,6 +112,24 @@
         </el-col>
 
         <el-col :span="12">
+          <el-form-item prop="name">
+            <template #label>
+              <span>
+                <el-tooltip
+                    content="访问的路由名称，如：`User`"
+                    placement="top"
+                >
+                  <el-icon><question-filled/></el-icon>
+                </el-tooltip>
+                路由名称
+              </span>
+            </template>
+            <el-input v-model="formData.name" placeholder="请输入路由名称"/>
+          </el-form-item>
+        </el-col>
+
+
+        <el-col :span="12">
           <el-form-item prop="component">
             <template #label>
               <span>
@@ -133,7 +151,7 @@
             <template #label>
               <span>
                 <el-tooltip
-                    content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问"
+                    content="选择隐藏则路由将不会出现在侧边栏，可以代码访问，也可以在菜单管理中更改状态"
                     placement="top"
                 >
                   <el-icon><QuestionFilled/></el-icon>
@@ -153,7 +171,7 @@
             <template #label>
               <span>
                 <el-tooltip
-                    content="选择停用则路由将不会出现在侧边栏，也不能被访问"
+                    content="选择停用则路由将不会出现在侧边栏，也不能被代码访问，只能在菜单管理中更改状态"
                     placement="top"
                 >
                   <el-icon><question-filled/></el-icon>
@@ -182,15 +200,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, reactive, ref, computed, watchEffect, watch} from "vue";
-import {networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
+import {computed, defineComponent, PropType, reactive, ref, watch} from "vue";
+import {MenuDialogForm, MenuTypeEnum, networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
 import type {FormInstance, FormRules} from 'element-plus'
-import {useSubmitForm} from "@/common/hooks/useSubmitForm";
-import {MenuDialogForm} from "@/common/api/system/menu";
 import {ElMessage} from "element-plus";
+import {useSubmitForm} from "@/common/hooks/useSubmitForm";
 
 export default defineComponent({
   name: "CreateMenu",
@@ -211,7 +228,7 @@ export default defineComponent({
   setup(props, context) {
     const initFormData: MenuDialogForm = {
       parentId: "",
-      menuType: "M",
+      menuType: MenuTypeEnum.内层按钮,
       formData: "",
       orderNum: 1,
       isIframe: "0",
@@ -331,6 +348,7 @@ export default defineComponent({
       sys_normal_disable,
       formRules,
       iconSelectRef,
+      MenuTypeEnum
     };
   },
 });

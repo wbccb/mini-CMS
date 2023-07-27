@@ -9,7 +9,12 @@ import router from "@/router";
 export interface ResponseData<T> {
   code: number;
   msg: string;
-  data: T;
+  data: {
+    list: T;
+    total?: number;
+    pageNo: number;
+    pageSize: number;
+  }
 }
 
 axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8";
