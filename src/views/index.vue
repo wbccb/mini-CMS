@@ -13,13 +13,6 @@ export default defineComponent({
   props: {},
   setup() {
 
-    const {goToMenuIndex} = useMyRouter();
-    onMounted(() => {
-      setTimeout(()=> {
-        goToMenuIndex();
-      }, 1000);
-    });
-
     return {}
   }
 });

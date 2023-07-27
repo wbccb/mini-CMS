@@ -3,10 +3,20 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onMounted} from "vue";
+import {useMyRouter} from "@/common/hooks/useMyRouter";
 
 export default defineComponent({
-  setup() {},
+  setup() {
+
+    const {goToMenuIndex, goToRoleIndex} = useMyRouter();
+    onMounted(() => {
+      setTimeout(() => {
+        goToRoleIndex();
+      }, 500);
+    });
+
+  },
 });
 </script>
 

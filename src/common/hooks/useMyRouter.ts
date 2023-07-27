@@ -19,18 +19,27 @@ const useMyRouter = () => {
     }
   };
 
+  const goToRoleIndex = (replace = false) => {
+    if (replace) {
+      return router.replace({name: "Role"});
+    } else {
+      return router.push({name: "Role"});
+    }
+  };
+
   const goToMenuIndex = (replace = false) => {
     if (replace) {
       return router.replace({name: "Menu"});
     } else {
-      return router.push({name: "Login"});
+      return router.push({name: "Menu"});
     }
   };
 
   return {
     goToRegister,
     goToLogin,
-    goToMenuIndex
+    goToMenuIndex,
+    goToRoleIndex
   };
 };
 
