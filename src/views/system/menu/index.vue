@@ -99,7 +99,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
+import {computed, defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import {handleTree, parseTime} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkDeleteMenu, networkGetMenuList, NetworkMenu} from "@/common/api/system/menu";
@@ -177,6 +177,27 @@ export default defineComponent({
         getList()
     );
 
+    function sortChildren(list: NetworkMenu[]) {
+      list.sort((a, b) => {
+        return b.orderNum - a.orderNum;
+      });
+    }
+
+    const menuList = computed(() => {
+      // 菜单进行排序
+      if (!dataList.value) {
+        return [];
+      }
+      let list = dataList.value!;
+      for (const item of list) {
+        if (item.children) {
+          sortChildren(item.children);
+        }
+      }
+      sortChildren(list);
+      return list;
+    });
+
     const initFinish = ref(true);
     onMounted(() => {
       forceRefresh();
@@ -192,7 +213,7 @@ export default defineComponent({
       handleUpdate,
       handleDelete,
       isExpandAll,
-      menuList: dataList,
+      menuList,
       forceRefresh,
       indexMethod,
       ...returnObject,
