@@ -30,10 +30,14 @@ export interface NetworkRole {
 const prefix = "/system";
 
 export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
-  return new Promise((resolve) => {
+  // return new Promise((resolve) => {
     // @ts-ignore
-    const data = systemRoleList as ResponseData<NetworkRole[]>;
-    resolve(deepClone(data));
+    // const data = systemRoleList as ResponseData<NetworkRole[]>;
+    // resolve(deepClone(data));
+  // });
+  return networkUtil({
+    url: prefix + "/role",
+    method: "get",
   });
 }
 

@@ -1,5 +1,6 @@
 import {nextTick, ref} from "vue";
 import {ResponseData} from "@/common/utils/networkUtil";
+import data from "@/views/system/dict/data.vue";
 
 /**
  * 通用版本，传入一个获取List的方法，获取对应的T[]数据
@@ -30,10 +31,15 @@ export const usePaginationBar = <T>(
     loading.value = true;
     const responseData = await getListData(currentPage.value, pageSize.value);
     // TODO 要适配不同数据结构
-    dataList.value = responseData.data || responseData.rows || responseData.roles;
-
-    if (responseData.total) {
-      total.value = responseData.total;
+    if(responseData.data && responseData.data.list) {
+        // 在各自的index.vue的getList()进行特殊处理，也是返回response.data.list
+        // 也可以不处理，直接返回network请求得到的数据，那么数据就在response.data.list中
+        dataList.value = responseData.data.list;
+    } else {
+      dataList.value = [] as T[];
+    }
+    if (responseData.data.total) {
+      total.value = responseData.data.total;
     }
     await nextTick(() => {
       loading.value = false;

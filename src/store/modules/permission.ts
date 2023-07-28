@@ -192,7 +192,7 @@ export const loadView = (view: string) => {
       // modules[path]就是直接获取对应的Component
       res = () => modules[path]();
     }
-    console.info("动态加载组件", res, path);
+    // console.info("动态加载组件", res, path);
   }
 
   return res;

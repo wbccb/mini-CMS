@@ -167,7 +167,10 @@ export default defineComponent({
         menuArray.value = data;
         const treeData = handleTree(data, "menuId");
         return {
-          data: treeData
+          data: {
+            total: treeData.length,
+            list: treeData
+          }
         } as ResponseData<NetworkMenu[]>
       };
     };

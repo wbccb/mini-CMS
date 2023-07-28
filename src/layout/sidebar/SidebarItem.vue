@@ -29,23 +29,6 @@
         ></SidebarItem>
       </el-sub-menu>
     </template>
-
-    <!--多个元素，可能存在嵌套结构-->
-    <template v-else>
-      <el-sub-menu :index="item.path">
-        <!-- 当前菜单group的标题一行-->
-        <template v-if="item.meta" #title>
-          <span>{{ item.meta.title }}</span>
-        </template>
-
-        <!--当前菜单group的嵌套子children具体的内容-->
-        <SidebarItem
-          v-for="(child, index) in item.children"
-          :key="child.path + index"
-          :item="child"
-        ></SidebarItem>
-      </el-sub-menu>
-    </template>
   </div>
 </template>
 

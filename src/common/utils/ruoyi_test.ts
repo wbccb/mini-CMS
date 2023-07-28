@@ -24,7 +24,7 @@ export function tansParams(params: Record<string, any>) {
 
 export function parseTime(time: any, pattern?: string) {
   if (arguments.length === 0 || !time) {
-    return null;
+    return "无";
   }
   const format = pattern || "{y}-{m}-{d} {h}:{i}:{s}";
   let date;
