@@ -1,8 +1,8 @@
 <template>
   <el-dialog :title="title" v-model="dialogOpen" width="500px" append-to-body>
-    <el-form ref="roleRef" :model="form" :rules="rules" label-width="100px">
+    <el-form ref="dialogRef" :model="formData" :rules="rules" label-width="100px">
       <el-form-item label="角色名称" prop="roleName">
-        <el-input v-model="form.roleName" placeholder="请输入角色名称" />
+        <el-input v-model="formData.roleName" placeholder="请输入角色名称" />
       </el-form-item>
       <el-form-item prop="roleKey">
         <template #label>
@@ -16,13 +16,13 @@
             权限字符
           </span>
         </template>
-        <el-input v-model="form.roleKey" placeholder="请输入权限字符" />
+        <el-input v-model="formData.roleKey" placeholder="请输入权限字符" />
       </el-form-item>
       <el-form-item label="角色顺序" prop="roleSort">
-        <el-input-number v-model="form.roleSort" controls-position="right" :min="0" />
+        <el-input-number v-model="formData.roleSort" controls-position="right" :min="0" />
       </el-form-item>
       <el-form-item label="状态">
-        <el-radio-group v-model="form.status">
+        <el-radio-group v-model="formData.status">
           <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">
             {{ dict.label }}
           </el-radio>
@@ -31,12 +31,11 @@
 
       
       <menu-tree-check-box
-        :menu-check-strictly="form.menuCheckStrictly"
-        @change-check-strictly="changeCheckStrictly"
+          v-model:menu-check-strictly="formData.menuCheckStrictly"
       ></menu-tree-check-box>
       
       <el-form-item label="备注">
-        <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+        <el-input v-model="formData.remark" type="textarea" placeholder="请输入内容"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -49,43 +48,56 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, reactive, ref, computed, onMounted} from "vue";
-import {NetworkMenu} from "@/common/api/system/menu";
+import {defineComponent, PropType, reactive, ref, computed, onMounted, watch} from "vue";
+import {networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
-import {NetworkCreateRoleTree, networkGetCreateRoleMenuList, networkGetRoleList} from "@/common/api/system/role";
+import {
+  networkCreateOrUpdateRole,
+  networkGetCreateRoleMenuList,
+  networkGetRoleList, RoleDialogForm
+} from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
+import {ElMessage, FormInstance} from "element-plus";
+import {useSubmitForm} from "@/common/hooks/useSubmitForm";
 
-interface CreateRoleForm {
-  roleName: string;
-  roleKey: string;
-  roleSort: number;
-  status: string;
-  menuCheckStrictly: boolean;
-  remark: string;
-}
+
 
 export default defineComponent({
   name: "CreateRole",
   components: {MenuTreeCheckBox, IconSelect},
   props: {
-    menuList: {
-      type: Array as PropType<NetworkMenu[]>,
-    },
     modelValue: {
       type: Boolean,
     },
+    updateItem: {
+      type: Object as PropType<NetworkMenu>,
+      require: false
+    }
   },
   emits: ["close-dialog", "update:modelValue"],
   setup(props, context) {
-    const form = reactive<CreateRoleForm>({
+    const formData = reactive<RoleDialogForm>({
       roleName: "",
       roleKey: "",
       roleSort: 0,
       status: "",
       menuCheckStrictly: false,
       remark: "",
+    });
+
+    const isUpdate = ref(false);
+    watch(() => props.updateItem, (value) => {
+      if (value) {
+        isUpdate.value = !!props.updateItem;
+        const keys = Object.keys(value);
+        for (const key of keys) {
+          formData[key] = value[key];
+        }
+      }
+    }, {
+      immediate: true
     });
 
     const rules = {
@@ -105,10 +117,21 @@ export default defineComponent({
       },
     });
 
-   
 
+    const dialogRef = ref<FormInstance>();
+
+    const {checkRulesAndSubmit} = useSubmitForm(dialogRef);
     const submit = () => {
       // TODO 创建角色
+      checkRulesAndSubmit(async () => {
+        const addRes = await networkCreateOrUpdateRole(formData, isUpdate.value);
+        let msg = "新增成功";
+        if (isUpdate.value) {
+          msg = "更新成功";
+        }
+        ElMessage({message: msg, type: "success", duration: 20 * 1000});
+        cancel();
+      });
     };
     const cancel = () => {
       dialogOpen.value = false;
@@ -119,19 +142,20 @@ export default defineComponent({
 
 
     const changeCheckStrictly = (value: boolean) => {
-      form.menuCheckStrictly = value;
+      formData.menuCheckStrictly = value;
     }
 
     return {
       title,
       rules,
-      form,
+      formData,
       dialogOpen,
       submit,
       cancel,
       sys_show_hide,
       sys_normal_disable,
-      changeCheckStrictly
+      changeCheckStrictly,
+      dialogRef
     };
   },
 });

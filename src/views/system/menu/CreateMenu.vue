@@ -226,18 +226,19 @@ export default defineComponent({
   },
   emits: ["close-dialog", "update:modelValue"],
   setup(props, context) {
-    const initFormData: MenuDialogForm = {
+    const initFormData: MenuDialogForm={
       parentId: "",
       menuType: MenuTypeEnum.内层按钮,
       formData: "",
       orderNum: 1,
-      isIframe: "0",
+      isIframe: false,
       path: "",
       component: "",
       visible: true,
-      status: "",
+      status: true,
       menuName: "",
       icon: "",
+      name: "",
     }
     const formData = reactive<MenuDialogForm>({...initFormData});
 

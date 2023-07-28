@@ -36,7 +36,7 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ["change-check-strictly"],
+  emits: ["update:menuCheckStrictly"],
   setup(props, context) {
     const menuRef = ref();
 
@@ -56,7 +56,7 @@ export default defineComponent({
     };
     const handleCheckedTreeConnect = (value: boolean) => {
       // form.menuCheckStrictly = value ? true : false;
-      context.emit("change-check-strictly", value);
+      context.emit("update:menuCheckStrictly", value);
     };
 
     const menuOptions = ref<NetworkMenuTree[]>([]);

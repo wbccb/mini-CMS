@@ -4,7 +4,7 @@ import deepClone from "@/common/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
-import {networkGetMenuTree, NetworkMenuTree} from "@/common/api/system/menu";
+import {MenuDialogForm, networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
 
 export interface NetworkRole {
   createBy: string;
@@ -78,6 +78,15 @@ export interface NetworkRoleUser {
   };
 }
 
+export interface RoleDialogForm {
+  roleName: string;
+  roleKey: string;
+  roleSort: number;
+  status: string;
+  menuCheckStrictly: boolean;
+  remark: string;
+}
+
 /**
  * 根据roleId查询所有的用户数据
  * 查找该角色的所有用户数据
@@ -116,4 +125,17 @@ export function networkGetUnallocatedUserList(
   //   method: 'get',
   //   params: query
   // })
+}
+
+
+export function networkCreateOrUpdateRole(
+  data: RoleDialogForm,
+  isUpdate = false
+): Promise<NetworkMenu[]> {
+  const method = isUpdate ? "put" : "post";
+  return networkUtil({
+    url: prefix + "/role",
+    method: method,
+    data: data,
+  });
 }

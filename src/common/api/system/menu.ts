@@ -49,7 +49,7 @@ export interface MenuDialogForm {
   menuType: MenuTypeEnum;
   formData: string;
   orderNum: number;
-  isIframe: "0" | "1";
+  isIframe: boolean;
   path: string;
   component: string;
   visible: boolean;

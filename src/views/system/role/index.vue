@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkGetRoleList, NetworkRole} from "@/common/api/system/role";
@@ -131,6 +131,12 @@ export default defineComponent({
     const handleAdd = () => {
       openDialog.value = true;
     };
+    watch(openDialog, (showFlag) => {
+      if (!showFlag) {
+        // 隐藏创建框时主动触发列表刷新
+        forceRefresh();
+      }
+    });
     const handleUpdate = (item: NetworkRole) => {};
     const handleDelete = (item: NetworkRole) => {};
     const handleExport = () => {};
