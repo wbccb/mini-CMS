@@ -17,13 +17,6 @@ export function networkGetCodeImg() {
   });
 }
 
-export interface NetworkRole {
-  roleId: number;
-  roleName: string;
-  roleKey: string;
-  roleSort: number;
-  dataScope: string;
-}
 export interface NetworkLogin {
   permissions: string[];
   roles: string[];

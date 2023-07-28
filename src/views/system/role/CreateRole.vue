@@ -56,7 +56,7 @@ import IconSelect from "@/components/icon-select/icon-select.vue";
 import {
   networkCreateOrUpdateRole,
   networkGetCreateRoleMenuList,
-  networkGetRoleList, RoleDialogForm
+  networkGetRoleList, NetworkRole, RoleDialogForm
 } from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ElMessage, FormInstance} from "element-plus";
@@ -72,7 +72,7 @@ export default defineComponent({
       type: Boolean,
     },
     updateItem: {
-      type: Object as PropType<NetworkMenu>,
+      type: Object as PropType<NetworkRole>,
       require: false
     }
   },

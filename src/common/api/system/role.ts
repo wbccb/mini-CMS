@@ -6,27 +6,13 @@ import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
 import {MenuDialogForm, networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
 
-export interface NetworkRole {
+export type NetworkRole = {
+  id: string;
   createBy: string;
   createTime: string;
   updateBy: string;
   updateTime: string;
-  remark: string;
-  roleId: string;
-  roleName: string;
-  roleKey: string;
-  roleSort: number;
-  dataScope: number;
-  menuCheckStrictly: boolean;
-  deptCheckStrictly: boolean;
-  status: string;
-  delFlag: string;
-  flag: boolean;
-  menuIds: null | string[];
-  deptIds: null | string[];
-  permissions: null | string[];
-  admin: boolean;
-}
+} & RoleDialogForm;
 const prefix = "/system";
 
 export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
@@ -137,5 +123,12 @@ export function networkCreateOrUpdateRole(
     url: prefix + "/role",
     method: method,
     data: data,
+  });
+}
+
+export function networkDeleteRole(id: string): Promise<NetworkMenu[]> {
+  return networkUtil({
+    url: prefix + "/role?id=" + id,
+    method: "delete",
   });
 }
