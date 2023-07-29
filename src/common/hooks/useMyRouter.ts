@@ -35,11 +35,20 @@ const useMyRouter = () => {
     }
   };
 
+  const goToUserIndex = (replace = false) => {
+    if (replace) {
+      return router.replace({name: "User"});
+    } else {
+      return router.push({name: "User"});
+    }
+  };
+
   return {
     goToRegister,
     goToLogin,
     goToMenuIndex,
-    goToRoleIndex
+    goToRoleIndex,
+    goToUserIndex
   };
 };
 

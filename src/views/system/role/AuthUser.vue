@@ -83,7 +83,7 @@ import {networkGetMenuList, NetworkMenu} from "@/common/api/system/menu";
 import {handleTree} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/common/utils/ruoyi_test";
-import {NetworkRoleUser, networkGetUserListByRoleId, QueryUserListParams} from "@/common/api/system/role";
+import {NetworkUser, networkGetUserListByRoleId, QueryUserListParams} from "@/common/api/system/role";
 import {useRoute, useRouter} from "vue-router";
 import SelectUser from "@/views/system/role/SelectUser.vue";
 import CreateRole from "@/views/system/role/CreateRole.vue";
@@ -110,7 +110,7 @@ export default defineComponent({
     const sys_normal_disable = sysNormalDisable;
 
     // 取消该用户的授权
-    const cancelAuthUser = (user: NetworkRoleUser) => {};
+    const cancelAuthUser = (user: NetworkUser) => {};
 
     const route = useRoute();
 
@@ -123,14 +123,14 @@ export default defineComponent({
           pageSize: pageSize,
           roleId: roleId,
         };
-        const data: ResponseData<NetworkRoleUser[]> = await networkGetUserListByRoleId(query);
+        const data: ResponseData<NetworkUser[]> = await networkGetUserListByRoleId(query);
         return data;
       };
     };
 
     // 分页逻辑结合
     const {dataList, forceRefresh, indexMethod, pageSize, currentPage, ...returnObject} =
-      usePaginationBar<NetworkRoleUser>(getList());
+      usePaginationBar<NetworkUser>(getList());
 
     const initFinish = ref(true);
     onMounted(() => {

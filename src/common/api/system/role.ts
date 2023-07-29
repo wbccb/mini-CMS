@@ -48,7 +48,7 @@ export interface QueryUserListParams {
   deptId?: string;
 }
 
-export interface NetworkRoleUser {
+export interface NetworkUser {
   remark: null | string;
   userId: number;
   deptId: number;
@@ -80,10 +80,10 @@ export interface RoleDialogForm {
  */
 export function networkGetUserListByRoleId(
   query: QueryUserListParams
-): Promise<ResponseData<NetworkRoleUser[]>> {
+): Promise<ResponseData<NetworkUser[]>> {
   return new Promise((resolve) => {
     // @ts-ignore
-    const data = authUser as ResponseData<NetworkRoleUser[]>;
+    const data = authUser as ResponseData<NetworkUser[]>;
     resolve(deepClone(data));
   });
   return networkUtil({

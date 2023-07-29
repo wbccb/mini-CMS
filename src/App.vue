@@ -9,10 +9,10 @@ import {useMyRouter} from "@/common/hooks/useMyRouter";
 export default defineComponent({
   setup() {
 
-    const {goToMenuIndex, goToRoleIndex} = useMyRouter();
+    const {goToMenuIndex, goToRoleIndex, goToUserIndex} = useMyRouter();
     onMounted(() => {
       setTimeout(() => {
-        goToRoleIndex();
+        goToUserIndex();
       }, 500);
     });
 

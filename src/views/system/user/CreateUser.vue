@@ -110,7 +110,7 @@ import {
   networkGetCreateRoleMenuList,
   networkGetRoleList,
   NetworkRole,
-  NetworkRoleUser,
+  NetworkUser,
 } from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ResponseData} from "@/common/utils/networkUtil";
