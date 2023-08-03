@@ -1,13 +1,15 @@
 <template>
   <div class="app-aside-content">
-    <AppAsideHeaderLogo></AppAsideHeaderLogo>
+    <AppAsideHeaderLogo/>
     <el-scrollbar>
-      <el-menu @select="handleSelect" mode="vertical">
+      <el-menu
+          @select="handleSelect"
+          mode="vertical">
         <!--每一个菜单group的具体内容-->
         <SidebarItem
-          v-for="(route, index) in sidebarRoutes"
-          :key="route.path + index"
-          :item="route"
+            v-for="(route, index) in sidebarRoutes"
+            :key="route.path + index"
+            :item="route"
         ></SidebarItem>
       </el-menu>
     </el-scrollbar>
@@ -19,7 +21,7 @@ import {computed, defineComponent} from "vue";
 import AppAsideHeaderLogo from "./HeaderLogo.vue";
 import SidebarItem from "./SidebarItem.vue";
 import usePermissionStore from "@/store/modules/permission";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
 export default defineComponent({
   name: "AppAside",
@@ -44,6 +46,16 @@ export default defineComponent({
       // TODO 需要解析出params，然后解析出对应的路径作为key
       router.push(keyPath.join("/"));
     };
+
+    const route = useRoute()
+    // const activeIndex = computed(() => {
+    //   const index = sidebarRoutes.value.findIndex(item => item.path === route.path);
+    //   if (index > 0) {
+    //     console.error("activeIndex", inde);
+    //     return index;
+    //   }
+    //   return -1;
+    // });
 
     return {
       sidebarRoutes,

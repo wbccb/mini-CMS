@@ -67,7 +67,7 @@ import CreateUser from "@/views/system/user/CreateUser.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
 import {NetworkRole, NetworkUser, QueryUserListParams} from "@/common/api/system/role";
 import {ResponseData} from "@/common/utils/networkUtil";
-import {networkGetRoleListInAddUser, networkGetUserList, NetworkUserAndRoles} from "@/common/api/user";
+import {networkGetRoleListInAddUser, networkGetUserList, NetworkUserAndRoles} from "@/common/api/system/people";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/common/utils/ruoyi_test";
 import {useRoute, useRouter} from "vue-router";

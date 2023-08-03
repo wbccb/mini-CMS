@@ -106,31 +106,20 @@ import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.
 import sysUserSex from "@/common/mock/system/dict/type/sys_user_sex.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
 import {
-  NetworkCreateRoleTree,
   networkGetCreateRoleMenuList,
   networkGetRoleList,
   NetworkRole,
-  NetworkUser,
 } from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ResponseData} from "@/common/utils/networkUtil";
-import {networkGetRoleListInAddUser, networkGetUserList} from "@/common/api/user";
+import {networkGetRoleListInAddUser, networkGetUserList, NetworkUser} from "@/common/api/system/people";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
+import useUserStore from "@/store/modules/user";
 
-interface CreateUserForm {
-  nickName: string;
-  deptId: string;
-  phonenumber: string;
-  email: string;
-  userId?: string;
-  userName: string;
+export type CreateUserForm = {
   password: string;
-  sex: string;
-  status: string;
-  postIds: string[];
   roleIds: string[];
-  remark: string;
-}
+} & Omit<NetworkUser, "userId"|"id">;
 
 export default defineComponent({
   name: "CreateUser",
@@ -146,18 +135,12 @@ export default defineComponent({
   emits: ["close-dialog", "update:modelValue"],
   setup(props, context) {
     const form = reactive<CreateUserForm>({
-      nickName: "",
-      deptId: "",
-      phonenumber: "",
-      email: "",
-      userId: "",
       userName: "",
+      email: "",
+      phonenumber: "",
       password: "",
-      sex: "",
-      status: "",
-      postIds: [],
-      roleIds: [],
-      remark: "",
+      status: true,
+      roleIds: []
     });
 
     const rules = {
@@ -170,7 +153,6 @@ export default defineComponent({
           trigger: "blur",
         },
       ],
-      nickName: [{required: true, message: "用户昵称不能为空", trigger: "blur"}],
       password: [
         {required: true, message: "用户密码不能为空", trigger: "blur"},
         {
@@ -198,8 +180,10 @@ export default defineComponent({
     });
 
     // ----------分页逻辑-----------
+    const userStore = useUserStore();
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
+        const userId = userStore.userId;
         const data: ResponseData<NetworkRole[]> = await networkGetRoleListInAddUser();
         return data;
       };
@@ -211,6 +195,7 @@ export default defineComponent({
     onMounted(() => {
       forceRefresh();
     });
+    // ----------分页逻辑-----------
 
     const submit = () => {};
     const cancel = () => {

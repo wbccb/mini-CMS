@@ -5,6 +5,7 @@ import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
 import {MenuDialogForm, networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
+import {NetworkUser, NetworkUserAndRoles} from "@/common/api/system/people";
 
 export type NetworkRole = {
   id: string;
@@ -48,21 +49,7 @@ export interface QueryUserListParams {
   deptId?: string;
 }
 
-export interface NetworkUser {
-  remark: null | string;
-  userId: number;
-  deptId: number;
-  userName: string;
-  nickName: string;
-  email: string;
-  phonenumber: string;
-  status: string;
-  dept: {
-    remark: null | string;
-    deptId: number;
-    parentId: null | number;
-  };
-}
+
 
 export interface RoleDialogForm {
   roleName: string;

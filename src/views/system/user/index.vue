@@ -150,7 +150,7 @@ import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
 import CreateUser from "@/views/system/user/CreateUser.vue";
 import AuthRole from "@/views/system/user/AuthRole.vue";
-import {networkGetUserList} from "@/common/api/user";
+import {networkGetUserList} from "@/common/api/system/people";
 import {ResponseData} from "@/common/utils/networkUtil";
 import {NetworkUser, QueryUserListParams} from "@/common/api/system/role";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";

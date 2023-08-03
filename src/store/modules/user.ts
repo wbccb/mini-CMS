@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {getToken, removeToken, setToken} from "@/common/utils/tokenUtil";
+import {getToken, removeToken, setTempStorage, setToken} from "@/common/utils/tokenUtil";
 import {
   logout,
   networkGetInfo,
@@ -10,11 +10,12 @@ import {
 import defaultAvatar from "@/common/assets/profile.jpg";
 
 interface UserStore {
-  token: string | undefined;
+  token: string | null;
   name: string;
   avatar: string;
   roles: NetworkRole[] | ["ROLE_DEFAULT"];
   permissions: string[];
+  userId: string;
 }
 
 interface LoginData {
@@ -40,6 +41,7 @@ const useUserStore = defineStore({
     avatar: "",
     roles: [],
     permissions: [],
+    userId: ""
   }),
   actions: {
     async storeRegister(userInfo: RegisterData) {
@@ -59,9 +61,13 @@ const useUserStore = defineStore({
 
       // TODO 需要处理await失败的情况
       try {
+        // TODO 登录获取token
         const res = await networkLogin(username, password, code, uuid);
-        setToken(res.token);
-        this.token = res.token;
+        const {userId, token} = res.data;
+        setToken(token);
+        setTempStorage("userId", userId);
+        this.token = token;
+        this.userId = userId;
       } catch (e) {
         return Promise.reject("登录失败");
       }
@@ -70,9 +76,16 @@ const useUserStore = defineStore({
     },
     async storeGetInfo() {
       try {
-        const res = await networkGetInfo();
+        // 如果上面的userInfo获取成功，说明存在本地的token没有过期，可以直接使用，更新对应的store
+        const localStoreToken =  getToken();
+        this.token = localStoreToken;
+
+        // TODO token直接获取对应的userInfo
+        const res = await networkGetInfo(localStoreToken);
         const {avatar, roles, userName} = res.user;
         const userAvatar = !avatar ? defaultAvatar : import.meta.env.VITE_BASE_URL + avatar;
+
+
 
         if (Array.isArray(roles) && roles.length > 0) {
           this.roles = roles;

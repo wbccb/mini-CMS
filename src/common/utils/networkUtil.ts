@@ -30,10 +30,14 @@ const server = axios.create(options);
 
 // 需要将登录成功后拿到的token放入到请求中，保证会话正常
 server.interceptors.request.use((config) => {
-  const isToken = (config.headers || {}).isToken === "false";
+  // const isToken = (config.headers || {}).isToken === "false";
 
-  if (getToken() && !isToken) {
-    config.headers["Authorization"] = `Bearer ${getToken()}`;
+  const userStore = useUserStore();
+  const token = userStore.token;
+
+  if (token) {
+    // TODO 在验证头放置了token!
+    config.headers["authorization"] = `Bearer ${token}`;
   }
 
   switch (config.method) {

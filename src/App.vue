@@ -10,11 +10,11 @@ export default defineComponent({
   setup() {
 
     const {goToMenuIndex, goToRoleIndex, goToUserIndex} = useMyRouter();
-    onMounted(() => {
-      setTimeout(() => {
-        goToUserIndex();
-      }, 500);
-    });
+    // onMounted(() => {
+    //   setTimeout(() => {
+    //     goToUserIndex();
+    //   }, 500);
+    // });
 
   },
 });

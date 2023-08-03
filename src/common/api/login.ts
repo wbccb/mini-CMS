@@ -66,7 +66,7 @@ export function networkLogin(
 }
 
 // 获取用户详细信息
-export function networkGetInfo(): Promise<NetworkLoginResponse> {
+export function networkGetInfo(token): Promise<NetworkLoginResponse> {
   return new Promise((resolve) => {
     // @ts-ignore
     const mockResponseData = {
@@ -144,10 +144,10 @@ export function networkGetInfo(): Promise<NetworkLoginResponse> {
     resolve(mockResponseData);
   });
 
-  // return networkUtil({
-  //   url: "/getInfo",
-  //   method: "get",
-  // });
+  return networkUtil({
+    url: prefix +"/getInfo",
+    method: "get",
+  });
 }
 
 export const errorCodeText: Record<string, string> = {
