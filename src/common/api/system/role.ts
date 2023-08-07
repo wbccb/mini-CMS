@@ -54,7 +54,7 @@ export interface QueryUserListParams {
 
 export interface RoleDialogForm {
   roleName: string;
-  roleId: string;
+  roleType: string;
   roleSort: number;
   status: string;
   roleIdName: number;

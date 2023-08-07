@@ -15,13 +15,17 @@ export interface UserStore {
     user: ResponseUser | null;
 }
 
+export type RequestUser = Omit<ResponseUser, "id">;
+
 // 数据库返回的User的实体类
 export interface ResponseUser {
     id: string;
     name: string;
-    avatar: string;
+    email: string;
+    password: string;
     roleId: typeof RoleType;
-    permissions: string[];
+    status: boolean;
+    permissions: string;
     userId: string;
 }
 

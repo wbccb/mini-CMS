@@ -96,7 +96,7 @@ export default defineComponent({
       roleIdName: "",
       roleSort: 0,
       status: "",
-      roleId: RoleType["普通用户"],
+      roleType: RoleType["普通用户"],
       permissions: ""
     });
 
@@ -137,7 +137,7 @@ export default defineComponent({
       formData.permissions = getPermissionString();
       let roleIdName = "";
       for (const item in RoleType) {
-        if (RoleType[item] === formData.roleId) {
+        if (RoleType[item] === formData.roleType) {
           roleIdName = item;
         }
       }

@@ -1,11 +1,12 @@
 // 查询用户列表
 import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
-import {QueryUserListParams, ResponseRole} from "@/common/api/system/role";
+import {QueryUserListParams, ResponseRole, RoleDialogForm} from "@/common/api/system/role";
 import userList from "@/common/mock/system/user/user.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import roles from "@/common/mock/system/user/roles.json";
 import deepClone from "@/common/utils/deepCloneUtil";
-import {ResponseUser} from "@/store/modules/user";
+import {RequestUser, ResponseUser} from "@/store/modules/user";
+import {NetworkMenu} from "@/common/api/system/menu";
 
 
 const prefix = "/user";
@@ -50,3 +51,17 @@ export function networkGetRoleListInAddUser(userId: string): Promise<NetworkUser
     method: "get",
   });
 }
+
+
+export function networkCreateOrUpdateUser(
+    data: RequestUser,
+    isUpdate = false
+): Promise<NetworkMenu[]> {
+  const method = isUpdate ? "put" : "post";
+  return networkUtil({
+    url: prefix + "/people",
+    method: method,
+    data: data,
+  });
+}
+
