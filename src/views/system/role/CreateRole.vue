@@ -24,10 +24,10 @@
       <el-form-item label="角色种类" prop="roleSort">
         <el-select v-model="formData.roleType" placeholder="请选择">
           <el-option
-              v-for="(value, key) in RoleType"
+              v-for="(value, key) in dataList"
               :key="key"
-              :label="key"
-              :value="value"
+              :label="value.roleName"
+              :value="value.roleId"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -40,13 +40,8 @@
       </el-form-item>
 
       
-      <menu-tree-check-box
-          v-model:menu-check-strictly="formData.menuCheckStrictly"
-      ></menu-tree-check-box>
-      
-      <el-form-item label="备注">
-        <el-input v-model="formData.remark" type="textarea" placeholder="请输入内容"></el-input>
-      </el-form-item>
+      <menu-tree-check-box></menu-tree-check-box>
+
     </el-form>
     <template #footer>
       <div class="dialog-footer">
@@ -64,14 +59,17 @@ import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
 import {
-  networkCreateOrUpdateRole,
-  networkGetCreateRoleMenuList,
-  networkGetRoleList, ResponseRole, RoleDialogForm
+  networkCreateOrUpdateRole, ResponseRole,
+  RoleDialogForm
 } from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ElMessage, FormInstance} from "element-plus";
 import {useSubmitForm} from "@/common/hooks/useSubmitForm";
 import {RoleType} from "@/common/utils/CONST";
+import useUserStore from "@/store/modules/user";
+import {ResponseListData} from "@/common/utils/networkUtil";
+import {networkGetRoleListInAddUser} from "@/common/api/system/people";
+import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 
 
 
@@ -150,10 +148,26 @@ export default defineComponent({
     const sys_show_hide = sysShowHideData;
     const sys_normal_disable = sysNormalDisable;
 
+    // TODO 根据目前登录用户获取对应的角色列表数据
+    // ----------分页逻辑-----------
+    const userStore = useUserStore();
+    const getList = () => {
+      return async (pageNo: number, pageSize: number) => {
+        const userId = userStore.user.id;
+        const data: ResponseListData<ResponseRole[]> = await networkGetRoleListInAddUser(userId);
+        return data;
+      };
+    };
+    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<ResponseRole>(
+        getList()
+    );
 
-    const changeCheckStrictly = (value: boolean) => {
-      formData.menuCheckStrictly = value;
-    }
+    onMounted(() => {
+      forceRefresh();
+    });
+    // ----------分页逻辑-----------
+
+
 
     return {
       title,
@@ -164,9 +178,9 @@ export default defineComponent({
       cancel,
       sys_show_hide,
       sys_normal_disable,
-      changeCheckStrictly,
       dialogRef,
-      RoleType
+      RoleType,
+      dataList
     };
   },
 });

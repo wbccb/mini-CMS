@@ -12,6 +12,7 @@
 
     <div class="right-wrapper">
       <div class="right-menu">
+        <div v-if="user">{{user.email}}</div>
         <el-button @click="clickToLogout">退出登录</el-button>
       </div>
     </div>
@@ -58,9 +59,12 @@ export default defineComponent({
       }
 
     }
+
+    const user = userStore.user!;
     return {
       toggleClick,
-      clickToLogout
+      clickToLogout,
+      user
     };
   },
 });
@@ -99,6 +103,10 @@ export default defineComponent({
   .right-wrapper {
     .right-menu {
       margin: 10px;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
   }
 }

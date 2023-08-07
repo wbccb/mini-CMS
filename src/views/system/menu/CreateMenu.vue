@@ -201,7 +201,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, PropType, reactive, ref, watch} from "vue";
-import {MenuDialogForm, MenuTypeEnum, networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
+import {RequestMenu, MenuTypeEnum, networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
@@ -226,7 +226,7 @@ export default defineComponent({
   },
   emits: ["close-dialog", "update:modelValue"],
   setup(props, context) {
-    const initFormData: MenuDialogForm={
+    const initFormData: RequestMenu={
       parentId: "",
       menuType: MenuTypeEnum.内层按钮,
       formData: "",
@@ -240,7 +240,7 @@ export default defineComponent({
       icon: "",
       name: "",
     }
-    const formData = reactive<MenuDialogForm>({...initFormData});
+    const formData = reactive<RequestMenu>({...initFormData});
 
     const isUpdate = ref(false);
     watch(() => props.updateItem, (value) => {
@@ -256,7 +256,7 @@ export default defineComponent({
     });
 
 
-    const formRules: FormRules<MenuDialogForm> = {
+    const formRules: FormRules<RequestMenu> = {
       menuName: [{required: true, message: "菜单名称不能为空", trigger: "blur"}],
       orderNum: [{required: true, message: "菜单顺序不能为空", trigger: "blur"}],
       path: [{required: true, message: "路由地址不能为空", trigger: "blur"}],

@@ -1,11 +1,12 @@
-import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
 import systemRoleList from "@/common/mock/system/role/list.json";
 import deepClone from "@/common/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
-import {MenuDialogForm, networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
+import {networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
 import {NetworkUserAndRoles} from "@/common/api/system/people";
+import {ResponseUser} from "@/store/modules/user";
+import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
 
 export type ResponseRole = {
   id: string;
@@ -66,7 +67,7 @@ export interface RoleDialogForm {
  */
 export function networkGetUserListByRoleId(
   query: QueryUserListParams
-): Promise<ResponseListData<NetworkUser[]>> {
+): Promise<ResponseListData<ResponseUser[]>> {
   return new Promise((resolve) => {
     // @ts-ignore
     const data = authUser as ResponseListData<NetworkUser[]>;

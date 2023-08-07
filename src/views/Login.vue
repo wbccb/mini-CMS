@@ -86,8 +86,8 @@ export default defineComponent({
   props: {},
   setup() {
     const loginForm = reactive({
-      username: "18814122731@163.com",
-      password: "admin123",
+      username: "root@163.com",
+      password: "123456",
       rememberMe: false,
       code: "",
       uuid: "", // 配套code一起使用
@@ -144,6 +144,9 @@ export default defineComponent({
                   message: "登录成功",
                 });
                 const path: string = redirect.value || "/";
+
+
+
                 router.push({path: path});
               })
               .catch((error) => {

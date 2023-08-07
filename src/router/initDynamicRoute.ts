@@ -32,6 +32,7 @@ function handleAlreadyLogin(
     from: RouteLocationNormalized,
     next: NavigationGuardNext
 ) {
+    console.warn("=========handleAlreadyLogin=========");
     // 已经登录的情况，重新进入页面
     if (to.path === "/login") {
         next({path: "/"});
@@ -39,7 +40,8 @@ function handleAlreadyLogin(
     } else {
         // 使用token进行数据和动态路由的获取
         const userStore = useUserStore(); // pinia可以在任意地方使用store
-        if (userStore && !userStore.user) {
+        const permissionStore = usePermissionStore();
+        if (!userStore.user || !permissionStore.sidebarRoutes) {
             console.error("检测到user为空，需要进行个人信息的获取");
             handleDynamicRoute(to, from, next);
         } else {

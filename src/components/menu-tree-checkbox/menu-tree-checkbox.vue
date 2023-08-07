@@ -29,12 +29,7 @@ import useUserStore from "@/store/modules/user";
 export default defineComponent({
   name: "menuTreeCheckBox",
   props: {
-    menuCheckStrictly: {
-      type: Boolean,
-      required: true
-    }
   },
-  emits: ["update:menuCheckStrictly"],
   setup(props, context) {
     const menuRef = ref();
 

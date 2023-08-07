@@ -44,7 +44,7 @@ export enum MenuTypeEnum {
 }
 
 
-export interface MenuDialogForm {
+export interface RequestMenu {
   parentId: string;
   menuType: MenuTypeEnum;
   formData: string;
@@ -94,7 +94,7 @@ export function networkGetMenuList(): Promise<ResponseListData<NetworkMenu[]>> {
 }
 
 export function networkCreateOrUpdateMenu(
-  data: MenuDialogForm,
+  data: RequestMenu,
   isUpdate = false
 ): Promise<NetworkMenu[]> {
   const method = isUpdate ? "put" : "post";

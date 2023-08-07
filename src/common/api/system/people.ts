@@ -36,8 +36,8 @@ export interface NetworkUserAndRoles {
 // 比如超级管理员：分配公司管理员、普通用户
 // 比如公司管理员：普通用户
 // 比如普通用户：无法分配任何角色
-export function networkGetRoleListInAddUser(userId?: string): Promise<NetworkUserAndRoles> {
-  const urlUserId = userId || "";
+export function networkGetRoleListInAddUser(userId: string): Promise<NetworkUserAndRoles> {
+  const urlUserId = userId;
 
   // return new Promise((resolve) => {
   //   // @ts-ignore
@@ -46,7 +46,7 @@ export function networkGetRoleListInAddUser(userId?: string): Promise<NetworkUse
   // });
 
   return networkUtil({
-    url: prefix + `people/authRole/${urlUserId}`,
+    url: prefix + `/people/authRole/${urlUserId}`,
     method: "get",
   });
 }
