@@ -54,7 +54,7 @@ export function networkLogin(
 // 获取用户详细信息
 export function networkGetInfo(): Promise<ResponseUserInfo> {
     return networkUtil({
-        url: prefix + "/getInfo",
+        url: prefix + "/info",
         method: "get",
     });
 }

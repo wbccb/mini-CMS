@@ -39,7 +39,10 @@ server.interceptors.request.use((config) => {
   // const isToken = (config.headers || {}).isToken === "false";
 
   const userStore = useUserStore();
-  const token = userStore.token;
+  let token = userStore.token;
+  if(!token) {
+    token = getToken();
+  }
 
   if (token) {
     // TODO 在验证头放置了token!

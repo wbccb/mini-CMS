@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
-import {NetworkCreateRoleTree, networkGetCreateRoleMenuList} from "@/common/api/system/role";
+import {networkGetCreateRoleMenuList} from "@/common/api/system/role";
 import {ResponseListData} from "@/common/utils/networkUtil";
 import {NetworkMenuTree} from "@/common/api/system/menu";
 import useUserStore from "@/store/modules/user";
@@ -67,11 +67,11 @@ export default defineComponent({
       // TODO 拿到的路由都是 id: {children:{id}}的数据结构，还需要初始化路由时进行 [id]: {url}的映射
 
       // TODO 根据登录用户的roleType进行筛选
-      const roleId = userStore.userId;
+      const user = userStore.user!.id;
+
 
     });
 
-    function addRoute
 
     return {
       menuExpand,

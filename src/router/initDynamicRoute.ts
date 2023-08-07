@@ -1,7 +1,7 @@
 import NProgress from "nprogress";
 import router, {notNeedLogin} from "./index";
 import {getToken, removeToken} from "@/common/utils/tokenUtil";
-import {RouteLocationNamedRaw, RouteLocationNormalized, NavigationGuardNext} from "vue-router";
+import {RouteLocationNamedRaw, RouteLocationNormalized, NavigationGuardNext, RouteRecordRaw} from "vue-router";
 import useUserStore from "@/store/modules/user";
 import networkUtil from "@/common/utils/networkUtil";
 import usePermissionStore from "@/store/modules/permission";
@@ -39,8 +39,8 @@ function handleAlreadyLogin(
     } else {
         // 使用token进行数据和动态路由的获取
         const userStore = useUserStore(); // pinia可以在任意地方使用store
-        if (userStore && userStore.roles && userStore.roles.length === 0) {
-            console.error("检测到roles为空，需要进行登录获取");
+        if (userStore && !userStore.user) {
+            console.error("检测到user为空，需要进行个人信息的获取");
             handleDynamicRoute(to, from, next);
         } else {
             // 已经合并过动态路由
@@ -81,6 +81,7 @@ async function handleDynamicRoute(
         rewriteRoutes.forEach((route) => {
             if (!isHttp(route.path)) {
                 console.warn("网络请求getRouters拿到的路由是：", route);
+                // @ts-ignore
                 router.addRoute(route);
             }
         });

@@ -88,18 +88,10 @@ const useUserStore = defineStore({
                 this.token = localStoreToken;
 
                 // TODO token直接获取对应的userInfo
-                const res = await networkGetInfo(localStoreToken);
-                const {avatar, roles, userName} = res.user;
-                const userAvatar = !avatar ? defaultAvatar : import.meta.env.VITE_BASE_URL + avatar;
+                const res = await networkGetInfo();
+                const {user} = res.data;
 
-                // if (Array.isArray(roles) && roles.length > 0) {
-                //   this.roles = roles;
-                //   this.permissions = res.permissions;
-                // } else {
-                //   this.roles = ["ROLE_DEFAULT"];
-                // }
-                // this.name = userName;
-                // this.avatar = userAvatar;
+                this.user = user;
 
                 return res;
             } catch (e) {
