@@ -1,34 +1,18 @@
 // 查询用户列表
 import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
-import {NetworkUser, QueryUserListParams, NetworkRole} from "@/common/api/system/role";
+import {QueryUserListParams, ResponseRole} from "@/common/api/system/role";
 import userList from "@/common/mock/system/user/user.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import roles from "@/common/mock/system/user/roles.json";
 import deepClone from "@/common/utils/deepCloneUtil";
+import {ResponseUser} from "@/store/modules/user";
 
-// 去掉部门、保留一个用户名即可
-export interface NetworkUser {
-  id: string;
-  // remark: null | string;
-  userId: number;
-  // deptId: number;
-  userName: string;
-  // nickName: string;
-  email: string;
-  phonenumber: string;
-  status: boolean;
-  // dept: {
-  //   remark: null | string;
-  //   deptId: number;
-  //   parentId: null | number;
-  // };
-}
 
-const prefix = "/system";
+const prefix = "/user";
 
 export function networkGetUserList(
   query: QueryUserListParams
-): Promise<ResponseListData<NetworkUser[]>> {
+): Promise<ResponseListData<ResponseUser[]>> {
   // return new Promise((resolve) => {
   //   // @ts-ignore
   //   const data = authUser as ResponseListData<NetworkUser[]>;
@@ -44,8 +28,8 @@ export function networkGetUserList(
 export interface NetworkUserAndRoles {
   code: number;
   msg: string;
-  roles: NetworkRole[];
-  user: NetworkUser;
+  roles: ResponseRole[];
+  user: ResponseUser;
 }
 
 // 查询该用户可以控制的角色

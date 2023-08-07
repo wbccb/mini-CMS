@@ -65,7 +65,7 @@ import {defineComponent, nextTick, onMounted, reactive, ref, watchEffect} from "
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import CreateUser from "@/views/system/user/CreateUser.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
-import {NetworkRole, NetworkUser, QueryUserListParams} from "@/common/api/system/role";
+import {ResponseRole, QueryUserListParams} from "@/common/api/system/role";
 import {ResponseListData} from "@/common/utils/networkUtil";
 import {networkGetRoleListInAddUser, networkGetUserList, NetworkUserAndRoles} from "@/common/api/system/people";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
@@ -98,14 +98,14 @@ export default defineComponent({
       };
     };
     const {total, dataList, forceRefresh, indexMethod, ...returnObject} =
-      usePaginationBar<NetworkRole>(getList());
+      usePaginationBar<ResponseRole>(getList());
     
     onMounted(() => {
       forceRefresh();
     });
 
     // 先获取所有数据roleList，然后在getList()中进行当前页的数据获取
-    const roleList = ref<NetworkRole[]>([]);
+    const roleList = ref<ResponseRole[]>([]);
     const route = useRoute();
     onMounted(async () => {
       const userId = route.params.userId as string;

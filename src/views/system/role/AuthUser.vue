@@ -83,7 +83,7 @@ import {networkGetMenuList, NetworkMenu} from "@/common/api/system/menu";
 import {handleTree} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/common/utils/ruoyi_test";
-import {NetworkUser, networkGetUserListByRoleId, QueryUserListParams} from "@/common/api/system/role";
+import {networkGetUserListByRoleId, QueryUserListParams} from "@/common/api/system/role";
 import {useRoute, useRouter} from "vue-router";
 import SelectUser from "@/views/system/role/SelectUser.vue";
 import CreateRole from "@/views/system/role/CreateRole.vue";

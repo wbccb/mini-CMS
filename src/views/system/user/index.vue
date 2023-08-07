@@ -31,35 +31,17 @@
         <el-table-column
             label="用户编号"
             align="center"
-            key="userId"
-            prop="userId"
-            v-if="columns[0].visible"
+            key="id"
+            prop="id"
         />
         <el-table-column
-            label="用户名称"
+            label="用户名"
             align="center"
-            key="userName"
-            prop="userName"
-            v-if="columns[1].visible"
+            key="email"
+            prop="email"
             :show-overflow-tooltip="true"
         />
-        <el-table-column
-            label="用户昵称"
-            align="center"
-            key="nickName"
-            prop="nickName"
-            v-if="columns[2].visible"
-            :show-overflow-tooltip="true"
-        />
-        <el-table-column
-            label="手机号码"
-            align="center"
-            key="phonenumber"
-            prop="phonenumber"
-            v-if="columns[4].visible"
-            width="120"
-        />
-        <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
+        <el-table-column label="状态" align="center" key="status">
           <template #default="scope">
             <el-switch
                 v-model="scope.row.status"
@@ -73,7 +55,6 @@
             label="创建时间"
             align="center"
             prop="created_at"
-            v-if="columns[6].visible"
             width="160"
         >
           <template #default="scope">
@@ -152,7 +133,7 @@ import CreateUser from "@/views/system/user/CreateUser.vue";
 import AuthRole from "@/views/system/user/AuthRole.vue";
 import {networkGetUserList} from "@/common/api/system/people";
 import {ResponseListData} from "@/common/utils/networkUtil";
-import {NetworkUser, QueryUserListParams} from "@/common/api/system/role";
+import {QueryUserListParams} from "@/common/api/system/role";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/common/utils/ruoyi_test";
 import {useRouter} from "vue-router";
@@ -210,15 +191,7 @@ export default defineComponent({
     const handleStatusChange = (item: NetworkUser) => {
     };
 
-    const columns = ref([
-      {key: 0, label: `用户编号`, visible: true},
-      {key: 1, label: `用户名称`, visible: true},
-      {key: 2, label: `用户昵称`, visible: true},
-      {key: 3, label: `部门`, visible: true},
-      {key: 4, label: `手机号码`, visible: true},
-      {key: 5, label: `状态`, visible: true},
-      {key: 6, label: `创建时间`, visible: true},
-    ]);
+
 
     return {
       openDialog,
@@ -237,8 +210,7 @@ export default defineComponent({
       dataList,
       forceRefresh,
       indexMethod,
-      ...returnObject,
-      columns,
+      ...returnObject
     };
   },
 });

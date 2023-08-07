@@ -113,7 +113,7 @@
 import {defineComponent, onMounted, ref, watch} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
-import {networkDeleteRole, networkGetRoleList, NetworkRole} from "@/common/api/system/role";
+import {networkDeleteRole, networkGetRoleList, ResponseRole} from "@/common/api/system/role";
 import {ResponseListData} from "@/common/utils/networkUtil";
 import {handleTree} from "@/common/utils/ruoyi_test";
 import {parseTime} from "@/common/utils/ruoyi_test";
@@ -139,12 +139,12 @@ export default defineComponent({
         forceRefresh();
       }
     });
-    const currentItem = ref<NetworkRole>();
-    const handleUpdate = (item: NetworkRole) => {
+    const currentItem = ref<ResponseRole>();
+    const handleUpdate = (item: ResponseRole) => {
       currentItem.value = item;
       openDialog.value = true;
     };
-    const handleDelete = async (item: NetworkRole) => {
+    const handleDelete = async (item: ResponseRole) => {
       await networkDeleteRole(item.id);
       ElMessage.success("删除成功");
       await forceRefresh();
@@ -158,11 +158,11 @@ export default defineComponent({
     // ----------分页逻辑-----------
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
-        const data: ResponseListData<NetworkRole[]> = await networkGetRoleList();
+        const data: ResponseListData<ResponseRole[]> = await networkGetRoleList();
         return data;
       };
     };
-    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<NetworkRole>(
+    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<ResponseRole>(
         getList()
     );
 
@@ -170,17 +170,17 @@ export default defineComponent({
       forceRefresh();
     });
 
-    const handleStatusChange = (item: NetworkRole) => {
+    const handleStatusChange = (item: ResponseRole) => {
     };
 
     const roleId = ref("");
     const openRolePermissionDialog = ref(false);
-    const handleDataScope = (item: NetworkRole) => {
+    const handleDataScope = (item: ResponseRole) => {
       roleId.value = item.roleId;
       openRolePermissionDialog.value = true;
     };
     const router = useRouter();
-    const handleAuthUser = (item: NetworkRole) => {
+    const handleAuthUser = (item: ResponseRole) => {
       router.push(`/system/role-auth/user/${item.roleId}`);
     }
     // ----------分页逻辑-----------

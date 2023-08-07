@@ -5,9 +5,9 @@ import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
 import {MenuDialogForm, networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
-import {NetworkUser, NetworkUserAndRoles} from "@/common/api/system/people";
+import {NetworkUserAndRoles} from "@/common/api/system/people";
 
-export type NetworkRole = {
+export type ResponseRole = {
   id: string;
   createBy: string;
   createTime: string;
@@ -16,10 +16,10 @@ export type NetworkRole = {
 } & RoleDialogForm;
 const prefix = "/system";
 
-export function networkGetRoleList(): Promise<ResponseListData<NetworkRole[]>> {
+export function networkGetRoleList(): Promise<ResponseListData<ResponseRole[]>> {
   // return new Promise((resolve) => {
     // @ts-ignore
-    // const data = systemRoleList as ResponseListData<NetworkRole[]>;
+    // const data = systemRoleList as ResponseListData<ResponseRole[]>;
     // resolve(deepClone(data));
   // });
   return networkUtil({

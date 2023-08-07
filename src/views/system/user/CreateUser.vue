@@ -108,11 +108,11 @@ import IconSelect from "@/components/icon-select/icon-select.vue";
 import {
   networkGetCreateRoleMenuList,
   networkGetRoleList,
-  NetworkRole,
+  ResponseRole,
 } from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ResponseListData} from "@/common/utils/networkUtil";
-import {networkGetRoleListInAddUser, networkGetUserList, NetworkUser} from "@/common/api/system/people";
+import {networkGetRoleListInAddUser} from "@/common/api/system/people";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import useUserStore from "@/store/modules/user";
 
@@ -184,11 +184,11 @@ export default defineComponent({
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
         const userId = userStore.userId;
-        const data: ResponseListData<NetworkRole[]> = await networkGetRoleListInAddUser();
+        const data: ResponseListData<ResponseRole[]> = await networkGetRoleListInAddUser();
         return data;
       };
     };
-    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<NetworkRole>(
+    const {dataList, forceRefresh, indexMethod, ...returnObject} = usePaginationBar<ResponseRole>(
       getList()
     );
 
