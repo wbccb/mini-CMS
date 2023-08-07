@@ -78,7 +78,7 @@ import {computed, defineComponent, onMounted, reactive, ref} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import {networkGetMenuList, NetworkMenu} from "@/common/api/system/menu";
 import {handleTree} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
@@ -123,7 +123,7 @@ export default defineComponent({
           pageSize: pageSize,
           roleId: roleId,
         };
-        const data: ResponseData<NetworkUser[]> = await networkGetUserListByRoleId(query);
+        const data: ResponseListData<NetworkUser[]> = await networkGetUserListByRoleId(query);
         return data;
       };
     };

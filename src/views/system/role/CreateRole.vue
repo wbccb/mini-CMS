@@ -21,6 +21,16 @@
       <el-form-item label="角色顺序" prop="roleSort">
         <el-input-number v-model="formData.roleSort" controls-position="right" :min="0" />
       </el-form-item>
+      <el-form-item label="角色种类" prop="roleSort">
+        <el-select v-model="formData.roleType" placeholder="请选择">
+          <el-option
+              v-for="(value, key) in RoleType"
+              :key="key"
+              :label="key"
+              :value="value"
+          ></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="状态">
         <el-radio-group v-model="formData.status">
           <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">
@@ -61,6 +71,7 @@ import {
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
 import {ElMessage, FormInstance} from "element-plus";
 import {useSubmitForm} from "@/common/hooks/useSubmitForm";
+import {RoleType} from "@/common/utils/CONST";
 
 
 
@@ -83,8 +94,7 @@ export default defineComponent({
       roleKey: "",
       roleSort: 0,
       status: "",
-      menuCheckStrictly: false,
-      remark: "",
+      roleType: RoleType["普通用户"]
     });
 
     const isUpdate = ref(false);
@@ -155,7 +165,8 @@ export default defineComponent({
       sys_show_hide,
       sys_normal_disable,
       changeCheckStrictly,
-      dialogRef
+      dialogRef,
+      RoleType
     };
   },
 });

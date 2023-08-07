@@ -78,7 +78,7 @@ import {ElMessage} from "element-plus";
 import {useRouter} from "vue-router";
 import {useMyRouter} from "@/common/hooks/useMyRouter";
 
-type IElForm = InstanceType<typeof ElForm>;
+import type { FormInstance, FormRules } from 'element-plus'
 
 export default defineComponent({
   name: "login",
@@ -99,16 +99,16 @@ export default defineComponent({
     const captchaEnabled = ref(false);
     const codeUrl = ref("");
     const getCode = async () => {
-      const res = await networkGetCodeImg();
-      captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
-      if (captchaEnabled.value) {
-        codeUrl.value = "data:image/gif;base64," + res.img;
-        loginForm.uuid = res.uuid;
-      }
+      // const res = await networkGetCodeImg();
+      // captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled;
+      // if (captchaEnabled.value) {
+      //   codeUrl.value = "data:image/gif;base64," + res.img;
+      //   loginForm.uuid = res.uuid;
+      // }
     };
 
     const userStore = useUserStore();
-    const loginRef = ref<IElForm>();
+    const loginRef = ref<FormInstance>();
     const router = useRouter();
     const redirect = ref<string>(""); // 如果是某一个业务页面跳转过来，则有redirect
     const loginRules = {

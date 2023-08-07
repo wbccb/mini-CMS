@@ -8,9 +8,9 @@ import LayoutIndex from "@/layout/index.vue";
 import ParentView from "@/components/parent-view/parent-view.vue";
 import InnerLink from "@/components/inner-link/inner-link.vue";
 import deepClone from "@/common/utils/deepCloneUtil";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 
-type NetworkResponseRoute = ResponseData<NetworkRoute>;
+type NetworkResponseRoute = ResponseListData<NetworkRoute>;
 
 interface PermissionState {
   routes: RouteRecordRaw[];

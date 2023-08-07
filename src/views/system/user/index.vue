@@ -151,7 +151,7 @@ import PaginationBar from "@/components/table/PaginationBar.vue";
 import CreateUser from "@/views/system/user/CreateUser.vue";
 import AuthRole from "@/views/system/user/AuthRole.vue";
 import {networkGetUserList} from "@/common/api/system/people";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import {NetworkUser, QueryUserListParams} from "@/common/api/system/role";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {parseTime} from "@/common/utils/ruoyi_test";
@@ -169,7 +169,7 @@ export default defineComponent({
           pageNum: pageNo,
           pageSize: pageSize,
         };
-        const data: ResponseData<NetworkUser[]> = await networkGetUserList(query);
+        const data: ResponseListData<NetworkUser[]> = await networkGetUserList(query);
         return data;
       };
     };

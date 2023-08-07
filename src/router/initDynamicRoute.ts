@@ -39,7 +39,7 @@ function handleAlreadyLogin(
     } else {
         // 使用token进行数据和动态路由的获取
         const userStore = useUserStore(); // pinia可以在任意地方使用store
-        if (userStore.roles.length === 0) {
+        if (userStore && userStore.roles && userStore.roles.length === 0) {
             console.error("检测到roles为空，需要进行登录获取");
             handleDynamicRoute(to, from, next);
         } else {

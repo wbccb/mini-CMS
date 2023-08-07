@@ -44,7 +44,7 @@ import PaginationBar from "@/components/table/PaginationBar.vue";
 import {parseTime} from "@/common/utils/ruoyi_test";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import {networkGetUnallocatedUserList, NetworkUser, QueryUserListParams} from "@/common/api/system/role";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {useRoute} from "vue-router";
 
@@ -70,7 +70,7 @@ export default defineComponent({
           pageSize: pageSize,
           roleId: roleId,
         };
-        const data: ResponseData<NetworkUser[]> = await networkGetUnallocatedUserList(query);
+        const data: ResponseListData<NetworkUser[]> = await networkGetUnallocatedUserList(query);
         return data;
       };
     };

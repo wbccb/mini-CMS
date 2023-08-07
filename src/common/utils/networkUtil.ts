@@ -6,7 +6,7 @@ import {tansParams} from "@/common/utils/ruoyi_test";
 import useUserStore from "@/store/modules/user";
 import router from "@/router";
 
-export interface ResponseData<T> {
+export interface ResponseListData<T> {
   code: number;
   msg: string;
   data: {
@@ -15,6 +15,12 @@ export interface ResponseData<T> {
     pageNo: number;
     pageSize: number;
   }
+}
+
+export interface ResponseData<T> {
+  code: number;
+  msg: string;
+  data: T
 }
 
 axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8";
@@ -77,7 +83,10 @@ server.interceptors.response.use(
         case 401:
           console.error("返回401，会话过期，需要重新登录");
           // 登录过期提示
-          ElMessage({message: msg, type: "error"});
+          ElMessage({
+            type: "error",
+            message: "会话过期，请重新登录",
+          });
           const userStore = useUserStore();
           userStore.storeLogout().then(() => {
             router.push("/login");

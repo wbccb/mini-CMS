@@ -103,7 +103,7 @@ import {computed, defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import {handleTree, parseTime} from "@/common/utils/ruoyi_test";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkDeleteMenu, networkGetMenuList, NetworkMenu} from "@/common/api/system/menu";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import CreateMenu from "@/views/system/menu/CreateMenu.vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import PaginationBar from "@/components/table/PaginationBar.vue";
@@ -154,7 +154,7 @@ export default defineComponent({
     // 实际请求的业务方法
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
-        const res: ResponseData<NetworkMenu[]> = await networkGetMenuList();
+        const res: ResponseListData<NetworkMenu[]> = await networkGetMenuList();
         const data: NetworkMenu[] = res.data.list.map((item: NetworkMenu) => {
           return {
             ...item,
@@ -171,7 +171,7 @@ export default defineComponent({
             total: treeData.length,
             list: treeData
           }
-        } as ResponseData<NetworkMenu[]>
+        } as ResponseListData<NetworkMenu[]>
       };
     };
 

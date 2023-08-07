@@ -1,5 +1,5 @@
 import {nextTick, ref} from "vue";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import data from "@/views/system/dict/data.vue";
 
 /**
@@ -7,7 +7,7 @@ import data from "@/views/system/dict/data.vue";
  * @param getListData
  */
 export const usePaginationBar = <T>(
-  getListData: (pageNo: number, pageSize: number) => Promise<ResponseData<T[]>>
+  getListData: (pageNo: number, pageSize: number) => Promise<ResponseListData<T[]>>
 ) => {
   const currentPage = ref<number>(1);
   const pageSize = ref<number>(10);

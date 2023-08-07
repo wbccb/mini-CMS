@@ -114,7 +114,7 @@ import {defineComponent, onMounted, ref, watch} from "vue";
 import TableBaseView from "@/components/table/TableBaseView.vue";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import {networkDeleteRole, networkGetRoleList, NetworkRole} from "@/common/api/system/role";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import {handleTree} from "@/common/utils/ruoyi_test";
 import {parseTime} from "@/common/utils/ruoyi_test";
 import PaginationBar from "@/components/table/PaginationBar.vue";
@@ -158,7 +158,7 @@ export default defineComponent({
     // ----------分页逻辑-----------
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
-        const data: ResponseData<NetworkRole[]> = await networkGetRoleList();
+        const data: ResponseListData<NetworkRole[]> = await networkGetRoleList();
         return data;
       };
     };

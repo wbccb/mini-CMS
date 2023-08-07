@@ -1,5 +1,5 @@
 // 查询用户列表
-import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
+import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
 import {NetworkUser, QueryUserListParams, NetworkRole} from "@/common/api/system/role";
 import userList from "@/common/mock/system/user/user.json";
 import authUser from "@/common/mock/system/role/authUser.json";
@@ -28,10 +28,10 @@ const prefix = "/system";
 
 export function networkGetUserList(
   query: QueryUserListParams
-): Promise<ResponseData<NetworkUser[]>> {
+): Promise<ResponseListData<NetworkUser[]>> {
   // return new Promise((resolve) => {
   //   // @ts-ignore
-  //   const data = authUser as ResponseData<NetworkUser[]>;
+  //   const data = authUser as ResponseListData<NetworkUser[]>;
   //   resolve(deepClone(data));
   // });
   return networkUtil({

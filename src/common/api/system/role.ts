@@ -1,4 +1,4 @@
-import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
+import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
 import systemRoleList from "@/common/mock/system/role/list.json";
 import deepClone from "@/common/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
@@ -16,10 +16,10 @@ export type NetworkRole = {
 } & RoleDialogForm;
 const prefix = "/system";
 
-export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
+export function networkGetRoleList(): Promise<ResponseListData<NetworkRole[]>> {
   // return new Promise((resolve) => {
     // @ts-ignore
-    // const data = systemRoleList as ResponseData<NetworkRole[]>;
+    // const data = systemRoleList as ResponseListData<NetworkRole[]>;
     // resolve(deepClone(data));
   // });
   return networkUtil({
@@ -32,7 +32,7 @@ export function networkGetRoleList(): Promise<ResponseData<NetworkRole[]>> {
 export function networkGetCreateRoleMenuList() {
   // return new Promise((resolve) => {
   //   // @ts-ignore
-  //   const data = createRole as ResponseData<NetworkCreateRoleTree[]>;
+  //   const data = createRole as ResponseListData<NetworkCreateRoleTree[]>;
   //   resolve(deepClone(data.data));
   // });
 
@@ -56,8 +56,7 @@ export interface RoleDialogForm {
   roleKey: string;
   roleSort: number;
   status: string;
-  menuCheckStrictly: boolean;
-  remark: string;
+  roleType: number;
 }
 
 /**
@@ -67,10 +66,10 @@ export interface RoleDialogForm {
  */
 export function networkGetUserListByRoleId(
   query: QueryUserListParams
-): Promise<ResponseData<NetworkUser[]>> {
+): Promise<ResponseListData<NetworkUser[]>> {
   return new Promise((resolve) => {
     // @ts-ignore
-    const data = authUser as ResponseData<NetworkUser[]>;
+    const data = authUser as ResponseListData<NetworkUser[]>;
     resolve(deepClone(data));
   });
   return networkUtil({

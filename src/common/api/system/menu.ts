@@ -1,7 +1,7 @@
 /**
  * 根据账号获取动态路由，进行menu菜单的显示
  */
-import networkUtil, {ResponseData} from "@/common/utils/networkUtil";
+import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
 import deepClone from "@/common/utils/deepCloneUtil";
 import routesList from "@/common/mock/system/router/list.json";
 import createRole from "@/common/mock/system/role/createRole.json";
@@ -70,10 +70,10 @@ const prefix = "/system";
 /**
  * 获取动态路由
  */
-export function networkGetRoutes(): Promise<ResponseData<NetworkRoute[]>> {
+export function networkGetRoutes(): Promise<ResponseListData<NetworkRoute[]>> {
   // return new Promise((resolve) => {
   //   const mockData: any = routesList;
-  //   const data = mockData as ResponseData<NetworkRoute>;
+  //   const data = mockData as ResponseListData<NetworkRoute>;
   //   resolve(data);
   // });
 
@@ -86,7 +86,7 @@ export function networkGetRoutes(): Promise<ResponseData<NetworkRoute[]>> {
 /**
  * 获取所有的菜单列表
  */
-export function networkGetMenuList(): Promise<ResponseData<NetworkMenu[]>> {
+export function networkGetMenuList(): Promise<ResponseListData<NetworkMenu[]>> {
   return networkUtil({
     url: prefix + "/menu",
     method: "get",
@@ -116,7 +116,7 @@ export function networkDeleteMenu(id: number): Promise<NetworkMenu[]> {
  * 获取menu的树状结构，可以参考createRole的mock数据
  * @param id
  */
-export function networkGetMenuTree(): Promise<ResponseData<NetworkMenuTree[]>> {
+export function networkGetMenuTree(): Promise<ResponseListData<NetworkMenuTree[]>> {
   return networkUtil({
     url: prefix + "/menu/treeselect",
     method: "get",

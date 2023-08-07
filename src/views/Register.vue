@@ -90,8 +90,7 @@ import useUserStore from "@/store/modules/user";
 import {ElMessage} from "element-plus";
 import {useRouter} from "vue-router";
 import {useMyRouter} from "@/common/hooks/useMyRouter";
-
-type IElForm = InstanceType<typeof ElForm>;
+import type { FormInstance, FormRules } from 'element-plus'
 
 export default defineComponent({
   name: "register",
@@ -102,17 +101,16 @@ export default defineComponent({
       email: "18814122731@163.com",
       password1: "admin123",
       password2: "admin123",
-      nickName: "unknown"
     });
 
     const loading = ref(false);
 
     const userStore = useUserStore();
-    const loginRef = ref<IElForm>();
+    const loginRef = ref<FormInstance>();
     const router = useRouter();
     const redirect = ref<string>(""); // 如果是某一个业务页面跳转过来，则有redirect
     const loginRules = {
-      nickName: [{required: true, trigger: "blur", message: "请输入您的账号"}],
+      email: [{required: true, trigger: "blur", message: "请输入您的账号"}],
       password1: [{required: true, trigger: "blur", message: "请输入您的密码"}],
       password2: [{required: true, trigger: "blur", message: "请输入您的密码"}],
     };

@@ -111,7 +111,7 @@ import {
   NetworkRole,
 } from "@/common/api/system/role";
 import MenuTreeCheckBox from "@/components/menu-tree-checkbox/menu-tree-checkbox.vue";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import {networkGetRoleListInAddUser, networkGetUserList, NetworkUser} from "@/common/api/system/people";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
 import useUserStore from "@/store/modules/user";
@@ -184,7 +184,7 @@ export default defineComponent({
     const getList = () => {
       return async (pageNo: number, pageSize: number) => {
         const userId = userStore.userId;
-        const data: ResponseData<NetworkRole[]> = await networkGetRoleListInAddUser();
+        const data: ResponseListData<NetworkRole[]> = await networkGetRoleListInAddUser();
         return data;
       };
     };

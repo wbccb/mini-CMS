@@ -6,18 +6,15 @@
     <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event)">
       全选/全不选
     </el-checkbox>
-    <el-checkbox v-model="menuCheckStrictly" @change="handleCheckedTreeConnect($event)">
-      父子联动
-    </el-checkbox>
     <el-tree
-      class="tree-border"
-      :data="menuOptions"
-      show-checkbox
-      ref="menuRef"
-      node-key="id"
-      :check-strictly="!menuCheckStrictly"
-      empty-text="加载中，请稍候"
-      :props="{label: 'label', children: 'children'}"
+        class="tree-border"
+        :data="menuOptions"
+        show-checkbox
+        ref="menuRef"
+        node-key="id"
+        :check-strictly="!menuCheckStrictly"
+        empty-text="加载中，请稍候"
+        :props="{label: 'label', children: 'children'}"
     ></el-tree>
   </el-form-item>
 </template>
@@ -25,8 +22,9 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
 import {NetworkCreateRoleTree, networkGetCreateRoleMenuList} from "@/common/api/system/role";
-import {ResponseData} from "@/common/utils/networkUtil";
+import {ResponseListData} from "@/common/utils/networkUtil";
 import {NetworkMenuTree} from "@/common/api/system/menu";
+import useUserStore from "@/store/modules/user";
 
 export default defineComponent({
   name: "menuTreeCheckBox",
@@ -60,11 +58,20 @@ export default defineComponent({
     };
 
     const menuOptions = ref<NetworkMenuTree[]>([]);
+    const userStore = useUserStore();
     onMounted(async () => {
       const res = await networkGetCreateRoleMenuList();
-      menuOptions.value = res.data;
+      menuOptions.value = res.data
       console.warn("createRole拿到的菜单是", res);
+
+      // TODO 拿到的路由都是 id: {children:{id}}的数据结构，还需要初始化路由时进行 [id]: {url}的映射
+
+      // TODO 根据登录用户的roleType进行筛选
+      const roleId = userStore.userId;
+
     });
+
+    function addRoute
 
     return {
       menuExpand,
