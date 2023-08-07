@@ -4,25 +4,28 @@
       <el-form-item label="角色名称" prop="roleName">
         <el-input v-model="formData.roleName" placeholder="请输入角色名称" />
       </el-form-item>
-      <el-form-item prop="roleKey">
-        <template #label>
-          <span>
-            <el-tooltip
-              content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasRole('admin')`)"
-              placement="top"
-            >
-              <el-icon><question-filled /></el-icon>
-            </el-tooltip>
-            权限字符
-          </span>
-        </template>
-        <el-input v-model="formData.roleKey" placeholder="请输入权限字符" />
-      </el-form-item>
+      <permission-tree-check-box :checkData="checkData" ref="permissionTree"></permission-tree-check-box>
+      <menu-tree-check-box @checkedNodes="checkedNodes"></menu-tree-check-box>
+
+      <!--      <el-form-item prop="roleKey">-->
+<!--        <template #label>-->
+<!--          <span>-->
+<!--            <el-tooltip-->
+<!--              content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasRole('admin')`)"-->
+<!--              placement="top"-->
+<!--            >-->
+<!--              <el-icon><question-filled /></el-icon>-->
+<!--            </el-tooltip>-->
+<!--            权限字符-->
+<!--          </span>-->
+<!--        </template>-->
+<!--        <el-input v-model="formData.roleKey" placeholder="请输入权限字符" />-->
+<!--      </el-form-item>-->
       <el-form-item label="角色顺序" prop="roleSort">
         <el-input-number v-model="formData.roleSort" controls-position="right" :min="0" />
       </el-form-item>
       <el-form-item label="角色种类" prop="roleSort">
-        <el-select v-model="formData.roleType" placeholder="请选择">
+        <el-select v-model="formData.roleId" placeholder="请选择">
           <el-option
               v-for="(value, key) in dataList"
               :key="key"
@@ -40,7 +43,6 @@
       </el-form-item>
 
       
-      <menu-tree-check-box></menu-tree-check-box>
 
     </el-form>
     <template #footer>
@@ -54,7 +56,7 @@
 
 <script lang="ts">
 import {defineComponent, PropType, reactive, ref, computed, onMounted, watch} from "vue";
-import {networkCreateOrUpdateMenu, NetworkMenu} from "@/common/api/system/menu";
+import {networkCreateOrUpdateMenu, NetworkMenu, ResponseMenuTree} from "@/common/api/system/menu";
 import sysShowHideData from "@/common/mock/system/dict/type/sys_show_hide.json";
 import sysNormalDisable from "@/common/mock/system/dict/type/sys_normal_disable.json";
 import IconSelect from "@/components/icon-select/icon-select.vue";
@@ -70,12 +72,14 @@ import useUserStore from "@/store/modules/user";
 import {ResponseListData} from "@/common/utils/networkUtil";
 import {networkGetRoleListInAddUser} from "@/common/api/system/people";
 import {usePaginationBar} from "@/common/hooks/usePaginationBar";
+import PermissionTreeCheckBox from "@/components/permissions-tree-checkbox/permissions-tree-checkbox.vue";
+import permission from "@/store/modules/permission";
 
 
 
 export default defineComponent({
   name: "CreateRole",
-  components: {MenuTreeCheckBox, IconSelect},
+  components: {PermissionTreeCheckBox, MenuTreeCheckBox, IconSelect},
   props: {
     modelValue: {
       type: Boolean,
@@ -89,10 +93,11 @@ export default defineComponent({
   setup(props, context) {
     const formData = reactive<RoleDialogForm>({
       roleName: "",
-      roleKey: "",
+      roleIdName: "",
       roleSort: 0,
       status: "",
-      roleType: RoleType["普通用户"]
+      roleId: RoleType["普通用户"],
+      permissions: ""
     });
 
     const isUpdate = ref(false);
@@ -110,7 +115,6 @@ export default defineComponent({
 
     const rules = {
       roleName: [{required: true, message: "角色名称不能为空", trigger: "blur"}],
-      roleKey: [{required: true, message: "权限字符不能为空", trigger: "blur"}],
       roleSort: [{required: true, message: "角色顺序不能为空", trigger: "blur"}],
     };
 
@@ -130,6 +134,15 @@ export default defineComponent({
 
     const {checkRulesAndSubmit} = useSubmitForm(dialogRef);
     const submit = () => {
+      formData.permissions = getPermissionString();
+      let roleIdName = "";
+      for (const item in RoleType) {
+        if (RoleType[item] === formData.roleId) {
+          roleIdName = item;
+        }
+      }
+      formData.roleIdName = roleIdName;
+
       // TODO 创建角色
       checkRulesAndSubmit(async () => {
         const addRes = await networkCreateOrUpdateRole(formData, isUpdate.value);
@@ -168,8 +181,20 @@ export default defineComponent({
     // ----------分页逻辑-----------
 
 
+    const checkData = ref<ResponseMenuTree[]>([]);
+    const checkedNodes = (data: ResponseMenuTree[]) => {
+      checkData.value = data;
+    }
+
+    const permissionTree = ref();
+    function getPermissionString() {
+      return permissionTree.value && permissionTree.value.getPermissionData();
+    }
 
     return {
+      checkData,
+      checkedNodes,
+      permissionTree,
       title,
       rules,
       formData,

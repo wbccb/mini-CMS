@@ -12,8 +12,9 @@
         show-checkbox
         ref="menuRef"
         node-key="id"
-        :check-strictly="!menuCheckStrictly"
+        :check-strictly="false"
         empty-text="加载中，请稍候"
+        @check-change="checkChange"
         :props="{label: 'label', children: 'children'}"
     ></el-tree>
   </el-form-item>
@@ -23,13 +24,13 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {networkGetCreateRoleMenuList} from "@/common/api/system/role";
 import {ResponseListData} from "@/common/utils/networkUtil";
-import {NetworkMenuTree} from "@/common/api/system/menu";
+import {ResponseMenuTree} from "@/common/api/system/menu";
 import useUserStore from "@/store/modules/user";
 
 export default defineComponent({
   name: "menuTreeCheckBox",
-  props: {
-  },
+  emits: ["checkedNodes"],
+  props: {},
   setup(props, context) {
     const menuRef = ref();
 
@@ -52,23 +53,22 @@ export default defineComponent({
       context.emit("update:menuCheckStrictly", value);
     };
 
-    const menuOptions = ref<NetworkMenuTree[]>([]);
+    const menuOptions = ref<ResponseMenuTree[]>([]);
     const userStore = useUserStore();
     onMounted(async () => {
       const res = await networkGetCreateRoleMenuList();
       menuOptions.value = res.data
-      console.warn("createRole拿到的菜单是", res);
-
-      // TODO 拿到的路由都是 id: {children:{id}}的数据结构，还需要初始化路由时进行 [id]: {url}的映射
-
-      // TODO 根据登录用户的roleType进行筛选
-      const user = userStore.user!.id;
-
-
     });
 
 
+    const checkChange = () => {
+      const checkedNodes = menuRef.value.getCheckedNodes();
+      context.emit("checkedNodes", checkedNodes);
+    }
+
+
     return {
+      checkChange,
       menuExpand,
       menuNodeAll,
       menuCheckStrictly,

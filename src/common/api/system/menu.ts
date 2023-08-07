@@ -59,8 +59,8 @@ export interface RequestMenu {
   icon: string;
 }
 
-export interface NetworkMenuTree {
-  children: NetworkMenuTree[];
+export interface ResponseMenuTree {
+  children: ResponseMenuTree[];
   id: number;
   label: string;
 }
@@ -116,7 +116,7 @@ export function networkDeleteMenu(id: number): Promise<NetworkMenu[]> {
  * 获取menu的树状结构，可以参考createRole的mock数据
  * @param id
  */
-export function networkGetMenuTree(): Promise<ResponseListData<NetworkMenuTree[]>> {
+export function networkGetMenuTree(): Promise<ResponseListData<ResponseMenuTree[]>> {
   return networkUtil({
     url: prefix + "/menu/treeselect",
     method: "get",

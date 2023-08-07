@@ -3,7 +3,7 @@ import deepClone from "@/common/utils/deepCloneUtil";
 import createRole from "@/common/mock/system/role/createRole.json";
 import authUser from "@/common/mock/system/role/authUser.json";
 import unallocatedUserList from "@/common/mock/system/role/unallocatedUserList.json";
-import {networkGetMenuTree, NetworkMenu, NetworkMenuTree} from "@/common/api/system/menu";
+import {networkGetMenuTree, NetworkMenu, ResponseMenuTree} from "@/common/api/system/menu";
 import {NetworkUserAndRoles} from "@/common/api/system/people";
 import {ResponseUser} from "@/store/modules/user";
 import networkUtil, {ResponseListData} from "@/common/utils/networkUtil";
@@ -54,10 +54,11 @@ export interface QueryUserListParams {
 
 export interface RoleDialogForm {
   roleName: string;
-  roleKey: string;
+  roleId: string;
   roleSort: number;
   status: string;
-  roleType: number;
+  roleIdName: number;
+  permissions: string;
 }
 
 /**
